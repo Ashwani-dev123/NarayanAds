@@ -6,7 +6,7 @@
         <attr name="layoutLoading" format="integer"/>
         <attr name="layoutPlaceHolder" format="integer"/>
     </declare-styleable>
-    <declare-styleable name="AperoBannerAdView">
+    <declare-styleable name="NarayanBannerAdView">
         <attr name="idBanner" format="string"/>
     </declare-styleable>
 
