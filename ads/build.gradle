@@ -1,6 +1,6 @@
 apply plugin: 'com.android.library'
 //apply plugin: 'kotlin-android'
-apply plugin: 'maven-publish'
+//apply plugin: 'maven-publish'
 
 /*group = 'com.github.AperoVN'
 version = '5.6.0-alpha04'*/

@@ -53,19 +53,19 @@
 -dontwarn com.mbridge.**
 -keep class **.R$* { public static final int mbridge*; }
 
-#-keep class com.ads.control.admob.** { *; }
-#-keep class com.ads.control.ads.** { *; }
-#-keep class com.ads.control.ads.bannerAds.* { *; }
-#-keep class com.ads.control.ads.nativeAds.** { *; }
-#-keep class com.ads.control.ads.wrapper.** { *; }
-#-keep class com.ads.control.applovin.** { *; }
-#-keep class com.ads.control.billing.** { *; }
-#-keep class com.ads.control.config.** { *; }
-#-keep class com.ads.control.dialog.** { *; }
-#-keep class com.ads.control.event.AperoAdjust { *; }
-#-keep class com.ads.control.event.AperoAppsflyer { *; }
-#-keep class com.ads.control.funtion.** { *; }
-#-keep class com.ads.control.util.AppConstant { *; }
+#-keep class com.ads.narayan.admob.** { *; }
+#-keep class com.ads.narayan.ads.** { *; }
+#-keep class com.ads.narayan.ads.bannerAds.* { *; }
+#-keep class com.ads.narayan.ads.nativeAds.** { *; }
+#-keep class com.ads.narayan.ads.wrapper.** { *; }
+#-keep class com.ads.narayan.applovin.** { *; }
+#-keep class com.ads.narayan.billing.** { *; }
+#-keep class com.ads.narayan.config.** { *; }
+#-keep class com.ads.narayan.dialog.** { *; }
+#-keep class com.ads.narayan.event.NarayanAdjust { *; }
+#-keep class com.ads.narayan.event.NarayanAppsflyer { *; }
+#-keep class com.ads.narayan.funtion.** { *; }
+#-keep class com.ads.narayan.util.AppConstant { *; }
 
 -dontusemixedcaseclassnames
 -dontskipnonpubliclibraryclasses
