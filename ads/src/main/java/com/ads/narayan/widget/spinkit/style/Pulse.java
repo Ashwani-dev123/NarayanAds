@@ -5,9 +5,7 @@ import android.animation.ValueAnimator;
 import com.ads.narayan.widget.spinkit.animation.SpriteAnimatorBuilder;
 import com.ads.narayan.widget.spinkit.sprite.CircleSprite;
 
-/**
- * Created by ybq.
- */
+
 public class Pulse extends CircleSprite {
 
     public Pulse() {

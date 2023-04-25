@@ -6,9 +6,7 @@ import android.graphics.ColorFilter;
 import android.graphics.Paint;
 
 
-/**
- * Created by ybq.
- */
+
 public abstract class ShapeSprite extends Sprite {
 
     private Paint mPaint;

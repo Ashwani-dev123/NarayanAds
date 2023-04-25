@@ -3,9 +3,7 @@ package com.ads.narayan.widget.spinkit.style;
 import com.ads.narayan.widget.spinkit.sprite.Sprite;
 import com.ads.narayan.widget.spinkit.sprite.SpriteContainer;
 
-/**
- * Created by ybq.
- */
+
 public class MultiplePulseRing extends SpriteContainer {
 
     @Override

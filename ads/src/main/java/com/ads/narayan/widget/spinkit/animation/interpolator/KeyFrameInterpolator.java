@@ -3,9 +3,7 @@ package com.ads.narayan.widget.spinkit.animation.interpolator;
 import android.animation.TimeInterpolator;
 import android.view.animation.Interpolator;
 
-/**
- * Created by ybq.
- */
+
 public class KeyFrameInterpolator implements Interpolator {
 
     private TimeInterpolator interpolator;

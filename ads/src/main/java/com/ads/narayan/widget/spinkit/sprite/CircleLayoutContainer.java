@@ -3,9 +3,7 @@ package com.ads.narayan.widget.spinkit.sprite;
 import android.graphics.Canvas;
 import android.graphics.Rect;
 
-/**
- * Created by ybq.
- */
+
 public abstract class CircleLayoutContainer extends SpriteContainer {
 
     @Override

@@ -193,8 +193,8 @@ public class NarayanAd {
         config.setOnAttributionChangedListener(new OnAttributionChangedListener() {
             @Override
             public void onAttributionChanged(AdjustAttribution attribution) {
-                Log.d(TAG_ADJUST, "Attribution callback called!");
-                Log.d(TAG_ADJUST, "Attribution: " + attribution.toString());
+                Log.e(TAG_ADJUST, "Attribution callback called!");
+                Log.e(TAG_ADJUST, "Attribution: " + attribution.toString());
             }
         });
 
@@ -202,16 +202,16 @@ public class NarayanAd {
         config.setOnEventTrackingSucceededListener(new OnEventTrackingSucceededListener() {
             @Override
             public void onFinishedEventTrackingSucceeded(AdjustEventSuccess eventSuccessResponseData) {
-                Log.d(TAG_ADJUST, "Event success callback called!");
-                Log.d(TAG_ADJUST, "Event success data: " + eventSuccessResponseData.toString());
+                Log.e(TAG_ADJUST, "Event success callback called!");
+                Log.e(TAG_ADJUST, "Event success data: " + eventSuccessResponseData.toString());
             }
         });
         // Set event failure tracking delegate.
         config.setOnEventTrackingFailedListener(new OnEventTrackingFailedListener() {
             @Override
             public void onFinishedEventTrackingFailed(AdjustEventFailure eventFailureResponseData) {
-                Log.d(TAG_ADJUST, "Event failure callback called!");
-                Log.d(TAG_ADJUST, "Event failure data: " + eventFailureResponseData.toString());
+                Log.e(TAG_ADJUST, "Event failure callback called!");
+                Log.e(TAG_ADJUST, "Event failure data: " + eventFailureResponseData.toString());
             }
         });
 
@@ -219,8 +219,8 @@ public class NarayanAd {
         config.setOnSessionTrackingSucceededListener(new OnSessionTrackingSucceededListener() {
             @Override
             public void onFinishedSessionTrackingSucceeded(AdjustSessionSuccess sessionSuccessResponseData) {
-                Log.d(TAG_ADJUST, "Session success callback called!");
-                Log.d(TAG_ADJUST, "Session success data: " + sessionSuccessResponseData.toString());
+                Log.e(TAG_ADJUST, "Session success callback called!");
+                Log.e(TAG_ADJUST, "Session success data: " + sessionSuccessResponseData.toString());
             }
         });
 
@@ -228,8 +228,8 @@ public class NarayanAd {
         config.setOnSessionTrackingFailedListener(new OnSessionTrackingFailedListener() {
             @Override
             public void onFinishedSessionTrackingFailed(AdjustSessionFailure sessionFailureResponseData) {
-                Log.d(TAG_ADJUST, "Session failure callback called!");
-                Log.d(TAG_ADJUST, "Session failure data: " + sessionFailureResponseData.toString());
+                Log.e(TAG_ADJUST, "Session failure callback called!");
+                Log.e(TAG_ADJUST, "Session failure data: " + sessionFailureResponseData.toString());
             }
         });
 
@@ -1237,7 +1237,7 @@ public class NarayanAd {
                     @Override
                     public void onInterstitialLoad(@Nullable InterstitialAd interstitialAd) {
                         super.onInterstitialLoad(interstitialAd);
-                        Log.d(TAG, "Admob onInterstitialLoad");
+                        Log.e(TAG, "Admob onInterstitialLoad");
                         apInterstitialAd.setInterstitialAd(interstitialAd);
                         adListener.onInterstitialLoad(apInterstitialAd);
                     }
@@ -1263,7 +1263,7 @@ public class NarayanAd {
 
                     @Override
                     public void onAdLoaded(MaxAd ad) {
-                        Log.d(TAG, "Max onInterstitialLoad: ");
+                        Log.e(TAG, "Max onInterstitialLoad: ");
                         apInterstitialAd.setMaxInterstitialAd(maxInterstitialAd);
                         adListener.onInterstitialLoad(apInterstitialAd);
                     }
@@ -1314,7 +1314,7 @@ public class NarayanAd {
                     @Override
                     public void onInterstitialLoad(@Nullable InterstitialAd interstitialAd) {
                         super.onInterstitialLoad(interstitialAd);
-                        Log.d(TAG, "Admob onInterstitialLoad: ");
+                        Log.e(TAG, "Admob onInterstitialLoad: ");
                         apInterstitialAd.setInterstitialAd(interstitialAd);
                     }
 
@@ -1337,7 +1337,7 @@ public class NarayanAd {
 
                     @Override
                     public void onAdLoaded(MaxAd ad) {
-                        Log.d(TAG, "Max onInterstitialLoad: ");
+                        Log.e(TAG, "Max onInterstitialLoad: ");
                         apInterstitialAd.setMaxInterstitialAd(maxInterstitialAd);
                     }
 
@@ -1409,14 +1409,14 @@ public class NarayanAd {
                     @Override
                     public void onAdClosed() {
                         super.onAdClosed();
-                        Log.d(TAG, "onAdClosed: ");
+                        Log.e(TAG, "onAdClosed: ");
                         callback.onAdClosed();
                         if (shouldReloadAds) {
                             Admob.getInstance().getInterstitialAds(context, mInterstitialAd.getInterstitialAd().getAdUnitId(), new AdCallback() {
                                 @Override
                                 public void onInterstitialLoad(@Nullable InterstitialAd interstitialAd) {
                                     super.onInterstitialLoad(interstitialAd);
-                                    Log.d(TAG, "Admob shouldReloadAds success");
+                                    Log.e(TAG, "Admob shouldReloadAds success");
                                     mInterstitialAd.setInterstitialAd(interstitialAd);
                                     callback.onInterstitialLoad(mInterstitialAd);
                                 }
@@ -1443,21 +1443,21 @@ public class NarayanAd {
                     @Override
                     public void onNextAction() {
                         super.onNextAction();
-                        Log.d(TAG, "onNextAction: ");
+                        Log.e(TAG, "onNextAction: ");
                         callback.onNextAction();
                     }
 
                     @Override
                     public void onAdFailedToShow(@Nullable AdError adError) {
                         super.onAdFailedToShow(adError);
-                        Log.d(TAG, "onAdFailedToShow: ");
+                        Log.e(TAG, "onAdFailedToShow: ");
                         callback.onAdFailedToShow(new NarayanAdError(adError));
                         if (shouldReloadAds) {
                             Admob.getInstance().getInterstitialAds(context, mInterstitialAd.getInterstitialAd().getAdUnitId(), new AdCallback() {
                                 @Override
                                 public void onInterstitialLoad(@Nullable InterstitialAd interstitialAd) {
                                     super.onInterstitialLoad(interstitialAd);
-                                    Log.d(TAG, "Admob shouldReloadAds success");
+                                    Log.e(TAG, "Admob shouldReloadAds success");
                                     mInterstitialAd.setInterstitialAd(interstitialAd);
                                     callback.onInterstitialLoad(mInterstitialAd);
                                 }
@@ -1509,7 +1509,7 @@ public class NarayanAd {
                     @Override
                     public void onInterstitialLoad(@Nullable InterstitialAd interstitialAd) {
                         super.onInterstitialLoad(interstitialAd);
-                        Log.d(TAG, "Max inter onAdLoaded:");
+                        Log.e(TAG, "Max inter onAdLoaded:");
                     }
 
                     @Override
@@ -1556,14 +1556,14 @@ public class NarayanAd {
                     @Override
                     public void onAdClosed() {
                         super.onAdClosed();
-                        Log.d(TAG, "onAdClosed: ");
+                        Log.e(TAG, "onAdClosed: ");
                         callback.onAdClosed();
                         if (shouldReloadAds) {
                             Admob.getInstance().getInterstitialAds(context, mInterstitialAd.getInterstitialAd().getAdUnitId(), new AdCallback() {
                                 @Override
                                 public void onInterstitialLoad(@Nullable InterstitialAd interstitialAd) {
                                     super.onInterstitialLoad(interstitialAd);
-                                    Log.d(TAG, "Admob shouldReloadAds success");
+                                    Log.e(TAG, "Admob shouldReloadAds success");
                                     mInterstitialAd.setInterstitialAd(interstitialAd);
                                     callback.onInterstitialLoad(mInterstitialAd);
                                 }
@@ -1590,21 +1590,21 @@ public class NarayanAd {
                     @Override
                     public void onNextAction() {
                         super.onNextAction();
-                        Log.d(TAG, "onNextAction: ");
+                        Log.e(TAG, "onNextAction: ");
                         callback.onNextAction();
                     }
 
                     @Override
                     public void onAdFailedToShow(@Nullable AdError adError) {
                         super.onAdFailedToShow(adError);
-                        Log.d(TAG, "onAdFailedToShow: ");
+                        Log.e(TAG, "onAdFailedToShow: ");
                         callback.onAdFailedToShow(new NarayanAdError(adError));
                         if (shouldReloadAds) {
                             Admob.getInstance().getInterstitialAds(context, mInterstitialAd.getInterstitialAd().getAdUnitId(), new AdCallback() {
                                 @Override
                                 public void onInterstitialLoad(@Nullable InterstitialAd interstitialAd) {
                                     super.onInterstitialLoad(interstitialAd);
-                                    Log.d(TAG, "Admob shouldReloadAds success");
+                                    Log.e(TAG, "Admob shouldReloadAds success");
                                     mInterstitialAd.setInterstitialAd(interstitialAd);
                                     callback.onInterstitialLoad(mInterstitialAd);
                                 }
@@ -1660,7 +1660,7 @@ public class NarayanAd {
                     @Override
                     public void onInterstitialLoad(@Nullable InterstitialAd interstitialAd) {
                         super.onInterstitialLoad(interstitialAd);
-                        Log.d(TAG, "Max inter onAdLoaded:");
+                        Log.e(TAG, "Max inter onAdLoaded:");
                     }
 
                     @Override

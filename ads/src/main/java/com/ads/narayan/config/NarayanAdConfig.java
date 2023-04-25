@@ -17,25 +17,17 @@ public class NarayanAdConfig {
 
     public static final String DEFAULT_TOKEN_FACEBOOK_SDK = "client_token";
 
-    /**
-     * config ad mediation using for app
-     */
+
     private int mediationProvider = PROVIDER_ADMOB;
 
     private boolean isVariantDev = false;
 
-    /**
-     * adjustConfig enable adjust and setup adjust token
-     */
+
     private AdjustConfig adjustConfig;
 
-    /**
-     * appsflyerConfig enable Appsflyer and setup dev key
-     */
+
     private AppsflyerConfig appsflyerConfig;
-    /**
-     * eventNamePurchase push event to adjust when user purchased
-     */
+
     private String eventNamePurchase = "";
     private String idAdResume;
     private List<String> listDeviceTest = new ArrayList();
@@ -44,10 +36,7 @@ public class NarayanAdConfig {
     private boolean enableAdResume = false;
     private String facebookClientToken = DEFAULT_TOKEN_FACEBOOK_SDK;
 
-    /**
-     * intervalInterstitialAd: time between two interstitial ad impressions
-     * unit: seconds
-     */
+
     private int intervalInterstitialAd = 0;
 
     public NarayanAdConfig(Application application) {
@@ -65,9 +54,7 @@ public class NarayanAdConfig {
         this.mediationProvider = mediationProvider;
     }
 
-    /**
-     * @deprecated As of release 5.5.0, replaced by {@link #setEnvironment(String)}
-     */
+
     @Deprecated
     public void setVariant(Boolean isVariantDev) {
         this.isVariantDev = isVariantDev;

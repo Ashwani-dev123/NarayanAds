@@ -15,9 +15,7 @@ import com.ads.narayan.widget.spinkit.animation.AnimationUtils;
 import com.ads.narayan.widget.spinkit.animation.FloatProperty;
 import com.ads.narayan.widget.spinkit.animation.IntProperty;
 
-/**
- * Created by ybq.
- */
+
 public abstract class Sprite extends Drawable implements
         ValueAnimator.AnimatorUpdateListener
         , Animatable

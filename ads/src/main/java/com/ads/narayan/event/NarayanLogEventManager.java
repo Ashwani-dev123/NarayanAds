@@ -11,9 +11,7 @@ import com.ads.narayan.util.SharePreferenceUtils;
 import com.applovin.mediation.MaxAd;
 import com.google.android.gms.ads.AdValue;
 
-/**
- * Created by lamlt on 12/09/2022.
- */
+
 public class NarayanLogEventManager {
 
     private static final String TAG = "NarayanLogEventManager";
@@ -31,7 +29,7 @@ public class NarayanLogEventManager {
     }
 
     private static void logEventWithAds(Context context, float revenue, int precision, String adUnitId, String network, int mediationProvider) {
-        Log.d(TAG, String.format(
+        Log.e(TAG, String.format(
                 "Paid event of value %.0f microcents in currency USD of precision %s%n occurred for ad unit %s from ad network %s.mediation provider: %s%n",
                 revenue,
                 precision,
@@ -81,7 +79,7 @@ public class NarayanLogEventManager {
     }
 
     public static void logClickAdsEvent(Context context, String adUnitId) {
-        Log.d(TAG, String.format(
+        Log.e(TAG, String.format(
                 "User click ad for ad unit %s.",
                 adUnitId));
         Bundle bundle = new Bundle();
@@ -117,7 +115,7 @@ public class NarayanLogEventManager {
         long installTime = SharePreferenceUtils.getInstallTime(context);
         if (!SharePreferenceUtils.isPushRevenue3Day(context)
                 && (System.currentTimeMillis() - installTime >= 3L * 24 * 60 * 60 * 1000)) {
-            Log.d(TAG, "logTotalRevenueAdAt3DaysIfNeed: ");
+            Log.e(TAG, "logTotalRevenueAdAt3DaysIfNeed: ");
             logCurrentTotalRevenueAd(context, "event_total_revenue_ad_in_3_days");
             SharePreferenceUtils.setPushedRevenue3Day(context);
         }
@@ -127,7 +125,7 @@ public class NarayanLogEventManager {
         long installTime = SharePreferenceUtils.getInstallTime(context);
         if (!SharePreferenceUtils.isPushRevenue7Day(context)
                 && (System.currentTimeMillis() - installTime >= 7L * 24 * 60 * 60 * 1000)) {
-            Log.d(TAG, "logTotalRevenueAdAt7DaysIfNeed: ");
+            Log.e(TAG, "logTotalRevenueAdAt7DaysIfNeed: ");
             logCurrentTotalRevenueAd(context, "event_total_revenue_ad_in_7_days");
             SharePreferenceUtils.setPushedRevenue7Day(context);
         }

@@ -7,9 +7,7 @@ import com.ads.narayan.widget.spinkit.animation.SpriteAnimatorBuilder;
 import com.ads.narayan.widget.spinkit.sprite.RectSprite;
 
 
-/**
- * Created by ybq.
- */
+
 public class RotatingPlane extends RectSprite {
     @Override
     protected void onBoundsChange(Rect bounds) {

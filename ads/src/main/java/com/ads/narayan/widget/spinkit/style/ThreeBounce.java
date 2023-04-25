@@ -8,9 +8,7 @@ import com.ads.narayan.widget.spinkit.sprite.CircleSprite;
 import com.ads.narayan.widget.spinkit.sprite.Sprite;
 import com.ads.narayan.widget.spinkit.sprite.SpriteContainer;
 
-/**
- * Created by ybq.
- */
+
 public class ThreeBounce extends SpriteContainer {
 
     @Override

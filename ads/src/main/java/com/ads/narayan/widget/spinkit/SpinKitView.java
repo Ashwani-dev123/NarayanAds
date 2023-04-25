@@ -11,9 +11,7 @@ import android.widget.ProgressBar;
 import com.ads.narayan.R;
 import com.ads.narayan.widget.spinkit.sprite.Sprite;
 
-/**
- * Created by ybq.
- */
+
 public class SpinKitView extends ProgressBar {
 
     private Style mStyle;

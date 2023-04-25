@@ -1,8 +1,6 @@
 package com.ads.narayan.widget.spinkit;
 
-/**
- * Created by ybq.
- */
+
 public enum Style {
 
     ROTATING_PLANE(0),

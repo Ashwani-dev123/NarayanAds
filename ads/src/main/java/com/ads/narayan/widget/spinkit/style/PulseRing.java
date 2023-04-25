@@ -6,9 +6,7 @@ import com.ads.narayan.widget.spinkit.animation.SpriteAnimatorBuilder;
 import com.ads.narayan.widget.spinkit.animation.interpolator.KeyFrameInterpolator;
 import com.ads.narayan.widget.spinkit.sprite.RingSprite;
 
-/**
- * Created by ybq.
- */
+
 public class PulseRing extends RingSprite {
 
     public PulseRing() {

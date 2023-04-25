@@ -7,19 +7,13 @@ public class AdjustConfig {
 
     private boolean enableAdjust = false;
 
-    /**
-     * adjustToken enable adjust and setup adjust token
-     */
+
     private String adjustToken = "";
 
-    /**
-     * eventNamePurchase push event to adjust when user purchased
-     */
+
     private String eventNamePurchase = "";
 
-    /**
-     * eventNamePurchase push event to adjust when ad impression
-     */
+
     private String eventAdImpression = "";
 
     public AdjustConfig(boolean enableAdjust) {

@@ -9,9 +9,7 @@ import com.ads.narayan.widget.spinkit.sprite.RectSprite;
 import com.ads.narayan.widget.spinkit.sprite.Sprite;
 import com.ads.narayan.widget.spinkit.sprite.SpriteContainer;
 
-/**
- * Created by ybq.
- */
+
 public class Wave extends SpriteContainer {
 
     @Override

@@ -99,18 +99,17 @@ public class Admob {
     private Handler handlerTimeoutHighFloor;
     private Runnable rdTimeoutHighFloor;
     private PrepareLoadingAdsDialog dialog;
-    private boolean isTimeout; // xử lý timeout show ads
+    private boolean isTimeout;
     private boolean isTimeoutHighFloor;
     private boolean disableAdResumeWhenClickAds = false;
-    private boolean isShowLoadingSplash = false;  //kiểm tra trạng thái ad splash, ko cho load, show khi đang show loading ads splash
+    private boolean isShowLoadingSplash = false;
     private boolean isFan;
     private boolean isAdcolony;
     private boolean isAppLovin;
-    boolean isTimeDelay = false; //xử lý delay time show ads, = true mới show ads
-    boolean isTimeDelayHighFloor = false; //xử lý delay time show ads, = true mới show ads
+    boolean isTimeDelay = false;
+    boolean isTimeDelayHighFloor = false;
     private boolean openActivityAfterShowInterAds = false;
     private Context context;
-//    private AppOpenAd appOpenAd = null;
 
     public static final String BANNER_INLINE_SMALL_STYLE = "BANNER_INLINE_SMALL_STYLE";
     public static final String BANNER_INLINE_LARGE_STYLE = "BANNER_INLINE_LARGE_STYLE";
@@ -134,11 +133,7 @@ public class Admob {
 
     }
 
-    /**
-     * Giới hạn số lần click trên 1 admod tren 1 ngay
-     *
-     * @param maxClickAds
-     */
+
     public void setMaxClickAdsPerDay(int maxClickAds) {
         this.maxClickAds = maxClickAds;
     }
@@ -165,20 +160,12 @@ public class Admob {
         this.currentClicked = currentClicked;
     }
 
-    /**
-     * Disable ad resume when user click ads and back to app
-     *
-     * @param disableAdResumeWhenClickAds
-     */
+
     public void setDisableAdResumeWhenClickAds(boolean disableAdResumeWhenClickAds) {
         this.disableAdResumeWhenClickAds = disableAdResumeWhenClickAds;
     }
 
-    /**
-     * khởi tạo admod
-     *
-     * @param context
-     */
+
     public void init(Context context, List<String> testDeviceList) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
             String processName = Application.getProcessName();
@@ -191,7 +178,7 @@ public class Admob {
             Map<String, AdapterStatus> statusMap = initializationStatus.getAdapterStatusMap();
             for (String adapterClass : statusMap.keySet()) {
                 AdapterStatus status = statusMap.get(adapterClass);
-                Log.d(TAG, String.format("Adapter name: %s, Description: %s, Latency: %d",
+                Log.e(TAG, String.format("Adapter name: %s, Description: %s, Latency: %d",
                         adapterClass, status.getDescription(), status.getLatency()));
             }
         });
@@ -213,7 +200,7 @@ public class Admob {
             Map<String, AdapterStatus> statusMap = initializationStatus.getAdapterStatusMap();
             for (String adapterClass : statusMap.keySet()) {
                 AdapterStatus status = statusMap.get(adapterClass);
-                Log.d(TAG, String.format("Adapter name: %s, Description: %s, Latency: %d",
+                Log.e(TAG, String.format("Adapter name: %s, Description: %s, Latency: %d",
                         adapterClass, status.getDescription(), status.getLatency()));
             }
         });
@@ -236,26 +223,14 @@ public class Admob {
         return null;
     }
 
-    /**
-     * If true -> callback onNextAction() is called right after Ad Interstitial showed
-     * It help remove delay when user click close Ad and onAdClosed called
-     *
-     * @param openActivityAfterShowInterAds
-     */
+
     public void setOpenActivityAfterShowInterAds(boolean openActivityAfterShowInterAds) {
         this.openActivityAfterShowInterAds = openActivityAfterShowInterAds;
     }
 
     public AdRequest getAdRequest() {
         AdRequest.Builder builder = new AdRequest.Builder();
-        // no need from facebook sdk ver 6.12.0.0
-        /*if (isFan) {
-            Bundle extras = new FacebookExtras()
-                    .setNativeBanner(true)
-                    .build();
 
-            builder.addNetworkExtrasBundle(FacebookAdapter.class, extras);
-        }*/
 
         if (isAdcolony) {
             AdColonyBundleBuilder.setShowPrePopup(true);
@@ -269,7 +244,6 @@ public class Admob {
                     .build();
             builder.addNetworkExtrasBundle(ApplovinAdapter.class, extras);
         }
-//        builder.addTestDevice(AdRequest.DEVICE_ID_EMULATOR);
         return builder.build();
     }
 
@@ -292,16 +266,6 @@ public class Admob {
     }
 
 
-    /**
-     * Load quảng cáo Full tại màn SplashActivity
-     * Sau khoảng thời gian timeout thì load ads và callback về cho View
-     *
-     * @param context
-     * @param id
-     * @param timeOut    : thời gian chờ ads, timeout <= 0 tương đương với việc bỏ timeout
-     * @param timeDelay  : thời gian chờ show ad từ lúc load ads
-     * @param adListener
-     */
     public void loadSplashInterstitialAds(final Context context, String id, long timeOut, long timeDelay, AdCallback adListener) {
         isTimeDelay = false;
         isTimeout = false;
@@ -397,17 +361,7 @@ public class Admob {
 
     }
 
-    /**
-     * Load quảng cáo Full tại màn SplashActivity
-     * Sau khoảng thời gian timeout thì load ads và callback về cho View
-     *
-     * @param context
-     * @param id
-     * @param timeOut           : thời gian chờ ads, timeout <= 0 tương đương với việc bỏ timeout
-     * @param timeDelay         : thời gian chờ show ad từ lúc load ads
-     * @param showSplashIfReady : auto show ad splash if ready
-     * @param adListener
-     */
+
     public void loadSplashInterstitialAds(final Context context, String id, long timeOut, long timeDelay, boolean showSplashIfReady, AdCallback adListener) {
         isTimeDelay = false;
         isTimeout = false;
@@ -609,7 +563,7 @@ public class Admob {
 
     public void onShowSplashHighFloor(AppCompatActivity activity, AdCallback adListener) {
         isShowLoadingSplash = true;
-        Log.d(TAG, "onShowSplashHighFloor: ");
+        Log.e(TAG, "onShowSplashHighFloor: ");
 
         if (mInterstitialSplashHighFloor == null) {
             adListener.onNextAction();
@@ -617,7 +571,7 @@ public class Admob {
         }
 
         mInterstitialSplashHighFloor.setOnPaidEventListener(adValue -> {
-            Log.d(TAG, "OnPaidEvent splash:" + adValue.getValueMicros());
+            Log.e(TAG, "OnPaidEvent splash:" + adValue.getValueMicros());
 
             NarayanLogEventManager.logPaidAdImpression(context,
                     adValue,
@@ -637,7 +591,7 @@ public class Admob {
         mInterstitialSplashHighFloor.setFullScreenContentCallback(new FullScreenContentCallback() {
             @Override
             public void onAdShowedFullScreenContent() {
-                Log.d(TAG, " Splash:onAdShowedFullScreenContent ");
+                Log.e(TAG, " Splash:onAdShowedFullScreenContent ");
                 AppOpenManager.getInstance().setInterstitialShowing(true);
                 AppOpenManager.getInstance().disableAppResume();
                 isShowLoadingSplash = false;
@@ -645,7 +599,7 @@ public class Admob {
 
             @Override
             public void onAdDismissedFullScreenContent() {
-                Log.d(TAG, " Splash:onAdDismissedFullScreenContent ");
+                Log.e(TAG, " Splash:onAdDismissedFullScreenContent ");
                 AppOpenManager.getInstance().setInterstitialShowing(false);
                 AppOpenManager.getInstance().enableAppResume();
                 mInterstitialSplashHighFloor = null;
@@ -748,7 +702,7 @@ public class Admob {
 
     public void onShowSplash(AppCompatActivity activity, AdCallback adListener) {
         isShowLoadingSplash = true;
-        Log.d(TAG, "onShowSplash: ");
+        Log.e(TAG, "onShowSplash: ");
 
         if (mInterstitialSplash == null) {
             adListener.onNextAction();
@@ -756,7 +710,7 @@ public class Admob {
         }
 
         mInterstitialSplash.setOnPaidEventListener(adValue -> {
-            Log.d(TAG, "OnPaidEvent splash:" + adValue.getValueMicros());
+            Log.e(TAG, "OnPaidEvent splash:" + adValue.getValueMicros());
 
             NarayanLogEventManager.logPaidAdImpression(context,
                     adValue,
@@ -776,7 +730,7 @@ public class Admob {
         mInterstitialSplash.setFullScreenContentCallback(new FullScreenContentCallback() {
             @Override
             public void onAdShowedFullScreenContent() {
-                Log.d(TAG, " Splash:onAdShowedFullScreenContent ");
+                Log.e(TAG, " Splash:onAdShowedFullScreenContent ");
                 AppOpenManager.getInstance().setInterstitialShowing(true);
                 AppOpenManager.getInstance().disableAppResume();
                 isShowLoadingSplash = false;
@@ -784,7 +738,7 @@ public class Admob {
 
             @Override
             public void onAdDismissedFullScreenContent() {
-                Log.d(TAG, " Splash:onAdDismissedFullScreenContent ");
+                Log.e(TAG, " Splash:onAdDismissedFullScreenContent ");
                 AppOpenManager.getInstance().setInterstitialShowing(false);
                 AppOpenManager.getInstance().enableAppResume();
                 mInterstitialSplash = null;
@@ -943,7 +897,7 @@ public class Admob {
                 if (interstitialAd != null) {
                     interstitialAd.setOnPaidEventListener(adValue -> {
 
-                        Log.d(TAG, "OnPaidEvent loadInterstitialAds:" + adValue.getValueMicros());
+                        Log.e(TAG, "OnPaidEvent loadInterstitialAds:" + adValue.getValueMicros());
                         NarayanLogEventManager.logPaidAdImpression(context,
                                 adValue,
                                 interstitialAd.getAdUnitId(),
@@ -984,13 +938,7 @@ public class Admob {
     }
 
 
-    /**
-     * Trả về 1 InterstitialAd và request Ads
-     *
-     * @param context
-     * @param id
-     * @return
-     */
+
     public void getInterstitialAds(Context context, String id, AdCallback adCallback) {
         if (Arrays.asList(context.getResources().getStringArray(R.array.list_id_test)).contains(id)) {
             showTestIdAlert(context, INTERS_ADS, id);
@@ -1010,7 +958,7 @@ public class Admob {
 
                         //tracking adjust
                         interstitialAd.setOnPaidEventListener(adValue -> {
-                            Log.d(TAG, "OnPaidEvent getInterstitalAds:" + adValue.getValueMicros());
+                            Log.e(TAG, "OnPaidEvent getInterstitalAds:" + adValue.getValueMicros());
 
                             NarayanLogEventManager.logPaidAdImpression(context,
                                     adValue,
@@ -1034,14 +982,7 @@ public class Admob {
     }
 
 
-    /**
-     * Hiển thị ads  timeout
-     * Sử dụng khi reopen app in splash
-     *
-     * @param context
-     * @param mInterstitialAd
-     * @param timeDelay
-     */
+
     public void showInterstitialAdByTimes(final Context context, final InterstitialAd mInterstitialAd, final AdCallback callback, long timeDelay) {
         if (timeDelay > 0) {
             handlerTimeout = new Handler();
@@ -1058,15 +999,6 @@ public class Admob {
     }
 
 
-    /**
-     * Hiển thị ads theo số lần được xác định trước và callback result
-     * vd: click vào 3 lần thì show ads full.
-     * AdmodHelper.setupAdmodData(context) -> kiểm tra xem app đc hoạt động đc 1 ngày chưa nếu YES thì reset lại số lần click vào ads
-     *
-     * @param context
-     * @param mInterstitialAd
-     * @param callback
-     */
     public void showInterstitialAdByTimes(final Context context, InterstitialAd mInterstitialAd, final AdCallback callback) {
         AdmodHelper.setupAdmodData(context);
         if (AppPurchase.getInstance().isPurchased(context)) {
@@ -1148,25 +1080,13 @@ public class Admob {
     }
 
 
-    /**
-     * Bắt buộc hiển thị  ads full và callback result
-     *
-     * @param context
-     * @param mInterstitialAd
-     * @param callback
-     */
+
     public void forceShowInterstitial(Context context, InterstitialAd mInterstitialAd, final AdCallback callback) {
         currentClicked = numShowAds;
         showInterstitialAdByTimes(context, mInterstitialAd, callback);
     }
 
-    /**
-     * Kiểm tra và hiện thị ads
-     *
-     * @param context
-     * @param mInterstitialAd
-     * @param callback
-     */
+
     private void showInterstitialAd(Context context, InterstitialAd mInterstitialAd, AdCallback callback) {
         currentClicked++;
         if (currentClicked >= numShowAds && mInterstitialAd != null) {
@@ -1215,24 +1135,14 @@ public class Admob {
         }
     }
 
-    /**
-     * Load quảng cáo Banner Trong Activity
-     *
-     * @param mActivity
-     * @param id
-     */
+
     public void loadBanner(final Activity mActivity, String id) {
         final FrameLayout adContainer = mActivity.findViewById(R.id.banner_container);
         final ShimmerFrameLayout containerShimmer = mActivity.findViewById(R.id.shimmer_container_banner);
         loadBanner(mActivity, id, adContainer, containerShimmer, null, false, BANNER_INLINE_LARGE_STYLE);
     }
 
-    /**
-     * Load quảng cáo Banner Trong Activity
-     *
-     * @param mActivity
-     * @param id
-     */
+
     public void loadBanner(final Activity mActivity, String id, AdCallback callback) {
         final FrameLayout adContainer = mActivity.findViewById(R.id.banner_container);
         final ShimmerFrameLayout containerShimmer = mActivity.findViewById(R.id.shimmer_container_banner);
@@ -1240,13 +1150,7 @@ public class Admob {
     }
 
 
-    /**
-     * Load quảng cáo Banner Trong Activity set Inline adaptive banners
-     *
-     * @param mActivity
-     * @param id
-     * @deprecated Using loadInlineBanner()
-     */
+
     @Deprecated
     public void loadBanner(final Activity mActivity, String id, Boolean useInlineAdaptive) {
         final FrameLayout adContainer = mActivity.findViewById(R.id.banner_container);
@@ -1254,28 +1158,14 @@ public class Admob {
         loadBanner(mActivity, id, adContainer, containerShimmer, null, useInlineAdaptive, BANNER_INLINE_LARGE_STYLE);
     }
 
-    /**
-     * Load quảng cáo Banner Trong Activity set Inline adaptive banners
-     *
-     * @param activity
-     * @param id
-     * @param inlineStyle
-     */
+
     public void loadInlineBanner(final Activity activity, String id, String inlineStyle) {
         final FrameLayout adContainer = activity.findViewById(R.id.banner_container);
         final ShimmerFrameLayout containerShimmer = activity.findViewById(R.id.shimmer_container_banner);
         loadBanner(activity, id, adContainer, containerShimmer, null, true, inlineStyle);
     }
 
-    /**
-     * Load quảng cáo Banner Trong Activity set Inline adaptive banners
-     *
-     * @param mActivity
-     * @param id
-     * @param callback
-     * @param useInlineAdaptive
-     * @deprecated Using loadInlineBanner() with callback
-     */
+
     @Deprecated
     public void loadBanner(final Activity mActivity, String id, final AdCallback callback, Boolean useInlineAdaptive) {
         final FrameLayout adContainer = mActivity.findViewById(R.id.banner_container);
@@ -1283,66 +1173,35 @@ public class Admob {
         loadBanner(mActivity, id, adContainer, containerShimmer, callback, useInlineAdaptive, BANNER_INLINE_LARGE_STYLE);
     }
 
-    /**
-     * Load quảng cáo Banner Trong Activity set Inline adaptive banners
-     *
-     * @param activity
-     * @param id
-     * @param inlineStyle
-     * @param callback
-     */
+
     public void loadInlineBanner(final Activity activity, String id, String inlineStyle, final AdCallback callback) {
         final FrameLayout adContainer = activity.findViewById(R.id.banner_container);
         final ShimmerFrameLayout containerShimmer = activity.findViewById(R.id.shimmer_container_banner);
         loadBanner(activity, id, adContainer, containerShimmer, callback, true, inlineStyle);
     }
 
-    /**
-     * Load quảng cáo Collapsible Banner Trong Activity
-     *
-     * @param mActivity
-     * @param id
-     */
+
     public void loadCollapsibleBanner(final Activity mActivity, String id, String gravity, final AdCallback callback) {
         final FrameLayout adContainer = mActivity.findViewById(R.id.banner_container);
         final ShimmerFrameLayout containerShimmer = mActivity.findViewById(R.id.shimmer_container_banner);
         loadCollapsibleBanner(mActivity, id, gravity, adContainer, containerShimmer, callback);
     }
 
-    /**
-     * Load Quảng Cáo Banner Trong Fragment
-     *
-     * @param mActivity
-     * @param id
-     * @param rootView
-     */
+
     public void loadBannerFragment(final Activity mActivity, String id, final View rootView) {
         final FrameLayout adContainer = rootView.findViewById(R.id.banner_container);
         final ShimmerFrameLayout containerShimmer = rootView.findViewById(R.id.shimmer_container_banner);
         loadBanner(mActivity, id, adContainer, containerShimmer, null, false, BANNER_INLINE_LARGE_STYLE);
     }
 
-    /**
-     * Load Quảng Cáo Banner Trong Fragment
-     *
-     * @param mActivity
-     * @param id
-     * @param rootView
-     */
+
     public void loadBannerFragment(final Activity mActivity, String id, final View rootView, final AdCallback callback) {
         final FrameLayout adContainer = rootView.findViewById(R.id.banner_container);
         final ShimmerFrameLayout containerShimmer = rootView.findViewById(R.id.shimmer_container_banner);
         loadBanner(mActivity, id, adContainer, containerShimmer, callback, false, BANNER_INLINE_LARGE_STYLE);
     }
 
-    /**
-     * Load Quảng Cáo Banner Trong Fragment set Inline adaptive banners
-     *
-     * @param mActivity
-     * @param id
-     * @param rootView
-     * @deprecated Using loadInlineBannerFragment()
-     */
+
     @Deprecated
     public void loadBannerFragment(final Activity mActivity, String id, final View rootView, Boolean useInlineAdaptive) {
         final FrameLayout adContainer = rootView.findViewById(R.id.banner_container);
@@ -1350,30 +1209,14 @@ public class Admob {
         loadBanner(mActivity, id, adContainer, containerShimmer, null, useInlineAdaptive, BANNER_INLINE_LARGE_STYLE);
     }
 
-    /**
-     * Load Quảng Cáo Banner Trong Fragment set Inline adaptive banners
-     *
-     * @param activity
-     * @param id
-     * @param rootView
-     * @param inlineStyle
-     */
+
     public void loadInlineBannerFragment(final Activity activity, String id, final View rootView, String inlineStyle) {
         final FrameLayout adContainer = rootView.findViewById(R.id.banner_container);
         final ShimmerFrameLayout containerShimmer = rootView.findViewById(R.id.shimmer_container_banner);
         loadBanner(activity, id, adContainer, containerShimmer, null, true, inlineStyle);
     }
 
-    /**
-     * Load Quảng Cáo Banner Trong Fragment set Inline adaptive banners
-     *
-     * @param mActivity
-     * @param id
-     * @param rootView
-     * @param callback
-     * @param useInlineAdaptive
-     * @deprecated Using loadInlineBannerFragment() with callback
-     */
+
     @Deprecated
     public void loadBannerFragment(final Activity mActivity, String id, final View rootView, final AdCallback callback, Boolean useInlineAdaptive) {
         final FrameLayout adContainer = rootView.findViewById(R.id.banner_container);
@@ -1381,30 +1224,14 @@ public class Admob {
         loadBanner(mActivity, id, adContainer, containerShimmer, callback, useInlineAdaptive, BANNER_INLINE_LARGE_STYLE);
     }
 
-    /**
-     * Load Quảng Cáo Banner Trong Fragment set Inline adaptive banners
-     *
-     * @param activity
-     * @param id
-     * @param rootView
-     * @param inlineStyle
-     * @param callback
-     */
+
     public void loadInlineBannerFragment(final Activity activity, String id, final View rootView, String inlineStyle, final AdCallback callback) {
         final FrameLayout adContainer = rootView.findViewById(R.id.banner_container);
         final ShimmerFrameLayout containerShimmer = rootView.findViewById(R.id.shimmer_container_banner);
         loadBanner(activity, id, adContainer, containerShimmer, callback, true, inlineStyle);
     }
 
-    /**
-     * Load quảng cáo Collapsible Banner Trong Fragment
-     *
-     * @param mActivity
-     * @param id
-     * @param rootView
-     * @param gravity
-     * @param callback
-     */
+
     public void loadCollapsibleBannerFragment(final Activity mActivity, String id, final View rootView, String gravity, final AdCallback callback) {
         final FrameLayout adContainer = rootView.findViewById(R.id.banner_container);
         final ShimmerFrameLayout containerShimmer = rootView.findViewById(R.id.shimmer_container_banner);
@@ -1449,13 +1276,13 @@ public class Admob {
 
                 @Override
                 public void onAdLoaded() {
-                    Log.d(TAG, "Banner adapter class name: " + adView.getResponseInfo().getMediationAdapterClassName());
+                    Log.e(TAG, "Banner adapter class name: " + adView.getResponseInfo().getMediationAdapterClassName());
                     containerShimmer.stopShimmer();
                     containerShimmer.setVisibility(View.GONE);
                     adContainer.setVisibility(View.VISIBLE);
                     if (adView != null) {
                         adView.setOnPaidEventListener(adValue -> {
-                            Log.d(TAG, "OnPaidEvent banner:" + adValue.getValueMicros());
+                            Log.e(TAG, "OnPaidEvent banner:" + adValue.getValueMicros());
 
                             NarayanLogEventManager.logPaidAdImpression(context,
                                     adValue,
@@ -1473,7 +1300,7 @@ public class Admob {
                         AppOpenManager.getInstance().disableAdResumeByClickAction();
                     if (callback != null) {
                         callback.onAdClicked();
-                        Log.d(TAG, "onAdClicked");
+                        Log.e(TAG, "onAdClicked");
                     }
                     NarayanLogEventManager.logClickAdsEvent(context, id);
                 }
@@ -1529,12 +1356,12 @@ public class Admob {
 
                 @Override
                 public void onAdLoaded() {
-                    Log.d(TAG, "Banner adapter class name: " + adView.getResponseInfo().getMediationAdapterClassName());
+                    Log.e(TAG, "Banner adapter class name: " + adView.getResponseInfo().getMediationAdapterClassName());
                     containerShimmer.stopShimmer();
                     containerShimmer.setVisibility(View.GONE);
                     adContainer.setVisibility(View.VISIBLE);
                     adView.setOnPaidEventListener(adValue -> {
-                        Log.d(TAG, "OnPaidEvent banner:" + adValue.getValueMicros());
+                        Log.e(TAG, "OnPaidEvent banner:" + adValue.getValueMicros());
 
                         NarayanLogEventManager.logPaidAdImpression(context,
                                 adValue,
@@ -1616,12 +1443,7 @@ public class Admob {
         return builder.build();
     }
 
-    /**
-     * load quảng cáo big native
-     *
-     * @param mActivity
-     * @param id
-     */
+
     public void loadNative(final Activity mActivity, String id) {
         final FrameLayout frameLayout = mActivity.findViewById(R.id.fl_adplaceholder);
         final ShimmerFrameLayout containerShimmer = mActivity.findViewById(R.id.shimmer_container_native);
@@ -1667,7 +1489,7 @@ public class Admob {
                     public void onNativeAdLoaded(@NonNull NativeAd nativeAd) {
                         callback.onUnifiedNativeAdLoaded(nativeAd);
                         nativeAd.setOnPaidEventListener(adValue -> {
-                            Log.d(TAG, "OnPaidEvent getInterstitalAds:" + adValue.getValueMicros());
+                            Log.e(TAG, "OnPaidEvent getInterstitalAds:" + adValue.getValueMicros());
 
                             NarayanLogEventManager.logPaidAdImpression(context,
                                     adValue,
@@ -1686,7 +1508,7 @@ public class Admob {
                     @Override
                     public void onAdImpression() {
                         super.onAdImpression();
-                        Log.d(TAG, "native onAdImpression");
+                        Log.e(TAG, "native onAdImpression");
                         if (callback != null) {
                             callback.onAdImpression();
                         }
@@ -1699,7 +1521,7 @@ public class Admob {
                             AppOpenManager.getInstance().disableAdResumeByClickAction();
                         if (callback != null) {
                             callback.onAdClicked();
-                            Log.d(TAG, "onAdClicked");
+                            Log.e(TAG, "onAdClicked");
                         }
                         NarayanLogEventManager.logClickAdsEvent(context, id);
                     }
@@ -1731,7 +1553,7 @@ public class Admob {
                     public void onNativeAdLoaded(@NonNull NativeAd nativeAd) {
                         callback.onUnifiedNativeAdLoaded(nativeAd);
                         nativeAd.setOnPaidEventListener(adValue -> {
-                            Log.d(TAG, "OnPaidEvent getInterstitalAds:" + adValue.getValueMicros());
+                            Log.e(TAG, "OnPaidEvent getInterstitalAds:" + adValue.getValueMicros());
 
                             NarayanLogEventManager.logPaidAdImpression(context,
                                     adValue,
@@ -1754,7 +1576,7 @@ public class Admob {
                             AppOpenManager.getInstance().disableAdResumeByClickAction();
                         if (callback != null) {
                             callback.onAdClicked();
-                            Log.d(TAG, "onAdClicked");
+                            Log.e(TAG, "onAdClicked");
                         }
                         NarayanLogEventManager.logClickAdsEvent(context, id);
                     }
@@ -1797,7 +1619,7 @@ public class Admob {
                         @SuppressLint("InflateParams") NativeAdView adView = (NativeAdView) LayoutInflater.from(context)
                                 .inflate(layout, null);
                         nativeAd.setOnPaidEventListener(adValue -> {
-                            Log.d(TAG, "OnPaidEvent native:" + adValue.getValueMicros());
+                            Log.e(TAG, "OnPaidEvent native:" + adValue.getValueMicros());
 
                             NarayanLogEventManager.logPaidAdImpression(context,
                                     adValue,
@@ -1867,7 +1689,7 @@ public class Admob {
                         @SuppressLint("InflateParams") NativeAdView adView = (NativeAdView) LayoutInflater.from(context)
                                 .inflate(layout, null);
                         nativeAd.setOnPaidEventListener(adValue -> {
-                            Log.d(TAG, "OnPaidEvent Native:" + adValue.getValueMicros());
+                            Log.e(TAG, "OnPaidEvent Native:" + adValue.getValueMicros());
 
                             NarayanLogEventManager.logPaidAdImpression(context,
                                     adValue,
@@ -1897,7 +1719,7 @@ public class Admob {
                             AppOpenManager.getInstance().disableAdResumeByClickAction();
                         if (callback != null) {
                             callback.onAdClicked();
-                            Log.d(TAG, "onAdClicked");
+                            Log.e(TAG, "onAdClicked");
                         }
                         NarayanLogEventManager.logClickAdsEvent(context, id);
                     }
@@ -1997,17 +1819,7 @@ public class Admob {
         } catch (Exception e) {
             e.printStackTrace();
         }
-//
-//        try {
-//            if (nativeAd.getStore() == null) {
-//                Objects.requireNonNull(adView.getStoreView()).setVisibility(View.INVISIBLE);
-//            } else {
-//                Objects.requireNonNull(adView.getStoreView()).setVisibility(View.VISIBLE);
-//                ((TextView) adView.getStoreView()).setText(nativeAd.getStore());
-//            }
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
+
 //
         try {
             if (nativeAd.getStarRating() == null) {
@@ -2041,12 +1853,7 @@ public class Admob {
 
     private RewardedAd rewardedAd;
 
-    /**
-     * Khởi tạo quảng cáo reward
-     *
-     * @param context
-     * @param id
-     */
+
     public void initRewardAds(Context context, String id) {
         if (Arrays.asList(context.getResources().getStringArray(R.array.list_id_test)).contains(id)) {
             showTestIdAlert(context, REWARD_ADS, id);
@@ -2064,7 +1871,7 @@ public class Admob {
                 Admob.this.rewardedAd = rewardedAd;
                 Admob.this.rewardedAd.setOnPaidEventListener(adValue -> {
 
-                    Log.d(TAG, "OnPaidEvent Reward:" + adValue.getValueMicros());
+                    Log.e(TAG, "OnPaidEvent Reward:" + adValue.getValueMicros());
 
                     NarayanLogEventManager.logPaidAdImpression(context,
                             adValue,
@@ -2081,12 +1888,7 @@ public class Admob {
         });
     }
 
-    /**
-     * Load ad Reward
-     *
-     * @param context
-     * @param id
-     */
+
     public void initRewardAds(Context context, String id, AdCallback callback) {
         if (Arrays.asList(context.getResources().getStringArray(R.array.list_id_test)).contains(id)) {
             showTestIdAlert(context, REWARD_ADS, id);
@@ -2104,7 +1906,7 @@ public class Admob {
                 callback.onRewardAdLoaded(rewardedAd);
                 Admob.this.rewardedAd = rewardedAd;
                 Admob.this.rewardedAd.setOnPaidEventListener(adValue -> {
-                    Log.d(TAG, "OnPaidEvent Reward:" + adValue.getValueMicros());
+                    Log.e(TAG, "OnPaidEvent Reward:" + adValue.getValueMicros());
 
                     NarayanLogEventManager.logPaidAdImpression(context,
                             adValue,
@@ -2124,12 +1926,7 @@ public class Admob {
         });
     }
 
-    /**
-     * Load ad Reward Interstitial
-     *
-     * @param context
-     * @param id
-     */
+
     public void getRewardInterstitial(Context context, String id, AdCallback callback) {
         if (Arrays.asList(context.getResources().getStringArray(R.array.list_id_test)).contains(id)) {
             showTestIdAlert(context, REWARD_ADS, id);
@@ -2147,7 +1944,7 @@ public class Admob {
                 callback.onRewardAdLoaded(rewardedAd);
                 Log.i(TAG, "RewardInterstitial onAdLoaded ");
                 rewardedAd.setOnPaidEventListener(adValue -> {
-                    Log.d(TAG, "OnPaidEvent Reward:" + adValue.getValueMicros());
+                    Log.e(TAG, "OnPaidEvent Reward:" + adValue.getValueMicros());
                     NarayanLogEventManager.logPaidAdImpression(context,
                             adValue,
                             rewardedAd.getAdUnitId(),
@@ -2169,12 +1966,7 @@ public class Admob {
         return rewardedAd;
     }
 
-    /**
-     * Show Reward and callback
-     *
-     * @param context
-     * @param adCallback
-     */
+
     public void showRewardAds(final Activity context, final RewardCallback adCallback) {
         if (AppPurchase.getInstance().isPurchased(context)) {
             adCallback.onUserEarnedReward(null);
@@ -2231,13 +2023,7 @@ public class Admob {
         }
     }
 
-    /**
-     * Show Reward Interstitial and callback
-     *
-     * @param activity
-     * @param rewardedInterstitialAd
-     * @param adCallback
-     */
+
     public void showRewardInterstitial(final Activity activity, RewardedInterstitialAd rewardedInterstitialAd, final RewardCallback adCallback) {
         if (AppPurchase.getInstance().isPurchased(activity)) {
             adCallback.onUserEarnedReward(null);
@@ -2294,12 +2080,7 @@ public class Admob {
     }
 
 
-    /**
-     * Show quảng cáo reward và nhận kết quả trả về
-     *
-     * @param context
-     * @param adCallback
-     */
+
     public void showRewardAds(final Activity context, RewardedAd rewardedAd, final RewardCallback adCallback) {
         if (AppPurchase.getInstance().isPurchased(context)) {
             adCallback.onUserEarnedReward(null);

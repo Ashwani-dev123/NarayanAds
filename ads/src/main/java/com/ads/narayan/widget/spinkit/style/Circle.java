@@ -8,9 +8,7 @@ import com.ads.narayan.widget.spinkit.sprite.CircleLayoutContainer;
 import com.ads.narayan.widget.spinkit.sprite.CircleSprite;
 import com.ads.narayan.widget.spinkit.sprite.Sprite;
 
-/**
- * Created by ybq.
- */
+
 public class Circle extends CircleLayoutContainer {
 
     @Override

@@ -90,7 +90,7 @@ public class AppLovin {
         AppLovinSdk.getInstance(context).setMediationProvider("max");
         AppLovinSdk.initializeSdk(context, configuration -> {
             // AppLovin SDK is initialized, start loading ads
-            Log.d(TAG, "init: applovin success");
+            Log.e(TAG, "init: applovin success");
             adCallback.initAppLovinSuccess();
         });
         this.context = context;
@@ -109,7 +109,7 @@ public class AppLovin {
         AppLovinSdk.getInstance(context).setMediationProvider("max");
         AppLovinSdk.initializeSdk(context, configuration -> {
             // AppLovin SDK is initialized, start loading ads
-            Log.d(TAG, "init: applovin success");
+            Log.e(TAG, "init: applovin success");
             adCallback.initAppLovinSuccess();
         });
         this.context = context;
@@ -128,25 +128,12 @@ public class AppLovin {
         return interstitialSplash;
     }
 
-    /**
-     * Disable ad resume when user click ads and back to app
-     *
-     * @param disableAdResumeWhenClickAds
-     */
+
     public void setDisableAdResumeWhenClickAds(boolean disableAdResumeWhenClickAds) {
         this.disableAdResumeWhenClickAds = disableAdResumeWhenClickAds;
     }
 
-    /**
-     * Load quảng cáo Full tại màn SplashActivity
-     * Sau khoảng thời gian timeout thì load ads và callback về cho View
-     *
-     * @param context
-     * @param id
-     * @param timeOut    : thời gian chờ ads, timeout <= 0 tương đương với việc bỏ timeout
-     * @param timeDelay  : thời gian chờ show ad từ lúc load ads
-     * @param adListener
-     */
+
     public void loadSplashInterstitialAds(final Context context, String id, long timeOut, long timeDelay, AppLovinCallback adListener) {
         isTimeDelay = false;
         isTimeout = false;
@@ -245,16 +232,7 @@ public class AppLovin {
         });
     }
 
-    /**
-     * Load quảng cáo Full tại màn SplashActivity
-     * Sau khoảng thời gian timeout thì load ads và callback về cho View
-     *
-     * @param context
-     * @param id
-     * @param timeOut    : thời gian chờ ads, timeout <= 0 tương đương với việc bỏ timeout
-     * @param timeDelay  : thời gian chờ show ad từ lúc load ads
-     * @param adListener
-     */
+
     public void loadSplashInterstitialAds(final Context context, String id, long timeOut, long timeDelay, boolean showSplashIfReady, AppLovinCallback adListener) {
         isTimeDelay = false;
         isTimeout = false;
@@ -368,7 +346,7 @@ public class AppLovin {
 
     public void onShowSplash(Activity activity, AppLovinCallback adListener) {
         isShowLoadingSplash = true;
-        Log.d(TAG, "onShowSplash: ");
+        Log.e(TAG, "onShowSplash: ");
         if (handlerTimeout != null && rdTimeout != null) {
             handlerTimeout.removeCallbacks(rdTimeout);
         }
@@ -389,7 +367,7 @@ public class AppLovin {
 
             @Override
             public void onAdDisplayed(MaxAd ad) {
-                Log.d(TAG, "onAdDisplayed: ");
+                Log.e(TAG, "onAdDisplayed: ");
                 AppOpenMax.getInstance().setInterstitialShowing(true);
                 if (adListener != null) {
                     adListener.onAdImpression();
@@ -398,7 +376,7 @@ public class AppLovin {
 
             @Override
             public void onAdHidden(MaxAd ad) {
-                Log.d(TAG, "onAdHidden: " + ((AppCompatActivity) activity).getLifecycle().getCurrentState());
+                Log.e(TAG, "onAdHidden: " + ((AppCompatActivity) activity).getLifecycle().getCurrentState());
                 AppOpenMax.getInstance().setInterstitialShowing(false);
                 isShowLoadingSplash = false;
                 if (adListener != null && ((AppCompatActivity) activity).getLifecycle().getCurrentState().isAtLeast(Lifecycle.State.RESUMED)) {
@@ -427,7 +405,7 @@ public class AppLovin {
 
             @Override
             public void onAdDisplayFailed(MaxAd ad, MaxError error) {
-                Log.d(TAG, "onAdDisplayFailed: " + error.getMessage());
+                Log.e(TAG, "onAdDisplayFailed: " + error.getMessage());
                 interstitialSplash = null;
                 isShowLoadingSplash = false;
                 if (adListener != null) {
@@ -481,23 +459,17 @@ public class AppLovin {
     }
 
 
-    /**
-     * Trả về 1 InterstitialAd và request Ads
-     *
-     * @param context
-     * @param id
-     * @return
-     */
+
     public MaxInterstitialAd getInterstitialAds(Context context, String id) {
         if (AppPurchase.getInstance().isPurchased(context) || AppLovinHelper.getNumClickAdsPerDay(context, id) >= maxClickAds) {
-            Log.d(TAG, "getInterstitialAds: ignore");
+            Log.e(TAG, "getInterstitialAds: ignore");
             return null;
         }
         final MaxInterstitialAd interstitialAd = new MaxInterstitialAd(id, (Activity) context);
         interstitialAd.setListener(new MaxAdListener() {
             @Override
             public void onAdLoaded(MaxAd ad) {
-                Log.d(TAG, "onAdLoaded: getInterstitialAds");
+                Log.e(TAG, "onAdLoaded: getInterstitialAds");
             }
 
             @Override
@@ -537,28 +509,13 @@ public class AppLovin {
         }
     }
 
-    /**
-     * Bắt buộc hiển thị  ads full và callback result
-     *
-     * @param context
-     * @param interstitialAd
-     * @param callback
-     */
+
     public void forceShowInterstitial(Context context, MaxInterstitialAd interstitialAd, final AdCallback callback, boolean shouldReload) {
         currentClicked = numShowAds;
         showInterstitialAdByTimes(context, interstitialAd, callback, shouldReload);
     }
 
-    /**
-     * Hiển thị ads theo số lần được xác định trước và callback result
-     * vd: click vào 3 lần thì show ads full.
-     * AdmodHelper.setupAdmodData(context) -> kiểm tra xem app đc hoạt động đc 1 ngày chưa nếu YES thì reset lại số lần click vào ads
-     *
-     * @param context
-     * @param interstitialAd
-     * @param callback
-     * @param shouldReloadAds
-     */
+
     public void showInterstitialAdByTimes(final Context context, MaxInterstitialAd interstitialAd, final AdCallback callback, final boolean shouldReloadAds) {
         AppLovinHelper.setupAppLovinData(context);
         if (AppPurchase.getInstance().isPurchased(context)) {
@@ -598,7 +555,7 @@ public class AppLovin {
                         dialog.dismiss();
                     }
                 }
-                Log.d(TAG, "onAdHidden: " + ((AppCompatActivity) context).getLifecycle().getCurrentState());
+                Log.e(TAG, "onAdHidden: " + ((AppCompatActivity) context).getLifecycle().getCurrentState());
             }
 
             @Override
@@ -636,13 +593,7 @@ public class AppLovin {
         }
     }
 
-    /**
-     * Kiểm tra và hiện thị ads
-     *
-     * @param context
-     * @param interstitialAd
-     * @param callback
-     */
+
     private void showInterstitialAd(Context context, MaxInterstitialAd interstitialAd, AdCallback callback) {
         currentClicked++;
         if (currentClicked >= numShowAds && interstitialAd != null) {
@@ -674,12 +625,7 @@ public class AppLovin {
         }
     }
 
-    /**
-     * Load quảng cáo Banner Trong Activity
-     *
-     * @param mActivity
-     * @param id
-     */
+
     public void loadBanner(final Activity mActivity, String id) {
         final FrameLayout adContainer = mActivity.findViewById(R.id.banner_container);
         final ShimmerFrameLayout containerShimmer = mActivity.findViewById(R.id.shimmer_container_banner);
@@ -692,13 +638,7 @@ public class AppLovin {
         loadBanner(mActivity, id, adContainer, containerShimmer, adCallback);
     }
 
-    /**
-     * Load Quảng Cáo Banner Trong Fragment
-     *
-     * @param mActivity
-     * @param id
-     * @param rootView
-     */
+
     public void loadBannerFragment(final Activity mActivity, String id, final View rootView) {
         final FrameLayout adContainer = rootView.findViewById(R.id.banner_container);
         final ShimmerFrameLayout containerShimmer = rootView.findViewById(R.id.shimmer_container_banner);
@@ -738,7 +678,7 @@ public class AppLovin {
 
             @Override
             public void onAdLoaded(MaxAd ad) {
-                Log.d(TAG, "onAdLoaded: banner");
+                Log.e(TAG, "onAdLoaded: banner");
                 containerShimmer.stopShimmer();
                 containerShimmer.setVisibility(View.GONE);
                 adContainer.setVisibility(View.VISIBLE);
@@ -804,7 +744,7 @@ public class AppLovin {
 
             @Override
             public void onAdLoaded(MaxAd ad) {
-                Log.d(TAG, "onAdLoaded: banner");
+                Log.e(TAG, "onAdLoaded: banner");
                 containerShimmer.stopShimmer();
                 containerShimmer.setVisibility(View.GONE);
                 adContainer.setVisibility(View.VISIBLE);
@@ -901,7 +841,7 @@ public class AppLovin {
         nativeAdLoader.setNativeAdListener(new MaxNativeAdListener() {
             @Override
             public void onNativeAdLoaded(final MaxNativeAdView nativeAdView, final MaxAd ad) {
-                Log.d(TAG, "onNativeAdLoaded ");
+                Log.e(TAG, "onNativeAdLoaded ");
                 containerShimmer.stopShimmer();
                 containerShimmer.setVisibility(View.GONE);
                 // Add ad view to view.
@@ -958,7 +898,7 @@ public class AppLovin {
         nativeAdLoader.setNativeAdListener(new MaxNativeAdListener() {
             @Override
             public void onNativeAdLoaded(final MaxNativeAdView nativeAdView, final MaxAd ad) {
-                Log.d(TAG, "onNativeAdLoaded ");
+                Log.e(TAG, "onNativeAdLoaded ");
                 callback.onUnifiedNativeAdLoaded(nativeAdView);
             }
 
@@ -1036,35 +976,35 @@ public class AppLovin {
         rewardedAd.setListener(new MaxRewardedAdListener() {
             @Override
             public void onRewardedVideoStarted(MaxAd ad) {
-                Log.d(TAG, "onRewardedVideoStarted: ");
+                Log.e(TAG, "onRewardedVideoStarted: ");
             }
 
             @Override
             public void onRewardedVideoCompleted(MaxAd ad) {
-                Log.d(TAG, "onRewardedVideoCompleted: ");
+                Log.e(TAG, "onRewardedVideoCompleted: ");
             }
 
             @Override
             public void onUserRewarded(MaxAd ad, MaxReward reward) {
                 callback.onUserRewarded(reward);
-                Log.d(TAG, "onUserRewarded: ");
+                Log.e(TAG, "onUserRewarded: ");
             }
 
             @Override
             public void onAdLoaded(MaxAd ad) {
-                Log.d(TAG, "onAdLoaded: ");
+                Log.e(TAG, "onAdLoaded: ");
                 callback.onAdLoaded();
             }
 
             @Override
             public void onAdDisplayed(MaxAd ad) {
-                Log.d(TAG, "onAdDisplayed: ");
+                Log.e(TAG, "onAdDisplayed: ");
             }
 
             @Override
             public void onAdHidden(MaxAd ad) {
                 callback.onAdClosed();
-                Log.d(TAG, "onAdHidden: ");
+                Log.e(TAG, "onAdHidden: ");
             }
 
             @Override
@@ -1077,13 +1017,13 @@ public class AppLovin {
 
             @Override
             public void onAdLoadFailed(String adUnitId, MaxError error) {
-                Log.d(TAG, "onAdLoadFailed: " + error.getMessage());
+                Log.e(TAG, "onAdLoadFailed: " + error.getMessage());
                 callback.onAdFailedToLoad(error);
             }
 
             @Override
             public void onAdDisplayFailed(MaxAd ad, MaxError error) {
-                Log.d(TAG, "onAdDisplayFailed: " + error.getMessage());
+                Log.e(TAG, "onAdDisplayFailed: " + error.getMessage());
                 callback.onAdFailedToShow(error);
             }
         });
@@ -1103,35 +1043,35 @@ public class AppLovin {
             maxRewardedAd.setListener(new MaxRewardedAdListener() {
                 @Override
                 public void onRewardedVideoStarted(MaxAd ad) {
-                    Log.d(TAG, "onRewardedVideoStarted: ");
+                    Log.e(TAG, "onRewardedVideoStarted: ");
                 }
 
                 @Override
                 public void onRewardedVideoCompleted(MaxAd ad) {
-                    Log.d(TAG, "onRewardedVideoCompleted: ");
+                    Log.e(TAG, "onRewardedVideoCompleted: ");
                 }
 
                 @Override
                 public void onUserRewarded(MaxAd ad, MaxReward reward) {
                     callback.onUserRewarded(reward);
-                    Log.d(TAG, "onUserRewarded: ");
+                    Log.e(TAG, "onUserRewarded: ");
                 }
 
                 @Override
                 public void onAdLoaded(MaxAd ad) {
-                    Log.d(TAG, "onAdLoaded: ");
+                    Log.e(TAG, "onAdLoaded: ");
                     callback.onAdLoaded();
                 }
 
                 @Override
                 public void onAdDisplayed(MaxAd ad) {
-                    Log.d(TAG, "onAdDisplayed: ");
+                    Log.e(TAG, "onAdDisplayed: ");
                 }
 
                 @Override
                 public void onAdHidden(MaxAd ad) {
                     callback.onAdClosed();
-                    Log.d(TAG, "onAdHidden: ");
+                    Log.e(TAG, "onAdHidden: ");
                 }
 
                 @Override
@@ -1144,13 +1084,13 @@ public class AppLovin {
 
                 @Override
                 public void onAdLoadFailed(String adUnitId, MaxError error) {
-                    Log.d(TAG, "onAdLoadFailed: " + error.getMessage());
+                    Log.e(TAG, "onAdLoadFailed: " + error.getMessage());
                     callback.onAdFailedToLoad(error);
                 }
 
                 @Override
                 public void onAdDisplayFailed(MaxAd ad, MaxError error) {
-                    Log.d(TAG, "onAdDisplayFailed: " + error.getMessage());
+                    Log.e(TAG, "onAdDisplayFailed: " + error.getMessage());
                     callback.onAdFailedToShow(error);
                 }
             });

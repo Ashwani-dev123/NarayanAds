@@ -23,9 +23,7 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
-/**
- * Created by lamlt on 13/09/2022.
- */
+
 public class NarayanAppsflyer {
     private static final String TAG = "NarayanAppsflyer";
     private Context context;

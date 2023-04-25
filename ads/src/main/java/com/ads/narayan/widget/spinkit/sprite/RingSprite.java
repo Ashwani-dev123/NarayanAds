@@ -5,9 +5,7 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 
 
-/**
- * Created by ybq.
- */
+
 public class RingSprite extends ShapeSprite {
 
 

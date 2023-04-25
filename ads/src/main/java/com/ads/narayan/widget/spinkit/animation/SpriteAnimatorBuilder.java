@@ -15,9 +15,7 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
-/**
- * Created by ybq.
- */
+
 public class SpriteAnimatorBuilder {
 
     private static final String TAG = "SpriteAnimatorBuilder";

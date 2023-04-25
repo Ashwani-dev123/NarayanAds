@@ -14,9 +14,7 @@ import com.ads.narayan.ads.NarayanAd;
 import com.ads.narayan.ads.NarayanAdCallback;
 import com.ads.narayan.funtion.AdCallback;
 
-/**
- * Created by lamlt on 28/10/2022.
- */
+
 public class NarayanBannerAdView extends RelativeLayout {
 
     private String TAG = "NarayanBannerAdView";

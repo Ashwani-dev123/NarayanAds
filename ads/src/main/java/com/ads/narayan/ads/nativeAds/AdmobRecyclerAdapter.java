@@ -89,25 +89,25 @@ public class AdmobRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.View
         @SuppressLint({"NotifyDataSetChanged"})
         public void onChanged() {
             AdmobRecyclerAdapter.this.adPlacer.configData();
-            Log.d("AdapterDataObserver", "onChanged: ");
+            Log.e("AdapterDataObserver", "onChanged: ");
         }
 
         public void onItemRangeChanged(int var1, int var2) {
-            Log.d("AdapterDataObserver", "onItemRangeChanged: ");
+            Log.e("AdapterDataObserver", "onItemRangeChanged: ");
 
         }
 
         public void onItemRangeInserted(int var1, int var2) {
-            Log.d("AdapterDataObserver", "onItemRangeInserted: ");
+            Log.e("AdapterDataObserver", "onItemRangeInserted: ");
         }
 
         public void onItemRangeRemoved(int var1, int var2) {
-            Log.d("AdapterDataObserver", "onItemRangeRemoved: ");
+            Log.e("AdapterDataObserver", "onItemRangeRemoved: ");
         }
 
         @SuppressLint({"NotifyDataSetChanged"})
         public void onItemRangeMoved(int var1, int var2, int var3) {
-            Log.d("AdapterDataObserver", "onItemRangeMoved: ");
+            Log.e("AdapterDataObserver", "onItemRangeMoved: ");
             notifyDataSetChanged();
         }
     }

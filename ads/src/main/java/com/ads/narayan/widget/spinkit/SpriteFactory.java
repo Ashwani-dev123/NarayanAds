@@ -18,9 +18,7 @@ import com.ads.narayan.widget.spinkit.style.ThreeBounce;
 import com.ads.narayan.widget.spinkit.style.WanderingCubes;
 import com.ads.narayan.widget.spinkit.style.Wave;
 
-/**
- * Created by ybq.
- */
+
 public class SpriteFactory {
 
     public static Sprite create(Style style) {

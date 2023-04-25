@@ -5,14 +5,10 @@ public class AppsflyerConfig {
 
     private boolean enableAppsflyer = false;
 
-    /**
-     * appsflyerToken enable Appsflyer and setup dev key
-     */
+
     private String appsflyerToken = "";
 
-    /**
-     * eventNamePurchase push event to appsflyer when ad impression
-     */
+
     private String eventAdImpression = "";
 
     public AppsflyerConfig(boolean enableAppsflyer) {

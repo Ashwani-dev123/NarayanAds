@@ -6,9 +6,7 @@ import android.graphics.Rect;
 
 import com.ads.narayan.widget.spinkit.animation.AnimationUtils;
 
-/**
- * Created by ybq.
- */
+
 public abstract class SpriteContainer extends Sprite {
 
     private Sprite[] sprites;

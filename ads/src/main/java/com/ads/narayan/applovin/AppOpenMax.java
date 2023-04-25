@@ -73,7 +73,7 @@ public class AppOpenMax implements Application.ActivityLifecycleCallbacks, Lifec
         appOpenAd.setListener(new MaxAdListener() {
             @Override
             public void onAdLoaded(MaxAd ad) {
-                Log.d(TAG, "onAdLoaded: ");
+                Log.e(TAG, "onAdLoaded: ");
                 if (narayanAdCallback != null) {
                     narayanAdCallback.onAdLoaded();
                 }
@@ -82,7 +82,7 @@ public class AppOpenMax implements Application.ActivityLifecycleCallbacks, Lifec
             @Override
             public void onAdDisplayed(MaxAd ad) {
                 displayAdResume = true;
-                Log.d(TAG, "onAdDisplayed: ");
+                Log.e(TAG, "onAdDisplayed: ");
                 if (narayanAdCallback != null) {
                     narayanAdCallback.onAdImpression();
                 }
@@ -90,7 +90,7 @@ public class AppOpenMax implements Application.ActivityLifecycleCallbacks, Lifec
 
             @Override
             public void onAdHidden(MaxAd ad) {
-                Log.d(TAG, "onAdHidden: ");
+                Log.e(TAG, "onAdHidden: ");
                 appOpenAd.loadAd();
                 dismissDialogLoading();
                 displayAdResume = false;
@@ -101,7 +101,7 @@ public class AppOpenMax implements Application.ActivityLifecycleCallbacks, Lifec
 
             @Override
             public void onAdClicked(MaxAd ad) {
-                Log.d(TAG, "onAdClicked: ");
+                Log.e(TAG, "onAdClicked: ");
                 disableAdResumeByClickAction = true;
                 if (narayanAdCallback != null) {
                     narayanAdCallback.onAdClicked();
@@ -110,7 +110,7 @@ public class AppOpenMax implements Application.ActivityLifecycleCallbacks, Lifec
 
             @Override
             public void onAdLoadFailed(String adUnitId, MaxError error) {
-                Log.d(TAG, "onAdLoadFailed: ");
+                Log.e(TAG, "onAdLoadFailed: ");
                 dismissDialogLoading();
                 if (narayanAdCallback != null) {
                     narayanAdCallback.onAdFailedToLoad(new NarayanAdError(error));
@@ -119,7 +119,7 @@ public class AppOpenMax implements Application.ActivityLifecycleCallbacks, Lifec
 
             @Override
             public void onAdDisplayFailed(MaxAd ad, MaxError error) {
-                Log.d(TAG, "onAdDisplayFailed: ");
+                Log.e(TAG, "onAdDisplayFailed: ");
                 appOpenAd.loadAd();
                 dismissDialogLoading();
                 if (narayanAdCallback != null) {
@@ -130,18 +130,14 @@ public class AppOpenMax implements Application.ActivityLifecycleCallbacks, Lifec
         appOpenAd.loadAd();
     }
 
-    /**
-     * Disable app open app on specific activity
-     *
-     * @param activityClass
-     */
+
     public void disableAppResumeWithActivity(Class activityClass) {
-        Log.d(TAG, "disableAppResumeWithActivity: " + activityClass.getName());
+        Log.e(TAG, "disableAppResumeWithActivity: " + activityClass.getName());
         disabledAppOpenList.add(activityClass);
     }
 
     public void enableAppResumeWithActivity(Class activityClass) {
-        Log.d(TAG, "enableAppResumeWithActivity: " + activityClass.getName());
+        Log.e(TAG, "enableAppResumeWithActivity: " + activityClass.getName());
         disabledAppOpenList.remove(activityClass);
     }
 
@@ -161,9 +157,7 @@ public class AppOpenMax implements Application.ActivityLifecycleCallbacks, Lifec
         isInterstitialShowing = interstitialShowing;
     }
 
-    /**
-     * Call disable ad resume when click a button, auto enable ad resume in next start
-     */
+
     public void disableAdResumeByClickAction() {
         disableAdResumeByClickAction = true;
     }
@@ -213,23 +207,23 @@ public class AppOpenMax implements Application.ActivityLifecycleCallbacks, Lifec
     @OnLifecycleEvent(Lifecycle.Event.ON_START)
     public void onResume() {
         if (!isAppResumeEnabled) {
-            Log.d(TAG, "onResume: app resume is disabled");
+            Log.e(TAG, "onResume: app resume is disabled");
             return;
         }
 
         if (disableAdResumeByClickAction) {
-            Log.d(TAG, "onResume:ad resume disable ad by action");
+            Log.e(TAG, "onResume:ad resume disable ad by action");
             disableAdResumeByClickAction = false;
             return;
         }
 
         if (isInterstitialShowing) {
-            Log.d(TAG, "onResume: interstitial is showing");
+            Log.e(TAG, "onResume: interstitial is showing");
             return;
         }
 
         if (displayAdResume) {
-            Log.d(TAG, "onResume: AppOpen is showing");
+            Log.e(TAG, "onResume: AppOpen is showing");
             return;
         }
 
@@ -237,7 +231,7 @@ public class AppOpenMax implements Application.ActivityLifecycleCallbacks, Lifec
         try {
             for (Class activity : disabledAppOpenList) {
                 if (activity.getName().equals(currentActivity.getClass().getName())) {
-                    Log.d(TAG, "onStart: activity is disabled");
+                    Log.e(TAG, "onStart: activity is disabled");
                     return;
                 }
             }
@@ -265,13 +259,13 @@ public class AppOpenMax implements Application.ActivityLifecycleCallbacks, Lifec
     @Override
     public void onActivityStarted(@NonNull Activity activity) {
         currentActivity = activity;
-        Log.d(TAG, "onActivityStarted: " + currentActivity);
+        Log.e(TAG, "onActivityStarted: " + currentActivity);
     }
 
     @Override
     public void onActivityResumed(@NonNull Activity activity) {
         currentActivity = activity;
-        Log.d(TAG, "onActivityResumed: " + currentActivity);
+        Log.e(TAG, "onActivityResumed: " + currentActivity);
     }
 
     @Override
@@ -292,7 +286,7 @@ public class AppOpenMax implements Application.ActivityLifecycleCallbacks, Lifec
     @Override
     public void onActivityDestroyed(@NonNull Activity activity) {
         currentActivity = null;
-        Log.d(TAG, "onActivityDestroyed: null");
+        Log.e(TAG, "onActivityDestroyed: null");
     }
 
     private boolean isNetworkAvailable() {
