@@ -7,6 +7,7 @@ import java.util.List;
 
 public class NarayanAdConfig {
 
+
     //switch mediation use for app
     public static final int PROVIDER_ADMOB = 0;
     public static final int PROVIDER_MAX = 1;

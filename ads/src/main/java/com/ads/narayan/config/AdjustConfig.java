@@ -1,8 +1,6 @@
 package com.ads.narayan.config;
 
-/**
- * Created by lamlt on 05/12/2022.
- */
+
 public class AdjustConfig {
 
     private boolean enableAdjust = false;
