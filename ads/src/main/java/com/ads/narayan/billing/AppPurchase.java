@@ -511,11 +511,11 @@ public class AppPurchase {
             return;
         }
 
-        purchase(activity, productId);
+        purchase(activity, productId,false);
     }
 
 
-    public String purchase(Activity activity, String productId) {
+    public String purchase(Activity activity, String productId,Boolean isAdsRemove) {
         if (skuListINAPFromStore == null) {
             if (purchaseListener != null)
                 purchaseListener.displayErrorMessage("Billing error init");
@@ -524,15 +524,13 @@ public class AppPurchase {
         ProductDetails productDetails = skuDetailsINAPMap.get(productId);
         Log.e(TAG, "purchase: "+ productDetails.toString());
         //ProductDetails{jsonString='{"productId":"android.test.purchased","type":"inapp","title":"Tiêu đề mẫu","description":"Mô tả mẫu về sản phẩm: android.test.purchased.","skuDetailsToken":"AEuhp4Izz50wTvd7YM9wWjPLp8hZY7jRPhBEcM9GAbTYSdUM_v2QX85e8UYklstgqaRC","oneTimePurchaseOfferDetails":{"priceAmountMicros":23207002450,"priceCurrencyCode":"VND","formattedPrice":"23.207 ₫"}}', parsedJson={"productId":"android.test.purchased","type":"inapp","title":"Tiêu đề mẫu","description":"Mô tả mẫu về sản phẩm: android.test.purchased.","skuDetailsToken":"AEuhp4Izz50wTvd7YM9wWjPLp8hZY7jRPhBEcM9GAbTYSdUM_v2QX85e8UYklstgqaRC","oneTimePurchaseOfferDetails":{"priceAmountMicros":23207002450,"priceCurrencyCode":"VND","formattedPrice":"23.207 ₫"}}, productId='android.test.purchased', productType='inapp', title='Tiêu đề mẫu', productDetailsToken='AEuhp4Izz50wTvd7YM9wWjPLp8hZY7jRPhBEcM9GAbTYSdUM_v2QX85e8UYklstgqaRC', subscriptionOfferDetails=null}
-        if (AppUtil.VARIANT_DEV) {
+        if (AppUtil.VARIANT_DEV && isAdsRemove) {
             // Auto using id purchase test in variant dev
             productId = PRODUCT_ID_TEST;
             PurchaseDevBottomSheet purchaseDevBottomSheet = new PurchaseDevBottomSheet(TYPE_IAP.PURCHASE,productDetails,activity,purchaseListener);
             purchaseDevBottomSheet.show();
             return "";
         }
-
-
 
         if (productDetails == null) {
             return "Product ID invalid";
@@ -614,7 +612,7 @@ public class AppPurchase {
 
         if (AppUtil.VARIANT_DEV) {
             // sử dụng ID Purchase test
-            purchase(activity, PRODUCT_ID_TEST);
+            purchase(activity, PRODUCT_ID_TEST,false);
             return "Billing test";
         }
         ProductDetails productDetails = skuDetailsSubsMap.get(SubsId);

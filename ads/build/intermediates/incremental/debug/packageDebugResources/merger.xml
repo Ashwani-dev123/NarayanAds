@@ -1,0 +1,216 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merger version="3"><dataSet aapt-namespace="http://schemas.android.com/apk/res-auto" config="main$Generated" generated="true" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="D:\Ashwani\DEMO\NewAdsDemo\ads\src\main\res"/><source path="D:\Ashwani\DEMO\NewAdsDemo\ads\build\generated\res\rs\debug"/><source path="D:\Ashwani\DEMO\NewAdsDemo\ads\build\generated\res\resValues\debug"/></dataSet><dataSet aapt-namespace="http://schemas.android.com/apk/res-auto" config="main" generated-set="main$Generated" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="D:\Ashwani\DEMO\NewAdsDemo\ads\src\main\res"><file name="ads_bg_lib" path="D:\Ashwani\DEMO\NewAdsDemo\ads\src\main\res\drawable\ads_bg_lib.xml" qualifiers="" type="drawable"/><file name="ads_icon" path="D:\Ashwani\DEMO\NewAdsDemo\ads\src\main\res\drawable\ads_icon.xml" qualifiers="" type="drawable"/><file name="ads_icon2" path="D:\Ashwani\DEMO\NewAdsDemo\ads\src\main\res\drawable\ads_icon2.xml" qualifiers="" type="drawable"/><file name="bg_card_ads" path="D:\Ashwani\DEMO\NewAdsDemo\ads\src\main\res\drawable\bg_card_ads.xml" qualifiers="" type="drawable"/><file name="bg_purcharse" path="D:\Ashwani\DEMO\NewAdsDemo\ads\src\main\res\drawable\bg_purcharse.xml" qualifiers="" type="drawable"/><file name="gnt_outline_shape" path="D:\Ashwani\DEMO\NewAdsDemo\ads\src\main\res\drawable\gnt_outline_shape.xml" qualifiers="" type="drawable"/><file name="gnt_rounded_corners_shape" path="D:\Ashwani\DEMO\NewAdsDemo\ads\src\main\res\drawable\gnt_rounded_corners_shape.xml" qualifiers="" type="drawable"/><file name="ic_close" path="D:\Ashwani\DEMO\NewAdsDemo\ads\src\main\res\drawable\ic_close.png" qualifiers="" type="drawable"/><file name="ic_inapp" path="D:\Ashwani\DEMO\NewAdsDemo\ads\src\main\res\drawable\ic_inapp.png" qualifiers="" type="drawable"/><file name="ic_ratingbar_staroff" path="D:\Ashwani\DEMO\NewAdsDemo\ads\src\main\res\drawable\ic_ratingbar_staroff.xml" qualifiers="" type="drawable"/><file name="ic_ratingbar_staron" path="D:\Ashwani\DEMO\NewAdsDemo\ads\src\main\res\drawable\ic_ratingbar_staron.xml" qualifiers="" type="drawable"/><file name="ic_warning" path="D:\Ashwani\DEMO\NewAdsDemo\ads\src\main\res\drawable\ic_warning.xml" qualifiers="" type="drawable"/><file name="ratingbar_full" path="D:\Ashwani\DEMO\NewAdsDemo\ads\src\main\res\drawable\ratingbar_full.xml" qualifiers="" type="drawable"/><file name="selector_bg_button_ads" path="D:\Ashwani\DEMO\NewAdsDemo\ads\src\main\res\drawable\selector_bg_button_ads.xml" qualifiers="" type="drawable"/><file name="selector_button_exit" path="D:\Ashwani\DEMO\NewAdsDemo\ads\src\main\res\drawable\selector_button_exit.xml" qualifiers="" type="drawable"/><file name="selector_button_exit_transfer" path="D:\Ashwani\DEMO\NewAdsDemo\ads\src\main\res\drawable\selector_button_exit_transfer.xml" qualifiers="" type="drawable"/><file name="shape_bg_exit_dialog" path="D:\Ashwani\DEMO\NewAdsDemo\ads\src\main\res\drawable\shape_bg_exit_dialog.xml" qualifiers="" type="drawable"/><file name="shape_bg_exit_dialog3" path="D:\Ashwani\DEMO\NewAdsDemo\ads\src\main\res\drawable\shape_bg_exit_dialog3.xml" qualifiers="" type="drawable"/><file name="shape_bg_native" path="D:\Ashwani\DEMO\NewAdsDemo\ads\src\main\res\drawable\shape_bg_native.xml" qualifiers="" type="drawable"/><file name="custom_native_admob_free_size" path="D:\Ashwani\DEMO\NewAdsDemo\ads\src\main\res\layout\custom_native_admob_free_size.xml" qualifiers="" type="layout"/><file name="custom_native_admob_small" path="D:\Ashwani\DEMO\NewAdsDemo\ads\src\main\res\layout\custom_native_admob_small.xml" qualifiers="" type="layout"/><file name="custom_native_admod_medium" path="D:\Ashwani\DEMO\NewAdsDemo\ads\src\main\res\layout\custom_native_admod_medium.xml" qualifiers="" type="layout"/><file name="custom_native_admod_medium2" path="D:\Ashwani\DEMO\NewAdsDemo\ads\src\main\res\layout\custom_native_admod_medium2.xml" qualifiers="" type="layout"/><file name="custom_native_admod_medium_rate" path="D:\Ashwani\DEMO\NewAdsDemo\ads\src\main\res\layout\custom_native_admod_medium_rate.xml" qualifiers="" type="layout"/><file name="custom_native_max_free_size" path="D:\Ashwani\DEMO\NewAdsDemo\ads\src\main\res\layout\custom_native_max_free_size.xml" qualifiers="" type="layout"/><file name="custom_native_max_medium" path="D:\Ashwani\DEMO\NewAdsDemo\ads\src\main\res\layout\custom_native_max_medium.xml" qualifiers="" type="layout"/><file name="custom_native_max_small" path="D:\Ashwani\DEMO\NewAdsDemo\ads\src\main\res\layout\custom_native_max_small.xml" qualifiers="" type="layout"/><file name="dialog_inapp" path="D:\Ashwani\DEMO\NewAdsDemo\ads\src\main\res\layout\dialog_inapp.xml" qualifiers="" type="layout"/><file name="dialog_prepair_loading_ads" path="D:\Ashwani\DEMO\NewAdsDemo\ads\src\main\res\layout\dialog_prepair_loading_ads.xml" qualifiers="" type="layout"/><file name="dialog_resume_loading" path="D:\Ashwani\DEMO\NewAdsDemo\ads\src\main\res\layout\dialog_resume_loading.xml" qualifiers="" type="layout"/><file name="fb_native_ad" path="D:\Ashwani\DEMO\NewAdsDemo\ads\src\main\res\layout\fb_native_ad.xml" qualifiers="" type="layout"/><file name="fb_native_ad_small" path="D:\Ashwani\DEMO\NewAdsDemo\ads\src\main\res\layout\fb_native_ad_small.xml" qualifiers="" type="layout"/><file name="layout_banner_control" path="D:\Ashwani\DEMO\NewAdsDemo\ads\src\main\res\layout\layout_banner_control.xml" qualifiers="" type="layout"/><file name="layout_inline_banner_control" path="D:\Ashwani\DEMO\NewAdsDemo\ads\src\main\res\layout\layout_inline_banner_control.xml" qualifiers="" type="layout"/><file name="layout_native_control" path="D:\Ashwani\DEMO\NewAdsDemo\ads\src\main\res\layout\layout_native_control.xml" qualifiers="" type="layout"/><file name="layout_native_fan" path="D:\Ashwani\DEMO\NewAdsDemo\ads\src\main\res\layout\layout_native_fan.xml" qualifiers="" type="layout"/><file name="layout_native_free_size" path="D:\Ashwani\DEMO\NewAdsDemo\ads\src\main\res\layout\layout_native_free_size.xml" qualifiers="" type="layout"/><file name="layout_native_medium" path="D:\Ashwani\DEMO\NewAdsDemo\ads\src\main\res\layout\layout_native_medium.xml" qualifiers="" type="layout"/><file name="layout_native_small" path="D:\Ashwani\DEMO\NewAdsDemo\ads\src\main\res\layout\layout_native_small.xml" qualifiers="" type="layout"/><file name="loading_native_free_size" path="D:\Ashwani\DEMO\NewAdsDemo\ads\src\main\res\layout\loading_native_free_size.xml" qualifiers="" type="layout"/><file name="loading_native_medium" path="D:\Ashwani\DEMO\NewAdsDemo\ads\src\main\res\layout\loading_native_medium.xml" qualifiers="" type="layout"/><file name="loading_native_small" path="D:\Ashwani\DEMO\NewAdsDemo\ads\src\main\res\layout\loading_native_small.xml" qualifiers="" type="layout"/><file name="load_fb_banner" path="D:\Ashwani\DEMO\NewAdsDemo\ads\src\main\res\layout\load_fb_banner.xml" qualifiers="" type="layout"/><file name="load_fb_inline_banner" path="D:\Ashwani\DEMO\NewAdsDemo\ads\src\main\res\layout\load_fb_inline_banner.xml" qualifiers="" type="layout"/><file name="load_fb_native" path="D:\Ashwani\DEMO\NewAdsDemo\ads\src\main\res\layout\load_fb_native.xml" qualifiers="" type="layout"/><file name="load_native_fan" path="D:\Ashwani\DEMO\NewAdsDemo\ads\src\main\res\layout\load_native_fan.xml" qualifiers="" type="layout"/><file name="native_exit1" path="D:\Ashwani\DEMO\NewAdsDemo\ads\src\main\res\layout\native_exit1.xml" qualifiers="" type="layout"/><file name="native_exit3" path="D:\Ashwani\DEMO\NewAdsDemo\ads\src\main\res\layout\native_exit3.xml" qualifiers="" type="layout"/><file name="view_billing_test" path="D:\Ashwani\DEMO\NewAdsDemo\ads\src\main\res\layout\view_billing_test.xml" qualifiers="" type="layout"/><file name="view_dialog_exit1" path="D:\Ashwani\DEMO\NewAdsDemo\ads\src\main\res\layout\view_dialog_exit1.xml" qualifiers="" type="layout"/><file name="view_dialog_exit2" path="D:\Ashwani\DEMO\NewAdsDemo\ads\src\main\res\layout\view_dialog_exit2.xml" qualifiers="" type="layout"/><file name="view_dialog_exit3" path="D:\Ashwani\DEMO\NewAdsDemo\ads\src\main\res\layout\view_dialog_exit3.xml" qualifiers="" type="layout"/><file name="resume_loading" path="D:\Ashwani\DEMO\NewAdsDemo\ads\src\main\res\raw\resume_loading.json" qualifiers="" type="raw"/><file path="D:\Ashwani\DEMO\NewAdsDemo\ads\src\main\res\values\attrs.xml" qualifiers=""><dimen name="banner_height">50dp</dimen><declare-styleable name="NarayanNativeAdView">
+        <attr format="integer" name="layoutCustomNativeAd"/>
+        <attr format="integer" name="layoutLoading"/>
+        <attr format="integer" name="layoutPlaceHolder"/>
+    </declare-styleable><declare-styleable name="NarayanBannerAdView">
+        <attr format="string" name="idBanner"/>
+    </declare-styleable><attr format="reference" name="SpinKitViewStyle"/><declare-styleable name="SpinKitView">
+        <attr name="SpinKit_Style">
+            <enum name="RotatingPlane" value="0"/>
+            <enum name="DoubleBounce" value="1"/>
+            <enum name="Wave" value="2"/>
+            <enum name="WanderingCubes" value="3"/>
+            <enum name="Pulse" value="4"/>
+            <enum name="ChasingDots" value="5"/>
+            <enum name="ThreeBounce" value="6"/>
+            <enum name="Circle" value="7"/>
+            <enum name="CubeGrid" value="8"/>
+            <enum name="FadingCircle" value="9"/>
+            <enum name="FoldingCube" value="10"/>
+            <enum name="RotatingCircle" value="11"/>
+            <enum name="MultiplePulse" value="12"/>
+            <enum name="PulseRing" value="13"/>
+            <enum name="MultiplePulseRing" value="14"/>
+        </attr>
+        <attr format="color" name="SpinKit_Color"/>
+    </declare-styleable></file><file path="D:\Ashwani\DEMO\NewAdsDemo\ads\src\main\res\values\colors.xml" qualifiers=""><color name="colorindicator">#068abf</color><color name="whiteBlur">#bf9c9c9c</color><color name="colorPrimary">#00FF00</color><color name="colorPrimaryDark">#000</color><color name="colorAccent">#00FF00</color><color name="textColor">#ff666666</color><color name="colorAds">#068abf</color><color name="colorWhite">#ffffffff</color><color name="colorGrayAds">#fff8f8f8</color><color name="stockeCard">#5E58595A</color><color name="lightTransparent">#16000000</color><color name="gntTestBackgroundColor">#00F4F4F4</color><color name="gntTestBackgroundColor2">#00A3A3A3</color><color name="gntBlack">#000000</color><color name="gntWhite">#FFFFFF</color><color name="gntRed">#FF0000</color><color name="gntGreen">#00FF00</color><color name="gntBlue">#4285f4</color><color name="gntAdGreen">#3A6728</color><color name="gntGray">#808080</color><color name="gntOutline">#E0E0E0</color><color name="text_exit">#2152FF</color></file><file path="D:\Ashwani\DEMO\NewAdsDemo\ads\src\main\res\values\dimens.xml" qualifiers=""><dimen name="height_native_ads">320dip</dimen><dimen name="height_native_small_ads">130dip</dimen><dimen name="height_full_ads">300dip</dimen><item format="float" name="gnt_medium_template_bottom_weight" type="dimen">0.4</item><item format="float" name="gnt_text_row_weight" type="dimen">0.25</item><item format="float" name="gnt_media_view_weight" type="dimen">1.0</item><item format="float" name="gnt_medium_template_top_weight" type="dimen">0.2</item><dimen name="gnt_default_margin">10dp</dimen><dimen name="gnt_text_size_small">12sp</dimen><dimen name="gnt_text_size_large">14sp</dimen><dimen name="gnt_ad_indicator_width">25dp</dimen><dimen name="gnt_ad_indicator_height">20dp</dimen><dimen name="gnt_ad_indicator_bar_height">30dp</dimen><dimen name="gnt_ad_indicator_top_margin">0dp</dimen><dimen name="gnt_ad_indicator_bottom_margin">10dp</dimen><dimen name="gnt_ad_indicator_text_size">10sp</dimen><dimen name="gnt_small_cta_button_height">30dp</dimen><dimen name="gnt_medium_cta_button_height">50dp</dimen><dimen name="gnt_no_margin">0dp</dimen><dimen name="gnt_no_size">0dp</dimen></file><file path="D:\Ashwani\DEMO\NewAdsDemo\ads\src\main\res\values\strings.xml" qualifiers=""><string name="app_open_test">ca-app-pub-3940256099942544/3419835294</string><string name="cancel">Cancel</string><string name="exit">EXIT</string><string name="close">CLOSE</string><string name="are_you_sure_you_want_to_exit">Are you sure want to exit?</string><string name="remove_ads">REMOVE ADS</string><string name="remove_all_anoying_ads_forever_by_just">Remove all anoying ads forever by just:</string><string name="buy_now">Buy now</string><string name="loading_ads">Loading Ads…</string><string name="well_comeback">Welcome back</string><string-array name="list_id_test">
+        
+        <item>ca-app-pub-3940256099942544/3419835294</item>
+        
+        <item>ca-app-pub-3940256099942544/6300978111</item>
+        
+        <item>ca-app-pub-3940256099942544/1033173712</item>
+        
+        <item>ca-app-pub-3940256099942544/8691691433</item>
+        
+        <item>ca-app-pub-3940256099942544/5224354917</item>
+        
+        <item>ca-app-pub-3940256099942544/5354046379</item>
+        
+        <item>ca-app-pub-3940256099942544/2247696110</item>
+        
+        <item>ca-app-pub-3940256099942544/1044960115</item>
+        
+        <item>ca-app-pub-3940256099942544/5354046379</item>
+    </string-array></file><file path="D:\Ashwani\DEMO\NewAdsDemo\ads\src\main\res\values\styles.xml" qualifiers=""><style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style><style name="AdsAppTheme" parent="Theme.AppCompat.Light"/><style name="AppTheme.Ads" parent="@style/AdsAppTheme">
+        <item name="android:textSize">11.0sp</item>
+        <item name="android:textColor">#ffffff</item>
+        <item name="android:gravity">center</item>
+        <item name="android:layout_gravity">left</item>
+        <item name="android:background">@drawable/ads_icon</item>
+        <item name="android:paddingLeft">3.0dip</item>
+        <item name="android:paddingRight">6.0dip</item>
+        <item name="android:paddingBottom">1.0dip</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:minWidth">15.0px</item>
+        <item name="android:minHeight">15.0px</item>
+        <item name="android:text">Ad</item>
+    </style><style name="NoTitleDialog" parent="Theme.AppCompat.Dialog">
+        <item name="android:windowNoTitle">true</item>
+    </style><style name="SpinKitView">
+        <item name="android:indeterminateOnly">true</item>
+        <item name="android:minWidth">48dip</item>
+        <item name="android:maxWidth">48dip</item>
+        <item name="android:minHeight">48dip</item>
+        <item name="android:maxHeight">48dip</item>
+    </style><style name="SpinKitView.ChasingDots">
+        <item name="SpinKit_Style">ChasingDots</item>
+    </style><style name="SpinKitView.Circle">
+        <item name="SpinKit_Style">Circle</item>
+    </style><style name="SpinKitView.CubeGrid">
+        <item name="SpinKit_Style">CubeGrid</item>
+    </style><style name="SpinKitView.DoubleBounce">
+        <item name="SpinKit_Style">DoubleBounce</item>
+    </style><style name="SpinKitView.FadingCircle">
+        <item name="SpinKit_Style">FadingCircle</item>
+    </style><style name="SpinKitView.FoldingCube">
+        <item name="SpinKit_Style">FoldingCube</item>
+    </style><style name="SpinKitView.Pulse">
+        <item name="SpinKit_Style">Pulse</item>
+    </style><style name="SpinKitView.RotatingPlane">
+        <item name="SpinKit_Style">RotatingPlane</item>
+    </style><style name="SpinKitView.RotatingCircle">
+        <item name="SpinKit_Style">RotatingCircle</item>
+    </style><style name="SpinKitView.ThreeBounce">
+        <item name="SpinKit_Style">ThreeBounce</item>
+    </style><style name="SpinKitView.WanderingCubes">
+        <item name="SpinKit_Style">WanderingCubes</item>
+    </style><style name="SpinKitView.Wave">
+        <item name="SpinKit_Style">Wave</item>
+    </style><style name="SpinKitView.MultiplePulse">
+        <item name="SpinKit_Style">MultiplePulse</item>
+    </style><style name="SpinKitView.PulseRing">
+        <item name="SpinKit_Style">PulseRing</item>
+    </style><style name="SpinKitView.MultiplePulseRing">
+        <item name="SpinKit_Style">MultiplePulseRing</item>
+    </style><style name="SpinKitView.Large">
+        <item name="android:minWidth">76dip</item>
+        <item name="android:maxWidth">76dip</item>
+        <item name="android:minHeight">76dip</item>
+        <item name="android:maxHeight">76dip</item>
+    </style><style name="SpinKitView.Large.ChasingDots">
+        <item name="SpinKit_Style">ChasingDots</item>
+    </style><style name="SpinKitView.Large.Circle">
+        <item name="SpinKit_Style">Circle</item>
+    </style><style name="SpinKitView.Large.CubeGrid">
+        <item name="SpinKit_Style">CubeGrid</item>
+    </style><style name="SpinKitView.Large.DoubleBounce">
+        <item name="SpinKit_Style">DoubleBounce</item>
+    </style><style name="SpinKitView.Large.FadingCircle">
+        <item name="SpinKit_Style">FadingCircle</item>
+    </style><style name="SpinKitView.Large.FoldingCube">
+        <item name="SpinKit_Style">FoldingCube</item>
+    </style><style name="SpinKitView.Large.Pulse">
+        <item name="SpinKit_Style">Pulse</item>
+    </style><style name="SpinKitView.Large.RotatingPlane">
+        <item name="SpinKit_Style">RotatingPlane</item>
+    </style><style name="SpinKitView.Large.RotatingCircle">
+        <item name="SpinKit_Style">RotatingCircle</item>
+    </style><style name="SpinKitView.Large.ThreeBounce">
+        <item name="SpinKit_Style">ThreeBounce</item>
+    </style><style name="SpinKitView.Large.WanderingCubes">
+        <item name="SpinKit_Style">WanderingCubes</item>
+    </style><style name="SpinKitView.Large.Wave">
+        <item name="SpinKit_Style">Wave</item>
+    </style><style name="SpinKitView.Large.MultiplePulse">
+        <item name="SpinKit_Style">MultiplePulse</item>
+    </style><style name="SpinKitView.Large.PulseRing">
+        <item name="SpinKit_Style">PulseRing</item>
+    </style><style name="SpinKitView.Large.MultiplePulseRing">
+        <item name="SpinKit_Style">MultiplePulseRing</item>
+    </style><style name="SpinKitView.Small">
+        <item name="android:minWidth">16dip</item>
+        <item name="android:maxWidth">16dip</item>
+        <item name="android:minHeight">16dip</item>
+        <item name="android:maxHeight">16dip</item>
+    </style><style name="SpinKitView.Small.ChasingDots">
+        <item name="SpinKit_Style">ChasingDots</item>
+    </style><style name="SpinKitView.Small.Circle">
+        <item name="SpinKit_Style">Circle</item>
+    </style><style name="SpinKitView.Small.CubeGrid">
+        <item name="SpinKit_Style">CubeGrid</item>
+    </style><style name="SpinKitView.Small.DoubleBounce">
+        <item name="SpinKit_Style">DoubleBounce</item>
+    </style><style name="SpinKitView.Small.FadingCircle">
+        <item name="SpinKit_Style">FadingCircle</item>
+    </style><style name="SpinKitView.Small.FoldingCube">
+        <item name="SpinKit_Style">FoldingCube</item>
+    </style><style name="SpinKitView.Small.Pulse">
+        <item name="SpinKit_Style">Pulse</item>
+    </style><style name="SpinKitView.Small.RotatingPlane">
+        <item name="SpinKit_Style">RotatingPlane</item>
+    </style><style name="SpinKitView.Small.RotatingCircle">
+        <item name="SpinKit_Style">RotatingCircle</item>
+    </style><style name="SpinKitView.Small.ThreeBounce">
+        <item name="SpinKit_Style">ThreeBounce</item>
+    </style><style name="SpinKitView.Small.WanderingCubes">
+        <item name="SpinKit_Style">WanderingCubes</item>
+    </style><style name="SpinKitView.Small.Wave">
+        <item name="SpinKit_Style">Wave</item>
+    </style><style name="SpinKitView.Small.MultiplePulse">
+        <item name="SpinKit_Style">MultiplePulse</item>
+    </style><style name="SpinKitView.Small.PulseRing">
+        <item name="SpinKit_Style">PulseRing</item>
+    </style><style name="SpinKitView.Small.MultiplePulseRing">
+        <item name="SpinKit_Style">MultiplePulseRing</item>
+    </style></file><file path="D:\Ashwani\DEMO\NewAdsDemo\ads\src\main\res\values-sw600dp\attrs.xml" qualifiers="sw600dp-v13"><dimen name="banner_height">90dp</dimen><attr format="reference" name="SpinKitViewStyle"/><declare-styleable name="SpinKitView">
+        <attr name="SpinKit_Style">
+            <enum name="RotatingPlane" value="0"/>
+            <enum name="DoubleBounce" value="1"/>
+            <enum name="Wave" value="2"/>
+            <enum name="WanderingCubes" value="3"/>
+            <enum name="Pulse" value="4"/>
+            <enum name="ChasingDots" value="5"/>
+            <enum name="ThreeBounce" value="6"/>
+            <enum name="Circle" value="7"/>
+            <enum name="CubeGrid" value="8"/>
+            <enum name="FadingCircle" value="9"/>
+            <enum name="FoldingCube" value="10"/>
+            <enum name="RotatingCircle" value="11"/>
+            <enum name="MultiplePulse" value="12"/>
+            <enum name="PulseRing" value="13"/>
+            <enum name="MultiplePulseRing" value="14"/>
+        </attr>
+        <attr format="color" name="SpinKit_Color"/>
+    </declare-styleable></file><file name="network_security_config" path="D:\Ashwani\DEMO\NewAdsDemo\ads\src\main\res\xml\network_security_config.xml" qualifiers="" type="xml"/></source><source path="D:\Ashwani\DEMO\NewAdsDemo\ads\build\generated\res\rs\debug"/><source path="D:\Ashwani\DEMO\NewAdsDemo\ads\build\generated\res\resValues\debug"/></dataSet><dataSet aapt-namespace="http://schemas.android.com/apk/res-auto" config="debug$Generated" generated="true" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="D:\Ashwani\DEMO\NewAdsDemo\ads\src\debug\res"/></dataSet><dataSet aapt-namespace="http://schemas.android.com/apk/res-auto" config="debug" generated-set="debug$Generated" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="D:\Ashwani\DEMO\NewAdsDemo\ads\src\debug\res"/></dataSet><mergedItems><configuration qualifiers=""><declare-styleable name="NarayanNativeAdView">
+        <attr format="integer" name="layoutCustomNativeAd"/>
+        <attr format="integer" name="layoutLoading"/>
+        <attr format="integer" name="layoutPlaceHolder"/>
+    </declare-styleable><declare-styleable name="NarayanBannerAdView">
+        <attr format="string" name="idBanner"/>
+    </declare-styleable><declare-styleable name="SpinKitView">
+        <attr name="SpinKit_Style">
+            <enum name="RotatingPlane" value="0"/>
+            <enum name="DoubleBounce" value="1"/>
+            <enum name="Wave" value="2"/>
+            <enum name="WanderingCubes" value="3"/>
+            <enum name="Pulse" value="4"/>
+            <enum name="ChasingDots" value="5"/>
+            <enum name="ThreeBounce" value="6"/>
+            <enum name="Circle" value="7"/>
+            <enum name="CubeGrid" value="8"/>
+            <enum name="FadingCircle" value="9"/>
+            <enum name="FoldingCube" value="10"/>
+            <enum name="RotatingCircle" value="11"/>
+            <enum name="MultiplePulse" value="12"/>
+            <enum name="PulseRing" value="13"/>
+            <enum name="MultiplePulseRing" value="14"/>
+        </attr>
+        <attr format="color" name="SpinKit_Color"/>
+    </declare-styleable></configuration></mergedItems></merger>
