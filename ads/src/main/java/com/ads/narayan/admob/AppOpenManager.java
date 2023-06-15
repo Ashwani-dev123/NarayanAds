@@ -29,6 +29,7 @@ import com.ads.narayan.dialog.ResumeLoadingDialog;
 import com.ads.narayan.event.NarayanLogEventManager;
 import com.ads.narayan.funtion.AdCallback;
 import com.ads.narayan.funtion.AdType;
+import com.google.ads.mediation.admob.AdMobAdapter;
 import com.google.android.gms.ads.AdActivity;
 import com.google.android.gms.ads.AdError;
 import com.google.android.gms.ads.AdRequest;
@@ -263,7 +264,16 @@ public class AppOpenManager implements Application.ActivityLifecycleCallbacks, L
 
 
     private AdRequest getAdRequest() {
-        return new AdRequest.Builder().build();
+
+        AdRequest.Builder builder = new AdRequest.Builder();
+        //AV Language
+        Bundle extras = new Bundle();
+        extras.putString("npa", "1");
+        extras.putString("GoogleConsent", "en"); // Replace "en" with the desired language code
+        builder.addNetworkExtrasBundle(AdMobAdapter.class, extras);
+        //AV Language
+
+        return builder.build();
     }
 
     private boolean wasLoadTimeLessThanNHoursAgo(long loadTime, long numHours) {

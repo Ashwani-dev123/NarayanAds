@@ -230,7 +230,12 @@ public class Admob {
 
     public AdRequest getAdRequest() {
         AdRequest.Builder builder = new AdRequest.Builder();
-
+        //AV Language
+        Bundle extras = new Bundle();
+        extras.putString("npa", "1");
+        extras.putString("GoogleConsent", "en"); // Replace "en" with the desired language code
+        builder.addNetworkExtrasBundle(AdMobAdapter.class, extras);
+        //AV Language
 
         if (isAdcolony) {
             AdColonyBundleBuilder.setShowPrePopup(true);
@@ -239,10 +244,10 @@ public class Admob {
         }
 
         if (isAppLovin) {
-            Bundle extras = new AppLovinExtras.Builder()
+            Bundle extras1 = new AppLovinExtras.Builder()
                     .setMuteAudio(true)
                     .build();
-            builder.addNetworkExtrasBundle(ApplovinAdapter.class, extras);
+            builder.addNetworkExtrasBundle(ApplovinAdapter.class, extras1);
         }
         return builder.build();
     }
@@ -1418,6 +1423,8 @@ public class Admob {
         AdRequest.Builder builder = new AdRequest.Builder();
         Bundle admobExtras = new Bundle();
         admobExtras.putString("collapsible", gravity);
+        admobExtras.putString("npa", "1");
+        admobExtras.putString("GoogleConsent", "en");
         builder.addNetworkExtrasBundle(AdMobAdapter.class, admobExtras);
         // no need from facebook sdk ver 6.12.0.0
         /*if (isFan) {
@@ -1428,6 +1435,7 @@ public class Admob {
             builder.addNetworkExtrasBundle(FacebookAdapter.class, extras);
         }*/
 
+
         if (isAdcolony) {
             AdColonyBundleBuilder.setShowPrePopup(true);
             AdColonyBundleBuilder.setShowPostPopup(true);
@@ -1435,10 +1443,10 @@ public class Admob {
         }
 
         if (isAppLovin) {
-            Bundle extras = new AppLovinExtras.Builder()
+            Bundle extras1 = new AppLovinExtras.Builder()
                     .setMuteAudio(true)
                     .build();
-            builder.addNetworkExtrasBundle(ApplovinAdapter.class, extras);
+            builder.addNetworkExtrasBundle(ApplovinAdapter.class, extras1);
         }
         return builder.build();
     }
