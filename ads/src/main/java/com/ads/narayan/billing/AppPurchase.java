@@ -515,6 +515,7 @@ public class AppPurchase {
     }
 
 
+    //AV
     public String purchase(Activity activity, String productId,Boolean isAdsRemove) {
         if (skuListINAPFromStore == null) {
             if (purchaseListener != null)
