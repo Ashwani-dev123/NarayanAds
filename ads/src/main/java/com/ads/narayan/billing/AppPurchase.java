@@ -259,8 +259,7 @@ public class AppPurchase {
     }
 
 
-    public void initBilling(final Application application, List<
-            String> listINAPId, List<String> listSubsId) {
+    public void initBilling(final Application application, List<String> listINAPId, List<String> listSubsId) {
 
         if (AppUtil.VARIANT_DEV) {
             // auto add purchase test when dev
@@ -501,8 +500,6 @@ public class AppPurchase {
         }
     }
 
-
-
     @Deprecated
     public void purchase(Activity activity) {
         if (productId == null) {
@@ -522,6 +519,7 @@ public class AppPurchase {
                 purchaseListener.displayErrorMessage("Billing error init");
             return "";
         }
+
         ProductDetails productDetails = skuDetailsINAPMap.get(productId);
         Log.e(TAG, "purchase: "+ productDetails.toString());
         //ProductDetails{jsonString='{"productId":"android.test.purchased","type":"inapp","title":"Tiêu đề mẫu","description":"Mô tả mẫu về sản phẩm: android.test.purchased.","skuDetailsToken":"AEuhp4Izz50wTvd7YM9wWjPLp8hZY7jRPhBEcM9GAbTYSdUM_v2QX85e8UYklstgqaRC","oneTimePurchaseOfferDetails":{"priceAmountMicros":23207002450,"priceCurrencyCode":"VND","formattedPrice":"23.207 ₫"}}', parsedJson={"productId":"android.test.purchased","type":"inapp","title":"Tiêu đề mẫu","description":"Mô tả mẫu về sản phẩm: android.test.purchased.","skuDetailsToken":"AEuhp4Izz50wTvd7YM9wWjPLp8hZY7jRPhBEcM9GAbTYSdUM_v2QX85e8UYklstgqaRC","oneTimePurchaseOfferDetails":{"priceAmountMicros":23207002450,"priceCurrencyCode":"VND","formattedPrice":"23.207 ₫"}}, productId='android.test.purchased', productType='inapp', title='Tiêu đề mẫu', productDetailsToken='AEuhp4Izz50wTvd7YM9wWjPLp8hZY7jRPhBEcM9GAbTYSdUM_v2QX85e8UYklstgqaRC', subscriptionOfferDetails=null}
@@ -541,18 +539,19 @@ public class AppPurchase {
         typeIap = TYPE_IAP.PURCHASE;
 
 
-        ImmutableList<BillingFlowParams.ProductDetailsParams> productDetailsParamsList =
-                ImmutableList.of(
-                        BillingFlowParams.ProductDetailsParams.newBuilder()
-                                .setProductDetails(productDetails)
-                                .build()
-                );
+//        ImmutableList<BillingFlowParams.ProductDetailsParams> productDetailsParamsList = ImmutableList.of(BillingFlowParams.ProductDetailsParams.newBuilder()
+//                                .setProductDetails(productDetails)
+//                                .build()
+//                );
+//
+//        BillingFlowParams billingFlowParams = BillingFlowParams.newBuilder()
+//                .setProductDetailsParamsList(productDetailsParamsList)
+//                .build();
 
-        BillingFlowParams billingFlowParams = BillingFlowParams.newBuilder()
-                .setProductDetailsParamsList(productDetailsParamsList)
-                .build();
+        BillingFlowParams productId1 = BillingFlowParams.newBuilder().setProductDetailsParamsList(
+                ImmutableList.of(BillingFlowParams.ProductDetailsParams.newBuilder().setProductDetails(productDetails).build())).build();
 
-        BillingResult billingResult = billingClient.launchBillingFlow(activity, billingFlowParams);
+        BillingResult billingResult = billingClient.launchBillingFlow(activity, productId1);
 
         switch (billingResult.getResponseCode()) {
 

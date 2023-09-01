@@ -10,7 +10,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e9a93abe-1ba6-4d3d-b9a4-37121a2a97f0" name="Changes" comment="Language Change">
+      <change beforePath="$PROJECT_DIR$/.gradle/7.4.2/fileHashes/fileHashes.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/7.4.2/fileHashes/fileHashes.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/outputFiles.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/outputFiles.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ads/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/ads/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ads/src/main/java/com/ads/narayan/ads/nativeAds/NarayanNativeAdView.java" beforeDir="false" afterPath="$PROJECT_DIR$/ads/src/main/java/com/ads/narayan/ads/nativeAds/NarayanNativeAdView.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ads/src/main/java/com/ads/narayan/billing/AppPurchase.java" beforeDir="false" afterPath="$PROJECT_DIR$/ads/src/main/java/com/ads/narayan/billing/AppPurchase.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ads/src/main/java/com/ads/narayan/util/CustomRatingBar.java" beforeDir="false" afterPath="$PROJECT_DIR$/ads/src/main/java/com/ads/narayan/util/CustomRatingBar.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -40,28 +47,28 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.cidr.known.project.marker": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "android-custom-viewD:/Ashwani/DEMO/NewAdsDemo/ads/src/main/java/com/ads/control/util/CustomRatingBar.java_SELECTED": "CustomRatingBar",
-    "android-custom-viewD:/Ashwani/DEMO/NewAdsDemo/ads/src/main/java/com/ads/narayan/ads/bannerAds/AperoBannerAdView.java_SELECTED": "AperoBannerAdView",
-    "android-custom-viewD:/Ashwani/DEMO/NewAdsDemo/ads/src/main/java/com/ads/narayan/ads/bannerAds/NarayanBannerAdView.java_SELECTED": "NarayanBannerAdView",
-    "android-custom-viewD:/Ashwani/DEMO/NewAdsDemo/ads/src/main/java/com/ads/narayan/ads/nativeAds/AperoNativeAdView.java_SELECTED": "AperoNativeAdView",
-    "android-custom-viewD:/Ashwani/DEMO/NewAdsDemo/ads/src/main/java/com/ads/narayan/ads/nativeAds/NarayanNativeAdView.java_SELECTED": "NarayanNativeAdView",
-    "android-custom-viewD:/Ashwani/DEMO/NewAdsDemo/ads/src/main/java/com/ads/narayan/util/CustomRatingBar.java_SELECTED": "CustomRatingBar",
-    "android-custom-viewD:/Ashwani/DEMO/NewAdsDemo/ads/src/main/java/com/ads/narayan/widget/spinkit/SpinKitView.java_SELECTED": "SpinKitView",
-    "cidr.known.project.marker": "true",
-    "com.intellij.openapi.externalSystem.service.settings.ExternalSystemGroupConfigurable": "ALL",
-    "last_opened_file_path": "D:/Ashwani/Backup/AdsBackUp",
-    "project.structure.last.edited": "Modules",
-    "project.structure.proportion": "0.17",
-    "project.structure.side.proportion": "0.2",
-    "settings.editor.selected.configurable": "project.propVCSSupport.DirectoryMappings"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.cidr.known.project.marker&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;android-custom-viewD:/Ashwani/DEMO/NewAdsDemo/ads/src/main/java/com/ads/control/util/CustomRatingBar.java_SELECTED&quot;: &quot;CustomRatingBar&quot;,
+    &quot;android-custom-viewD:/Ashwani/DEMO/NewAdsDemo/ads/src/main/java/com/ads/narayan/ads/bannerAds/AperoBannerAdView.java_SELECTED&quot;: &quot;AperoBannerAdView&quot;,
+    &quot;android-custom-viewD:/Ashwani/DEMO/NewAdsDemo/ads/src/main/java/com/ads/narayan/ads/bannerAds/NarayanBannerAdView.java_SELECTED&quot;: &quot;NarayanBannerAdView&quot;,
+    &quot;android-custom-viewD:/Ashwani/DEMO/NewAdsDemo/ads/src/main/java/com/ads/narayan/ads/nativeAds/AperoNativeAdView.java_SELECTED&quot;: &quot;AperoNativeAdView&quot;,
+    &quot;android-custom-viewD:/Ashwani/DEMO/NewAdsDemo/ads/src/main/java/com/ads/narayan/ads/nativeAds/NarayanNativeAdView.java_SELECTED&quot;: &quot;NarayanNativeAdView&quot;,
+    &quot;android-custom-viewD:/Ashwani/DEMO/NewAdsDemo/ads/src/main/java/com/ads/narayan/util/CustomRatingBar.java_SELECTED&quot;: &quot;CustomRatingBar&quot;,
+    &quot;android-custom-viewD:/Ashwani/DEMO/NewAdsDemo/ads/src/main/java/com/ads/narayan/widget/spinkit/SpinKitView.java_SELECTED&quot;: &quot;SpinKitView&quot;,
+    &quot;cidr.known.project.marker&quot;: &quot;true&quot;,
+    &quot;com.intellij.openapi.externalSystem.service.settings.ExternalSystemGroupConfigurable&quot;: &quot;ALL&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/pushp/Downloads/autoscroll&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.17&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;project.propVCSSupport.DirectoryMappings&quot;
   }
-}]]></component>
+}</component>
   <component name="RunManager">
     <configuration name="app" type="AndroidRunConfigurationType" factoryName="Android App">
       <module name="NewAdsDemo.app.main" />
@@ -208,7 +215,21 @@
       <option name="project" value="LOCAL" />
       <updated>1686820540247</updated>
     </task>
-    <option name="localTasksCounter" value="12" />
+    <task id="LOCAL-00012" summary="Language Change">
+      <created>1686821629381</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1686821629381</updated>
+    </task>
+    <task id="LOCAL-00013" summary="Language Change">
+      <created>1686821660314</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1686821660314</updated>
+    </task>
+    <option name="localTasksCounter" value="14" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">

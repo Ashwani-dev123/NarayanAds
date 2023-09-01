@@ -9,6 +9,7 @@ import android.graphics.Shader;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ClipDrawable;
 import android.graphics.drawable.Drawable;
+import android.graphics.drawable.DrawableWrapper;
 import android.graphics.drawable.LayerDrawable;
 import android.graphics.drawable.ShapeDrawable;
 import android.graphics.drawable.VectorDrawable;
@@ -18,10 +19,8 @@ import android.os.Build;
 import android.util.AttributeSet;
 import android.view.Gravity;
 
-import androidx.appcompat.graphics.drawable.DrawableWrapper;
 import androidx.vectordrawable.graphics.drawable.VectorDrawableCompat;
 
-import com.ads.narayan.R;
 
 public class CustomRatingBar extends androidx.appcompat.widget.AppCompatRatingBar {
 
@@ -51,49 +50,51 @@ public class CustomRatingBar extends androidx.appcompat.widget.AppCompatRatingBa
      */
     @SuppressLint("RestrictedApi")
     private Drawable createTile(Drawable drawable, boolean clip) {
-        if (drawable instanceof DrawableWrapper) {
-            Drawable inner = ((DrawableWrapper) drawable).getWrappedDrawable();
-            if (inner != null) {
-                inner = createTile(inner, clip);
-                ((DrawableWrapper) drawable).setWrappedDrawable(inner);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if (drawable instanceof DrawableWrapper) {
+                Drawable inner = ((DrawableWrapper) drawable).getDrawable();
+                if (inner != null) {
+                    inner = createTile(inner, clip);
+                    ((DrawableWrapper) drawable).setDrawable(inner);
+                }
+            } else if (drawable instanceof LayerDrawable) {
+                LayerDrawable background = (LayerDrawable) drawable;
+                final int n = background.getNumberOfLayers();
+                Drawable[] outDrawables = new Drawable[n];
+
+                for (int i = 0; i < n; i++) {
+                    int id = background.getId(i);
+                    outDrawables[i] = createTile(background.getDrawable(i),
+                            (id == android.R.id.progress || id == android.R.id.secondaryProgress));
+                }
+                LayerDrawable newBg = new LayerDrawable(outDrawables);
+
+                for (int i = 0; i < n; i++) {
+                    newBg.setId(i, background.getId(i));
+                }
+
+                return newBg;
+
+            } else if (drawable instanceof BitmapDrawable) {
+                final BitmapDrawable bitmapDrawable = (BitmapDrawable) drawable;
+                final Bitmap tileBitmap = bitmapDrawable.getBitmap();
+                if (sampleTile == null) {
+                    sampleTile = tileBitmap;
+                }
+
+                final ShapeDrawable shapeDrawable = new ShapeDrawable(getDrawableShape());
+                final BitmapShader bitmapShader = new BitmapShader(tileBitmap,
+                        Shader.TileMode.REPEAT, Shader.TileMode.CLAMP);
+                shapeDrawable.getPaint().setShader(bitmapShader);
+                shapeDrawable.getPaint().setColorFilter(bitmapDrawable.getPaint().getColorFilter());
+                return (clip) ? new ClipDrawable(shapeDrawable, Gravity.START,
+                        ClipDrawable.HORIZONTAL) : shapeDrawable;
+            } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP && drawable instanceof VectorDrawable) {
+                return createTile(getBitmapDrawableFromVectorDrawable(drawable), clip);
+            } else if (drawable instanceof VectorDrawableCompat) {
+                // API 19 support.
+                return createTile(getBitmapDrawableFromVectorDrawable(drawable), clip);
             }
-        } else if (drawable instanceof LayerDrawable) {
-            LayerDrawable background = (LayerDrawable) drawable;
-            final int n = background.getNumberOfLayers();
-            Drawable[] outDrawables = new Drawable[n];
-
-            for (int i = 0; i < n; i++) {
-                int id = background.getId(i);
-                outDrawables[i] = createTile(background.getDrawable(i),
-                        (id == android.R.id.progress || id == android.R.id.secondaryProgress));
-            }
-            LayerDrawable newBg = new LayerDrawable(outDrawables);
-
-            for (int i = 0; i < n; i++) {
-                newBg.setId(i, background.getId(i));
-            }
-
-            return newBg;
-
-        } else if (drawable instanceof BitmapDrawable) {
-            final BitmapDrawable bitmapDrawable = (BitmapDrawable) drawable;
-            final Bitmap tileBitmap = bitmapDrawable.getBitmap();
-            if (sampleTile == null) {
-                sampleTile = tileBitmap;
-            }
-
-            final ShapeDrawable shapeDrawable = new ShapeDrawable(getDrawableShape());
-            final BitmapShader bitmapShader = new BitmapShader(tileBitmap,
-                    Shader.TileMode.REPEAT, Shader.TileMode.CLAMP);
-            shapeDrawable.getPaint().setShader(bitmapShader);
-            shapeDrawable.getPaint().setColorFilter(bitmapDrawable.getPaint().getColorFilter());
-            return (clip) ? new ClipDrawable(shapeDrawable, Gravity.START,
-                    ClipDrawable.HORIZONTAL) : shapeDrawable;
-        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP && drawable instanceof VectorDrawable) {
-            return createTile(getBitmapDrawableFromVectorDrawable(drawable), clip);
-        } else if (drawable instanceof VectorDrawableCompat) {
-            // API 19 support.
-            return createTile(getBitmapDrawableFromVectorDrawable(drawable), clip);
         }
         return drawable;
     }
