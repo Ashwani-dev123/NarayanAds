@@ -77,7 +77,7 @@ public class NarayanNativeAdView extends RelativeLayout {
 
     public void populateNativeAdView(Activity activity, NarayanNativeAd nativeAd){
         if(layoutLoading == null){
-            Log.e(TAG, "populateNativeAdView error : layoutLoading not set" );
+            Log.e(TAG, "populateNativeAdView error : layoutLoading not set");
             return;
         }
         NarayanAd.getInstance().populateNativeAdView(activity, nativeAd, layoutPlaceHolder, layoutLoading);

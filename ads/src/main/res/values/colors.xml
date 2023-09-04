@@ -26,5 +26,8 @@
     <color name="gntGray">#808080</color>
     <color name="gntOutline">#E0E0E0</color>
     <color name="text_exit">#2152FF</color>
+    <color name="colorTitle">#1C68FB</color>
+    <color name="colorMain">#148DFD</color>
+    <color name="black">#FF000000</color>
 
 </resources>
