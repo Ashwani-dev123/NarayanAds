@@ -2,6 +2,7 @@
 <resources>
     <color name="colorindicator">#068abf</color>
     <color name="whiteBlur">#bf9c9c9c</color>
+    <color name="white">#ffffffff</color>
 
     <color name="colorPrimary">#00FF00</color>
     <color name="colorPrimaryDark">#000</color>
