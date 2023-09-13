@@ -78,6 +78,10 @@ public class NarayanAd {
     private static volatile NarayanAd INSTANCE;
     private NarayanAdConfig adConfig;
     private NarayanInitCallback initCallback;
+
+    private AdsInterCallBack adsInterCallBack;
+    private PreloadNativeCallback preloadNativeCallback;
+    private StorageCommon storageCommon;
     private Boolean initAdSuccess = false;
 
     private boolean isInterAdsNormalLoaded = false;
