@@ -78,6 +78,7 @@ public class NarayanAd {
     private static volatile NarayanAd INSTANCE;
     private NarayanAdConfig adConfig;
     private NarayanInitCallback initCallback;
+    private AdsInterCallBack initCallback1;
 
     private Boolean initAdSuccess = false;
 
@@ -180,6 +181,12 @@ public class NarayanAd {
         this.initCallback = initCallback;
         if (initAdSuccess)
             initCallback.initAdSuccess();
+    }
+
+    public void setInitCallback1(AdsInterCallBack initCallback) {
+        this.initCallback1 = initCallback;
+        if (initAdSuccess)
+            initCallback1.onAdClicked();
     }
 
     private void setupAdjust(Boolean buildDebug, String adjustToken) {
