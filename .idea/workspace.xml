@@ -18,11 +18,41 @@
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
-  <component name="ExecutionTargetManager" SELECTED_TARGET="device_and_snapshot_combo_box_target[13830873840008K]" />
   <component name="ExternalProjectsData">
     <projectState path="$PROJECT_DIR$">
       <ProjectState />
     </projectState>
+  </component>
+  <component name="ExternalProjectsManager">
+    <system id="GRADLE">
+      <state>
+        <task path="$PROJECT_DIR$">
+          <activation />
+        </task>
+        <projects_view>
+          <tree_state>
+            <expand>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="NewAdsDemo" type="f1a62948:ProjectNode" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="NewAdsDemo" type="f1a62948:ProjectNode" />
+                <item name="Tasks" type="e4a08cd1:TasksNode" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="NewAdsDemo" type="f1a62948:ProjectNode" />
+                <item name="Tasks" type="e4a08cd1:TasksNode" />
+                <item name="build" type="c8890929:TasksNode$1" />
+              </path>
+            </expand>
+            <select />
+          </tree_state>
+        </projects_view>
+      </state>
+    </system>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
@@ -41,33 +71,34 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.cidr.known.project.marker&quot;: &quot;true&quot;,
-    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;android-custom-viewD:/Ashwani/DEMO/NewAdsDemo/ads/src/main/java/com/ads/control/util/CustomRatingBar.java_SELECTED&quot;: &quot;CustomRatingBar&quot;,
-    &quot;android-custom-viewD:/Ashwani/DEMO/NewAdsDemo/ads/src/main/java/com/ads/narayan/ads/bannerAds/AperoBannerAdView.java_SELECTED&quot;: &quot;AperoBannerAdView&quot;,
-    &quot;android-custom-viewD:/Ashwani/DEMO/NewAdsDemo/ads/src/main/java/com/ads/narayan/ads/bannerAds/NarayanBannerAdView.java_SELECTED&quot;: &quot;NarayanBannerAdView&quot;,
-    &quot;android-custom-viewD:/Ashwani/DEMO/NewAdsDemo/ads/src/main/java/com/ads/narayan/ads/nativeAds/AperoNativeAdView.java_SELECTED&quot;: &quot;AperoNativeAdView&quot;,
-    &quot;android-custom-viewD:/Ashwani/DEMO/NewAdsDemo/ads/src/main/java/com/ads/narayan/ads/nativeAds/NarayanNativeAdView.java_SELECTED&quot;: &quot;NarayanNativeAdView&quot;,
-    &quot;android-custom-viewD:/Ashwani/DEMO/NewAdsDemo/ads/src/main/java/com/ads/narayan/util/CustomRatingBar.java_SELECTED&quot;: &quot;CustomRatingBar&quot;,
-    &quot;android-custom-viewD:/Ashwani/DEMO/NewAdsDemo/ads/src/main/java/com/ads/narayan/widget/spinkit/SpinKitView.java_SELECTED&quot;: &quot;SpinKitView&quot;,
-    &quot;cidr.known.project.marker&quot;: &quot;true&quot;,
-    &quot;com.intellij.openapi.externalSystem.service.settings.ExternalSystemGroupConfigurable&quot;: &quot;ALL&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/pushp/Downloads/autoscroll&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.17&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;project.propVCSSupport.DirectoryMappings&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.cidr.known.project.marker": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "android-custom-viewC:/Users/pushp/AppData/Local/Android/Sdk/sources/android-33/android/widget/ProgressBar.java_SELECTED": "ProgressBar",
+    "android-custom-viewD:/Ashwani/DEMO/NewAdsDemo/ads/src/main/java/com/ads/control/util/CustomRatingBar.java_SELECTED": "CustomRatingBar",
+    "android-custom-viewD:/Ashwani/DEMO/NewAdsDemo/ads/src/main/java/com/ads/narayan/ads/bannerAds/AperoBannerAdView.java_SELECTED": "AperoBannerAdView",
+    "android-custom-viewD:/Ashwani/DEMO/NewAdsDemo/ads/src/main/java/com/ads/narayan/ads/bannerAds/NarayanBannerAdView.java_SELECTED": "NarayanBannerAdView",
+    "android-custom-viewD:/Ashwani/DEMO/NewAdsDemo/ads/src/main/java/com/ads/narayan/ads/nativeAds/AperoNativeAdView.java_SELECTED": "AperoNativeAdView",
+    "android-custom-viewD:/Ashwani/DEMO/NewAdsDemo/ads/src/main/java/com/ads/narayan/ads/nativeAds/NarayanNativeAdView.java_SELECTED": "NarayanNativeAdView",
+    "android-custom-viewD:/Ashwani/DEMO/NewAdsDemo/ads/src/main/java/com/ads/narayan/util/CustomRatingBar.java_SELECTED": "CustomRatingBar",
+    "android-custom-viewD:/Ashwani/DEMO/NewAdsDemo/ads/src/main/java/com/ads/narayan/widget/spinkit/SpinKitView.java_SELECTED": "SpinKitView",
+    "cidr.known.project.marker": "true",
+    "com.intellij.openapi.externalSystem.service.settings.ExternalSystemGroupConfigurable": "ALL",
+    "last_opened_file_path": "C:/Users/pushp/Downloads/autoscroll",
+    "project.structure.last.edited": "Modules",
+    "project.structure.proportion": "0.17",
+    "project.structure.side.proportion": "0.2",
+    "settings.editor.selected.configurable": "project.propVCSSupport.DirectoryMappings"
   }
-}</component>
+}]]></component>
   <component name="PsdUISettings">
     <option name="MODULE_TAB" value="Properties" />
     <option name="LAST_EDITED_SIGNING_CONFIG" value="debug" />
   </component>
-  <component name="RunManager">
+  <component name="RunManager" selected="Gradle.NewAdsDemo [assemble]">
     <configuration name="app" type="AndroidRunConfigurationType" factoryName="Android App">
       <module name="NewAdsDemo.app.main" />
       <option name="DEPLOY" value="true" />
@@ -126,6 +157,32 @@
         <option name="Android.Gradle.BeforeRunTask" enabled="true" />
       </method>
     </configuration>
+    <configuration name="NewAdsDemo [assemble]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value="assemble" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Gradle.NewAdsDemo [assemble]" />
+      </list>
+    </recent_temporary>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
@@ -262,7 +319,14 @@
       <option name="project" value="LOCAL" />
       <updated>1694683615542</updated>
     </task>
-    <option name="localTasksCounter" value="19" />
+    <task id="LOCAL-00019" summary="Solved ad load issue">
+      <created>1694684350332</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1694684350332</updated>
+    </task>
+    <option name="localTasksCounter" value="20" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
