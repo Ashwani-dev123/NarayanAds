@@ -1,5 +1,7 @@
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
+apply plugin: 'maven-publish'
+
 
 android {
     compileSdkVersion 33
@@ -131,6 +133,20 @@ dependencies {
     implementation "com.android.billingclient:billing-ktx:6.0.1"
 
 
+}
+
+afterEvaluate {
+    println(components*.name)
+    publishing {
+        publications {
+            appProdRelease(MavenPublication) {
+                from components.appProdRelease
+                groupId = 'com.github.Ashwani-dev123'
+                artifactId = 'NarayanAds'
+                version = '1.0.7'
+            }
+        }
+    }
 }
 
 
