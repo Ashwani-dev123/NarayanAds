@@ -1,6 +1,5 @@
 package com.ads.narayan.admob;
 
-import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.ActivityManager;
@@ -9,7 +8,6 @@ import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.content.Context;
-import android.content.pm.PackageManager;
 import android.content.res.Resources;
 import android.os.Build;
 import android.os.Bundle;
@@ -31,7 +29,6 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 import androidx.lifecycle.Lifecycle;
@@ -946,6 +943,7 @@ public class Admob {
     }
 
 
+
     public void getInterstitialAds(Context context, String id, AdCallback adCallback) {
         if (Arrays.asList(context.getResources().getStringArray(R.array.list_id_test)).contains(id)) {
             showTestIdAlert(context, INTERS_ADS, id);
@@ -987,6 +985,7 @@ public class Admob {
                 });
 
     }
+
 
 
     public void showInterstitialAdByTimes(final Context context, final InterstitialAd mInterstitialAd, final AdCallback callback, long timeDelay) {
@@ -1086,6 +1085,7 @@ public class Admob {
     }
 
 
+
     public void forceShowInterstitial(Context context, InterstitialAd mInterstitialAd, final AdCallback callback) {
         currentClicked = numShowAds;
         showInterstitialAdByTimes(context, mInterstitialAd, callback);
@@ -1153,6 +1153,7 @@ public class Admob {
         final ShimmerFrameLayout containerShimmer = mActivity.findViewById(R.id.shimmer_container_banner);
         loadBanner(mActivity, id, adContainer, containerShimmer, callback, false, BANNER_INLINE_LARGE_STYLE);
     }
+
 
 
     @Deprecated
@@ -2087,6 +2088,7 @@ public class Admob {
     }
 
 
+
     public void showRewardAds(final Activity context, RewardedAd rewardedAd, final RewardCallback adCallback) {
         if (AppPurchase.getInstance().isPurchased(context)) {
             adCallback.onUserEarnedReward(null);
@@ -2230,16 +2232,6 @@ public class Admob {
                     "Warning Ads",
                     NotificationManager.IMPORTANCE_LOW);
             notificationManager.createNotificationChannel(channel);
-        }
-        if (ActivityCompat.checkSelfPermission(context, Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
-            // TODO: Consider calling
-            //    ActivityCompat#requestPermissions
-            // here to request the missing permissions, and then overriding
-            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-            //                                          int[] grantResults)
-            // to handle the case where the user grants the permission. See the documentation
-            // for ActivityCompat#requestPermissions for more details.
-            return;
         }
         notificationManager.notify(typeAds, notification);
 

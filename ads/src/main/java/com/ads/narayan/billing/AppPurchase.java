@@ -170,7 +170,7 @@ public class AppPurchase {
             } else if (billingResult.getResponseCode() == BillingClient.BillingResponseCode.USER_CANCELED) {
                 if (purchaseListener != null)
                     purchaseListener.onUserCancelBilling();
-                Log.e(TAG, "onPurchasesUpdated:USER_CANCELED ");
+                Log.e(TAG, "onPurchasesUpdated:USER_CANCELED");
             } else {
                 Log.e(TAG, "onPurchasesUpdated:... ");
             }
@@ -257,7 +257,6 @@ public class AppPurchase {
     private AppPurchase() {
 
     }
-
 
     public void initBilling(final Application application, List<String> listINAPId, List<String> listSubsId) {
 
