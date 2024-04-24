@@ -30,6 +30,6 @@
         <!--        reward-interstitial-->
         <item>ca-app-pub-3940256099942544/5354046379</item>
     </string-array>
-
+    <string name="offline_notification_text">offline_notification_text</string>
 
 </resources>
