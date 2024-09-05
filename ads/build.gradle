@@ -131,7 +131,7 @@ dependencies {
     implementation 'com.appsflyer:af-android-sdk:6.8.2'
     implementation 'com.appsflyer:adrevenue:6.4.3'
 
-    implementation "com.android.billingclient:billing-ktx:6.0.1"
+    implementation "com.android.billingclient:billing-ktx:7.0.0"
 
 }
 

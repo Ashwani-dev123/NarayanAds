@@ -267,6 +267,9 @@ public class AppPurchase {
         this.listSubscriptionId = listIdToListProduct(listSubsId, BillingClient.ProductType.SUBS);
         this.listINAPId = listIdToListProduct(listINAPId, BillingClient.ProductType.INAPP);
 
+        Log.e(TAG, "initBilling: app list size=>"+listINAPId.size() );
+        Log.e(TAG, "initBilling: list in app size=>"+this.listINAPId.size() );
+
         billingClient = BillingClient.newBuilder(application)
                 .setListener(purchasesUpdatedListener)
                 .enablePendingPurchases()
@@ -802,7 +805,9 @@ public class AppPurchase {
 
     public String getPrice(String productId) {
 
+        Log.e(TAG, "productId: " + productId);
         ProductDetails skuDetails = skuDetailsINAPMap.get(productId);
+        Log.e(TAG, "skuDetails: " + skuDetails);
         if (skuDetails == null)
             return "";
 

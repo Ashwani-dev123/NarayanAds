@@ -10,18 +10,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e9a93abe-1ba6-4d3d-b9a4-37121a2a97f0" name="Changes" comment="Purchase crash fixed #DRASHTI">
-      <change beforePath="$PROJECT_DIR$/.gradle/7.5/executionHistory/executionHistory.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/7.5/executionHistory/executionHistory.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/7.5/executionHistory/executionHistory.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/7.5/executionHistory/executionHistory.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/7.5/fileHashes/fileHashes.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/7.5/fileHashes/fileHashes.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/7.5/checksums/checksums.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/7.5/checksums/checksums.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/7.5/fileHashes/fileHashes.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/7.5/fileHashes/fileHashes.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/7.5/fileHashes/resourceHashesCache.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/7.5/fileHashes/resourceHashesCache.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/cache.properties" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/cache.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/file-system.probe" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/file-system.probe" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ads/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/ads/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.properties" beforeDir="false" afterPath="$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ads/src/main/java/com/ads/narayan/billing/AppPurchase.java" beforeDir="false" afterPath="$PROJECT_DIR$/ads/src/main/java/com/ads/narayan/billing/AppPurchase.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -31,7 +26,7 @@
   <component name="ClangdSettings">
     <option name="formatViaClangd" value="false" />
   </component>
-  <component name="ExecutionTargetManager" SELECTED_TARGET="device_and_snapshot_combo_box_target[9620253241000OI]" />
+  <component name="ExecutionTargetManager" SELECTED_TARGET="device_and_snapshot_combo_box_target[DeviceId(pluginId=PhysicalDevice, isTemplate=false, identifier=serial=ZA222J6S68)]" />
   <component name="ExternalProjectsData">
     <projectState path="$PROJECT_DIR$">
       <ProjectState />
@@ -53,24 +48,6 @@
                 <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
                 <item name="NewAdsDemo" type="f1a62948:ProjectNode" />
               </path>
-              <path>
-                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
-                <item name="NewAdsDemo" type="f1a62948:ProjectNode" />
-                <item name="ads" type="2d1252cf:ModuleNode" />
-              </path>
-              <path>
-                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
-                <item name="NewAdsDemo" type="f1a62948:ProjectNode" />
-                <item name="ads" type="2d1252cf:ModuleNode" />
-                <item name="Tasks" type="e4a08cd1:TasksNode" />
-              </path>
-              <path>
-                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
-                <item name="NewAdsDemo" type="f1a62948:ProjectNode" />
-                <item name="ads" type="2d1252cf:ModuleNode" />
-                <item name="Tasks" type="e4a08cd1:TasksNode" />
-                <item name="other" type="c8890929:TasksNode$1" />
-              </path>
             </expand>
             <select />
           </tree_state>
@@ -89,39 +66,49 @@
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
   </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 3
+}</component>
   <component name="ProjectId" id="2OrHouq1O2RleAJEW2rXoM1clLY" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.cidr.known.project.marker": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "android-custom-viewC:/Users/pushp/AppData/Local/Android/Sdk/sources/android-33/android/widget/ProgressBar.java_SELECTED": "ProgressBar",
-    "android-custom-viewD:/Ashwani/DEMO/NewAdsDemo/ads/src/main/java/com/ads/control/util/CustomRatingBar.java_SELECTED": "CustomRatingBar",
-    "android-custom-viewD:/Ashwani/DEMO/NewAdsDemo/ads/src/main/java/com/ads/narayan/ads/bannerAds/AperoBannerAdView.java_SELECTED": "AperoBannerAdView",
-    "android-custom-viewD:/Ashwani/DEMO/NewAdsDemo/ads/src/main/java/com/ads/narayan/ads/bannerAds/NarayanBannerAdView.java_SELECTED": "NarayanBannerAdView",
-    "android-custom-viewD:/Ashwani/DEMO/NewAdsDemo/ads/src/main/java/com/ads/narayan/ads/nativeAds/AperoNativeAdView.java_SELECTED": "AperoNativeAdView",
-    "android-custom-viewD:/Ashwani/DEMO/NewAdsDemo/ads/src/main/java/com/ads/narayan/ads/nativeAds/NarayanNativeAdView.java_SELECTED": "NarayanNativeAdView",
-    "android-custom-viewD:/Ashwani/DEMO/NewAdsDemo/ads/src/main/java/com/ads/narayan/util/CustomRatingBar.java_SELECTED": "CustomRatingBar",
-    "android-custom-viewD:/Ashwani/DEMO/NewAdsDemo/ads/src/main/java/com/ads/narayan/widget/spinkit/SpinKitView.java_SELECTED": "SpinKitView",
-    "cf.first.check.clang-format": "false",
-    "cidr.known.project.marker": "true",
-    "com.intellij.openapi.externalSystem.service.settings.ExternalSystemGroupConfigurable": "ALL",
-    "dart.analysis.tool.window.visible": "false",
-    "git-widget-placeholder": "Launguage__Change",
-    "last_opened_file_path": "D:/Drashti/ZIP/DemoForAdTesting/app",
-    "project.structure.last.edited": "Modules",
-    "project.structure.proportion": "0.17",
-    "project.structure.side.proportion": "0.2",
-    "settings.editor.selected.configurable": "project.propVCSSupport.Mappings",
-    "show.migrate.to.gradle.popup": "false"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.cidr.known.project.marker&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.readMode.enableVisualFormatting&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;android-custom-viewC:/Users/pushp/AppData/Local/Android/Sdk/sources/android-33/android/widget/ProgressBar.java_SELECTED&quot;: &quot;ProgressBar&quot;,
+    &quot;android-custom-viewD:/Ashwani/DEMO/NewAdsDemo/ads/src/main/java/com/ads/control/util/CustomRatingBar.java_SELECTED&quot;: &quot;CustomRatingBar&quot;,
+    &quot;android-custom-viewD:/Ashwani/DEMO/NewAdsDemo/ads/src/main/java/com/ads/narayan/ads/bannerAds/AperoBannerAdView.java_SELECTED&quot;: &quot;AperoBannerAdView&quot;,
+    &quot;android-custom-viewD:/Ashwani/DEMO/NewAdsDemo/ads/src/main/java/com/ads/narayan/ads/bannerAds/NarayanBannerAdView.java_SELECTED&quot;: &quot;NarayanBannerAdView&quot;,
+    &quot;android-custom-viewD:/Ashwani/DEMO/NewAdsDemo/ads/src/main/java/com/ads/narayan/ads/nativeAds/AperoNativeAdView.java_SELECTED&quot;: &quot;AperoNativeAdView&quot;,
+    &quot;android-custom-viewD:/Ashwani/DEMO/NewAdsDemo/ads/src/main/java/com/ads/narayan/ads/nativeAds/NarayanNativeAdView.java_SELECTED&quot;: &quot;NarayanNativeAdView&quot;,
+    &quot;android-custom-viewD:/Ashwani/DEMO/NewAdsDemo/ads/src/main/java/com/ads/narayan/util/CustomRatingBar.java_SELECTED&quot;: &quot;CustomRatingBar&quot;,
+    &quot;android-custom-viewD:/Ashwani/DEMO/NewAdsDemo/ads/src/main/java/com/ads/narayan/widget/spinkit/SpinKitView.java_SELECTED&quot;: &quot;SpinKitView&quot;,
+    &quot;cf.first.check.clang-format&quot;: &quot;false&quot;,
+    &quot;cidr.known.project.marker&quot;: &quot;true&quot;,
+    &quot;com.intellij.openapi.externalSystem.service.settings.ExternalSystemGroupConfigurable&quot;: &quot;ALL&quot;,
+    &quot;dart.analysis.tool.window.visible&quot;: &quot;false&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;Launguage__Change&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;D:/Drashti/ZIP/DemoForAdTesting&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.17&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;project.propVCSSupport.Mappings&quot;,
+    &quot;show.migrate.to.gradle.popup&quot;: &quot;false&quot;
+  },
+  &quot;keyToStringList&quot;: {
+    &quot;kotlin-gradle-user-dirs&quot;: [
+      &quot;C:\\Users\\pc\\.gradle&quot;
+    ]
   }
-}]]></component>
+}</component>
   <component name="PsdUISettings">
     <option name="MODULE_TAB" value="Properties" />
     <option name="LAST_EDITED_SIGNING_CONFIG" value="debug" />
@@ -141,7 +128,6 @@
       <option name="MODE" value="default_activity" />
       <option name="CLEAR_LOGCAT" value="false" />
       <option name="SHOW_LOGCAT_AUTOMATICALLY" value="false" />
-      <option name="INSPECTION_WITHOUT_ACTIVITY_RESTART" value="false" />
       <option name="TARGET_SELECTION_MODE" value="DEVICE_AND_SNAPSHOT_COMBO_BOX" />
       <option name="SELECTED_CLOUD_MATRIX_CONFIGURATION_ID" value="-1" />
       <option name="SELECTED_CLOUD_MATRIX_PROJECT_ID" value="" />
@@ -212,7 +198,7 @@
       <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
       <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
       <DebugAllEnabled>false</DebugAllEnabled>
-      <ForceTestExec>false</ForceTestExec>
+      <RunAsTest>false</RunAsTest>
       <method v="2" />
     </configuration>
     <configuration name="NewAdsDemo:ads [assemble]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
@@ -234,7 +220,7 @@
       <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
       <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
       <DebugAllEnabled>false</DebugAllEnabled>
-      <ForceTestExec>false</ForceTestExec>
+      <RunAsTest>false</RunAsTest>
       <method v="2" />
     </configuration>
     <recent_temporary>
@@ -449,7 +435,15 @@
       <option name="project" value="LOCAL" />
       <updated>1715238068062</updated>
     </task>
-    <option name="localTasksCounter" value="28" />
+    <task id="LOCAL-00028" summary="Purchase crash fixed #DRASHTI">
+      <option name="closed" value="true" />
+      <created>1715239648114</created>
+      <option name="number" value="00028" />
+      <option name="presentableId" value="LOCAL-00028" />
+      <option name="project" value="LOCAL" />
+      <updated>1715239648114</updated>
+    </task>
+    <option name="localTasksCounter" value="29" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
