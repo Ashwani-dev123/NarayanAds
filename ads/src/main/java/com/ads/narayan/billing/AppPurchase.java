@@ -516,9 +516,10 @@ public class AppPurchase {
 
     //AV
     public String purchase(Activity activity, String productId,Boolean isAdsRemove) {
-        if (skuListINAPFromStore == null) {
+        if (skuListINAPFromStore == null || skuDetailsINAPMap.isEmpty()) {
             if (purchaseListener != null)
                 purchaseListener.displayErrorMessage("Billing error init");
+            Toast.makeText(activity, "Billing error", Toast.LENGTH_SHORT).show();
             return "";
         }
 
