@@ -1,5 +1,7 @@
 package com.ads.narayan.ads.wrapper;
 
+import android.util.Log;
+
 import com.applovin.mediation.ads.MaxInterstitialAd;
 import com.google.android.gms.ads.interstitial.InterstitialAd;
 
@@ -39,6 +41,7 @@ public class NarayanInterstitialAd extends NarayanAdBase {
     public boolean isReady(){
         if (maxInterstitialAd!=null && maxInterstitialAd.isReady())
             return true;
+        Log.e("CHECKAD", "isReady: interstitialAd=>"+interstitialAd);
         return interstitialAd != null;
     }
 
