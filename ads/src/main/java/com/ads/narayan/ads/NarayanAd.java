@@ -1237,7 +1237,7 @@ public class NarayanAd {
                     @Override
                     public void onInterstitialLoad(@Nullable InterstitialAd interstitialAd) {
                         super.onInterstitialLoad(interstitialAd);
-                        Log.e(TAG, "Admob onInterstitialLoad");
+                        Log.e("DRASHTI", "Admob onInterstitialLoad 1");
                         apInterstitialAd.setInterstitialAd(interstitialAd);
                         adListener.onInterstitialLoad(apInterstitialAd);
                     }
@@ -1245,6 +1245,7 @@ public class NarayanAd {
                     @Override
                     public void onAdFailedToLoad(@Nullable LoadAdError i) {
                         super.onAdFailedToLoad(i);
+                        Log.e("DRASHTI", "Admob onAdFailedToLoad 1=>"+i.getMessage());
                         adListener.onAdFailedToLoad(new NarayanAdError(i));
                     }
 
@@ -1314,13 +1315,14 @@ public class NarayanAd {
                     @Override
                     public void onInterstitialLoad(@Nullable InterstitialAd interstitialAd) {
                         super.onInterstitialLoad(interstitialAd);
-                        Log.e(TAG, "Admob onInterstitialLoad: ");
+                        Log.e("DRASHTI", "Admob onInterstitialLoad 2: ");
                         apInterstitialAd.setInterstitialAd(interstitialAd);
                     }
 
                     @Override
                     public void onAdFailedToLoad(@Nullable LoadAdError i) {
                         super.onAdFailedToLoad(i);
+                        Log.e("DRASHTI", "onAdFailedToLoad: 2=>"+i.getMessage() );
                     }
 
                     @Override

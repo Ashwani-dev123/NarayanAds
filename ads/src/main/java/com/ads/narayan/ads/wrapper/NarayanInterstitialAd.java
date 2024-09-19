@@ -23,13 +23,17 @@ public class NarayanInterstitialAd extends NarayanAdBase {
 
     public NarayanInterstitialAd(InterstitialAd interstitialAd) {
         this.interstitialAd = interstitialAd;
+        Log.e("DRASHTI", "NarayanInterstitialAd=>"+interstitialAd);
         status = StatusAd.AD_LOADED;
+        Log.e("DRASHTI", "status=>"+status);
     }
 
 
     public void setInterstitialAd(InterstitialAd interstitialAd) {
         this.interstitialAd = interstitialAd;
+        Log.e("DRASHTI", "setInterstitialAd=>"+interstitialAd);
         status = StatusAd.AD_LOADED;
+        Log.e("DRASHTI", "status=>"+status);
     }
 
     public void setMaxInterstitialAd(MaxInterstitialAd maxInterstitialAd) {
@@ -41,7 +45,7 @@ public class NarayanInterstitialAd extends NarayanAdBase {
     public boolean isReady(){
         if (maxInterstitialAd!=null && maxInterstitialAd.isReady())
             return true;
-        Log.e("CHECKAD", "isReady: interstitialAd=>"+interstitialAd);
+        Log.e("DRASHTI", "isReady: interstitialAd=>"+interstitialAd);
         return interstitialAd != null;
     }
 
