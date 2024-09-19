@@ -955,7 +955,7 @@ public class Admob {
         Log.e("DRASHTI", "getInterstitialAds: isPurchased=>"+AppPurchase.getInstance().isPurchased(context) );
         Log.e("DRASHTI", "getInterstitialAds: getNumClickAdsPerDay=>"+AdmodHelper.getNumClickAdsPerDay(context, id) );
         Log.e("DRASHTI", "getInterstitialAds: maxClickAds=>"+maxClickAds );
-        if (/*AppPurchase.getInstance().isPurchased(context) || */AdmodHelper.getNumClickAdsPerDay(context, id) >= maxClickAds) {
+        if (AppPurchase.getInstance().isPurchased(context) || AdmodHelper.getNumClickAdsPerDay(context, id) >= maxClickAds) {
             adCallback.onInterstitialLoad(null);
             return;
         }
