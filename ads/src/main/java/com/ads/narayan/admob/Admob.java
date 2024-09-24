@@ -21,6 +21,7 @@ import android.util.TypedValue;
 import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.WindowMetrics;
 import android.webkit.WebView;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -118,7 +119,8 @@ public class Admob {
 
     public static final String BANNER_INLINE_SMALL_STYLE = "BANNER_INLINE_SMALL_STYLE";
     public static final String BANNER_INLINE_LARGE_STYLE = "BANNER_INLINE_LARGE_STYLE";
-    private final int MAX_SMALL_INLINE_BANNER_HEIGHT = 50;
+//    private final int MAX_SMALL_INLINE_BANNER_HEIGHT = 50;
+    private final int MAX_SMALL_INLINE_BANNER_HEIGHT = 150;
 
     InterstitialAd mInterstitialSplash;
     InterstitialAd mInterstitialSplashHighFloor;
@@ -1402,13 +1404,24 @@ public class Admob {
     private AdSize getAdSize(Activity mActivity, Boolean useInlineAdaptive, String inlineStyle) {
 
         // Step 2 - Determine the screen width (less decorations) to use for the ad width.
-        Display display = mActivity.getWindowManager().getDefaultDisplay();
+        /*Display display = mActivity.getWindowManager().getDefaultDisplay();
         DisplayMetrics outMetrics = new DisplayMetrics();
         display.getMetrics(outMetrics);
 
         float widthPixels = outMetrics.widthPixels;
-        float density = outMetrics.density;
+        float density = outMetrics.density;*/
 
+        DisplayMetrics displayMetrics = mActivity.getResources().getDisplayMetrics();
+        int widthPixels;
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            WindowMetrics windowMetrics = mActivity.getWindowManager().getCurrentWindowMetrics();
+            widthPixels = windowMetrics.getBounds().width();
+        } else {
+            widthPixels = displayMetrics.widthPixels;
+        }
+
+        float density = displayMetrics.density;
         int adWidth = (int) (widthPixels / density);
 
         // Step 3 - Get adaptive ad size and return for setting on the ad view.

@@ -340,8 +340,8 @@ public class AppPurchase {
                                         if (purchase.getProducts().contains(id.zza())) {
                                             Log.e(TAG, "verifyPurchased INAPP: true");
                                             ownerIdInapps.add(id.zza());
-                                            //isPurchase = true;
-                                            isPurchase = false;
+                                            isPurchase = true;
+//                                            isPurchase = false;
                                         }
                                     }
                                 }
@@ -403,8 +403,8 @@ public class AppPurchase {
                                             );
                                             addOrUpdateOwnerIdSub(purchaseResult, id.zza());
                                             Log.e(TAG, "verifyPurchased SUBS: true");
-                                            //isPurchase = true;
-                                            isPurchase = false;
+                                            isPurchase = true;
+//                                            isPurchase = false;
                                         }
                                     }
                                 }
@@ -764,8 +764,8 @@ public class AppPurchase {
         NarayanLogEventManager.onTrackRevenuePurchase((float) price, currency, idPurchaseCurrent, typeIap);
 
         if (purchaseListener != null) {
-           // isPurchase = true;
-            isPurchase = false;
+            isPurchase = true;
+//            isPurchase = false;
             purchaseListener.onProductPurchased(purchase.getOrderId(), purchase.getOriginalJson());
         }
         if (isConsumePurchase) {
