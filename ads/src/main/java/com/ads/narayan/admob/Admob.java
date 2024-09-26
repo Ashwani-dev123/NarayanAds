@@ -1263,6 +1263,10 @@ public class Admob {
         containerShimmer.setVisibility(View.VISIBLE);
         containerShimmer.startShimmer();
         try {
+
+            // Remove any existing ads from the container to prevent overlap
+            adContainer.removeAllViews();
+
             AdView adView = new AdView(mActivity);
             adView.setAdUnitId(id);
             adContainer.addView(adView);
@@ -1279,6 +1283,8 @@ public class Admob {
             adView.setAdListener(new AdListener() {
                 @Override
                 public void onAdFailedToLoad(@NonNull LoadAdError loadAdError) {
+                    Log.e(TAG, "Banner onAdFailedToLoad=>" + loadAdError);
+                    Log.e(TAG, "Banner onAdFailedToLoad message=>" + loadAdError.getMessage());
                     containerShimmer.stopShimmer();
                     adContainer.setVisibility(View.GONE);
                     containerShimmer.setVisibility(View.GONE);
