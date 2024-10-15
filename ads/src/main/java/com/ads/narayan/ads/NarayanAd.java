@@ -1323,6 +1323,8 @@ public class NarayanAd {
                     public void onAdFailedToLoad(@Nullable LoadAdError i) {
                         super.onAdFailedToLoad(i);
                         Log.e("DRASHTI", "onAdFailedToLoad: 2=>"+i.getMessage() );
+                        apInterstitialAd.setInterstitialAd(null);
+
                     }
 
                     @Override
