@@ -167,7 +167,7 @@ public class AppPurchase {
                     List<String> sku = purchase.getSkus();
                     handlePurchase(purchase);
                     try {
-                        updatePurchaseStatus();
+                        updatePurchaseStatus(purchase);
                     } catch (Exception e) {
 
                     }
@@ -454,7 +454,7 @@ public class AppPurchase {
         }
     }
 
-    public void updatePurchaseStatus() {
+    public void updatePurchaseStatus(Purchase purchaseF) {
         if (listINAPId != null) {
             billingClient.queryPurchasesAsync(
                     QueryPurchasesParams.newBuilder().setProductType(BillingClient.ProductType.INAPP).build(),
@@ -473,7 +473,7 @@ public class AppPurchase {
                         isUpdateInapps = true;
                         if (isUpdateSubs) {
                             if (updatePurchaseListener != null) {
-                                updatePurchaseListener.onUpdateFinished(billingResult);
+                                updatePurchaseListener.onUpdateFinished(purchaseF);
                             }
                         }
                     }
@@ -502,7 +502,7 @@ public class AppPurchase {
                         isUpdateSubs = true;
                         if (isUpdateInapps) {
                             if (updatePurchaseListener != null) {
-                                updatePurchaseListener.onUpdateFinished(billingResult);
+                                updatePurchaseListener.onUpdateFinished(purchaseF);
                             }
                         }
                     }
