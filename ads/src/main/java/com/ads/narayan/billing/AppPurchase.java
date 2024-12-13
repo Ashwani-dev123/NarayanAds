@@ -166,6 +166,11 @@ public class AppPurchase {
 
                     List<String> sku = purchase.getSkus();
                     handlePurchase(purchase);
+                    try {
+                        updatePurchaseStatus();
+                    } catch (Exception e) {
+
+                    }
                 }
             } else if (billingResult.getResponseCode() == BillingClient.BillingResponseCode.USER_CANCELED) {
                 if (purchaseListener != null)
@@ -189,6 +194,7 @@ public class AppPurchase {
 
             if (!isInitBillingFinish) {
                 verifyPurchased(true);
+
             }
 
             isInitBillingFinish = true;
@@ -467,7 +473,7 @@ public class AppPurchase {
                         isUpdateInapps = true;
                         if (isUpdateSubs) {
                             if (updatePurchaseListener != null) {
-                                updatePurchaseListener.onUpdateFinished();
+                                updatePurchaseListener.onUpdateFinished(billingResult);
                             }
                         }
                     }
@@ -496,7 +502,7 @@ public class AppPurchase {
                         isUpdateSubs = true;
                         if (isUpdateInapps) {
                             if (updatePurchaseListener != null) {
-                                updatePurchaseListener.onUpdateFinished();
+                                updatePurchaseListener.onUpdateFinished(billingResult);
                             }
                         }
                     }
