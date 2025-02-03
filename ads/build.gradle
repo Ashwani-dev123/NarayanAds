@@ -17,13 +17,16 @@ android {
     buildFeatures{
         buildConfig = true
         viewBinding = true
-        buildConfig = true
     }
 
     buildTypes {
         release {
             minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+        debug {
+            // Specific configurations for debug builds, if needed
+            minifyEnabled false
         }
         productFlavors {
 
