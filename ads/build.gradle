@@ -147,17 +147,30 @@ afterEvaluate {
     println(components*.name)
     publishing {
         publications {
+//            appProdRelease(MavenPublication) {
+//                from components.appProdRelease
+//                groupId = 'com.github.Ashwani-dev123'
+//                artifactId = 'NarayanAds'
+//                version = '1.0.7'
+//            }
+//            appDevRelease(MavenPublication) {  // Add this block
+//                from components.appDevRelease
+//                groupId = 'com.github.Ashwani-dev123'
+//                artifactId = 'NarayanAds'
+//                version = '1.0.7'
+//            }
             appProdRelease(MavenPublication) {
-                from components.appProdRelease
+                from components.findByName("appProdRelease") // Ensure correct reference
                 groupId = 'com.github.Ashwani-dev123'
                 artifactId = 'NarayanAds'
-                version = '1.0.7'
+                version = '1.2.6'
             }
-            appDevRelease(MavenPublication) {  // Add this block
-                from components.appDevRelease
+
+            appDevRelease(MavenPublication) {  // Ensure appDev is also published
+                from components.findByName("appDevRelease") // Ensure correct reference
                 groupId = 'com.github.Ashwani-dev123'
                 artifactId = 'NarayanAds'
-                version = '1.0.7'
+                version = '1.2.6'
             }
         }
     }
