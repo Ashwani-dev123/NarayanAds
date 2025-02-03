@@ -32,4 +32,11 @@
     </string-array>
     <string name="offline_notification_text">offline_notification_text</string>
 
+    <string name="ad_attribution" translatable="false">Ad</string>
+    <string name="ads_by_developer" translatable="false">Ads by developer</string>
+    <string name="exit_dialog_negative_button_text">Go Back</string>
+    <string name="exit_dialog_positive_button_text">Exit App</string>
+    <string name="exit_dialog_title">Are you sure, you want to exit ?</string>
+    <string name="rating_sub_header">Your progress is important to us. Come back anytime to pick up where you left off!</string>
+
 </resources>

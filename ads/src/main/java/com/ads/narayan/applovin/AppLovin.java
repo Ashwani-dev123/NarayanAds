@@ -19,8 +19,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.ads.narayan.R;
 import com.ads.narayan.billing.AppPurchase;
 import com.ads.narayan.dialog.PrepareLoadingAdsDialog;
-import com.ads.narayan.funtion.AdCallback;
 import com.ads.narayan.event.NarayanLogEventManager;
+import com.ads.narayan.funtion.AdCallback;
 import com.ads.narayan.funtion.AdType;
 import com.ads.narayan.util.SharePreferenceUtils;
 import com.applovin.mediation.MaxAd;
@@ -974,15 +974,15 @@ public class AppLovin {
     public MaxRewardedAd getRewardAd(Activity activity, String id, AppLovinCallback callback) {
         MaxRewardedAd rewardedAd = MaxRewardedAd.getInstance(id, activity);
         rewardedAd.setListener(new MaxRewardedAdListener() {
-            @Override
-            public void onRewardedVideoStarted(MaxAd ad) {
-                Log.e(TAG, "onRewardedVideoStarted: ");
-            }
-
-            @Override
-            public void onRewardedVideoCompleted(MaxAd ad) {
-                Log.e(TAG, "onRewardedVideoCompleted: ");
-            }
+//            @Override
+//            public void onRewardedVideoStarted(MaxAd ad) {
+//                Log.e(TAG, "onRewardedVideoStarted: ");
+//            }
+//
+//            @Override
+//            public void onRewardedVideoCompleted(MaxAd ad) {
+//                Log.e(TAG, "onRewardedVideoCompleted: ");
+//            }
 
             @Override
             public void onUserRewarded(MaxAd ad, MaxReward reward) {
@@ -1041,15 +1041,15 @@ public class AppLovin {
         if (maxRewardedAd.isReady()) {
             maxRewardedAd.setRevenueListener(ad -> NarayanLogEventManager.logPaidAdImpression( activity,ad, AdType.REWARDED));
             maxRewardedAd.setListener(new MaxRewardedAdListener() {
-                @Override
-                public void onRewardedVideoStarted(MaxAd ad) {
-                    Log.e(TAG, "onRewardedVideoStarted: ");
-                }
-
-                @Override
-                public void onRewardedVideoCompleted(MaxAd ad) {
-                    Log.e(TAG, "onRewardedVideoCompleted: ");
-                }
+//                @Override
+//                public void onRewardedVideoStarted(MaxAd ad) {
+//                    Log.e(TAG, "onRewardedVideoStarted: ");
+//                }
+//
+//                @Override
+//                public void onRewardedVideoCompleted(MaxAd ad) {
+//                    Log.e(TAG, "onRewardedVideoCompleted: ");
+//                }
 
                 @Override
                 public void onUserRewarded(MaxAd ad, MaxReward reward) {
