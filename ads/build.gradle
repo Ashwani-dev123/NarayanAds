@@ -159,19 +159,37 @@ afterEvaluate {
 //                artifactId = 'NarayanAds'
 //                version = '1.0.7'
 //            }
-            appProdRelease(MavenPublication) {
-                from components.findByName("appProdRelease") // Ensure correct reference
-                groupId = 'com.github.Ashwani-dev123'
-                artifactId = 'NarayanAds'
-                version = '1.2.6'
-            }
+                // Ensure appProdRelease is published
+                appProdRelease(MavenPublication) {
+                    from components.findByName("appProdRelease")
+                    groupId = 'com.github.Ashwani-dev123'
+                    artifactId = 'NarayanAds'
+                    version = '1.2.7'
+                }
 
-            appDevRelease(MavenPublication) {  // Ensure appDev is also published
-                from components.findByName("appDevRelease") // Ensure correct reference
-                groupId = 'com.github.Ashwani-dev123'
-                artifactId = 'NarayanAds'
-                version = '1.2.6'
-            }
+                // Ensure appDevRelease is published
+                appDevRelease(MavenPublication) {
+                    from components.findByName("appDevRelease")
+                    groupId = 'com.github.Ashwani-dev123'
+                    artifactId = 'NarayanAds'
+                    version = '1.2.7'
+                }
+
+                // Ensure debug variant is published for appDev
+                appDevDebug(MavenPublication) {
+                    from components.findByName("appDevDebug")
+                    groupId = 'com.github.Ashwani-dev123'
+                    artifactId = 'NarayanAds'
+                    version = '1.2.7-debug'
+                }
+
+                // Ensure debug variant is published for appProd (if needed)
+                appProdDebug(MavenPublication) {
+                    from components.findByName("appProdDebug")
+                    groupId = 'com.github.Ashwani-dev123'
+                    artifactId = 'NarayanAds'
+                    version = '1.2.7-debug'
+                }
         }
     }
 }
