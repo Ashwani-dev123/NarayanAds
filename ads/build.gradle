@@ -157,13 +157,13 @@ afterEvaluate {
                 from components.appProdRelease
                 groupId = 'com.github.Ashwani-dev123'
                 artifactId = 'NarayanAds'
-                version = '1.0.7'
+                version = '1.2.7'
             }
             appDevRelease(MavenPublication) {  // Add this block
                 from components.appDevRelease
                 groupId = 'com.github.Ashwani-dev123'
                 artifactId = 'NarayanAds'
-                version = '1.0.7'
+                version = '1.2.7'
             }
         }
     }
