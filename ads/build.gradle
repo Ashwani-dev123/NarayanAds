@@ -25,8 +25,8 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
         debug {
-            // Specific configurations for debug builds, if needed
             minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
         productFlavors {
 
@@ -36,6 +36,7 @@ android {
     flavorDimensions "default"
     productFlavors {
         appDev {
+            dimension "default"
             //use id test when dev
             manifestPlaceholders = [ ad_app_id:"ca-app-pub-3940256099942544~3347511713"]
             buildConfigField "String", "ad_interstitial_splash", "\"ca-app-pub-3940256099942544/1033173712\""
@@ -54,6 +55,7 @@ android {
 
         }
         appProd {
+            dimension "default"
             //add your id ad here
             manifestPlaceholders = [ ad_app_id:"ca-app-pub-3940256099942544~3347511713"]
             buildConfigField "String", "ad_interstitial_splash", "\"ca-app-pub-3940256099942544/1033173712\""
