@@ -81,6 +81,17 @@ android {
         targetCompatibility JavaVersion.VERSION_17
     }
 
+    publishing {
+        singleVariant('release') {
+            withSourcesJar()
+            withJavadocJar()
+        }
+        singleVariant('debug') {
+            withSourcesJar()
+            withJavadocJar()
+        }
+    }
+
 }
 
 
@@ -153,14 +164,40 @@ afterEvaluate {
     println(components*.name)
     publishing {
         publications {
-            appProdRelease(MavenPublication) {
-                from components.appProdRelease
+//            appProdRelease(MavenPublication) {
+//                from components.appProdRelease
+//                groupId = 'com.github.Ashwani-dev123'
+//                artifactId = 'NarayanAds'
+//                version = '1.2.7'
+//            }
+//            appDevRelease(MavenPublication) {
+//                from components.appDevRelease
+//                groupId = 'com.github.Ashwani-dev123'
+//                artifactId = 'NarayanAds'
+//                version = '1.2.7'
+//            }
+            appDevRelease(MavenPublication) {
+                from components.findByName('appDevRelease')
                 groupId = 'com.github.Ashwani-dev123'
                 artifactId = 'NarayanAds'
                 version = '1.2.7'
             }
-            appDevRelease(MavenPublication) {  // Add this block
-                from components.appDevRelease
+            appProdRelease(MavenPublication) {
+                from components.findByName('appProdRelease')
+                groupId = 'com.github.Ashwani-dev123'
+                artifactId = 'NarayanAds'
+                version = '1.2.7'
+            }
+
+            // Debug variants
+            appDevDebug(MavenPublication) {
+                from components.findByName('appDevDebug')
+                groupId = 'com.github.Ashwani-dev123'
+                artifactId = 'NarayanAds'
+                version = '1.2.7'
+            }
+            appProdDebug(MavenPublication) {
+                from components.findByName('appProdDebug')
                 groupId = 'com.github.Ashwani-dev123'
                 artifactId = 'NarayanAds'
                 version = '1.2.7'
