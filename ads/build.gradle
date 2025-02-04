@@ -176,7 +176,8 @@ afterEvaluate {
 //                artifactId = 'NarayanAds'
 //                version = '1.2.7'
 //            }
-            appProdRelease(MavenPublication) {
+
+            appProductRelease(MavenPublication) {
                 from components.findByName('appProductRelease')
                 groupId = 'com.github.Ashwani-dev123'
                 artifactId = 'NarayanAds'
@@ -189,7 +190,7 @@ afterEvaluate {
                 version = '1.2.8'
             }
             // Debug variants
-            appProdDebug(MavenPublication) {
+            appProductDebug(MavenPublication) {
                 from components.findByName('appProductDebug')
                 groupId = 'com.github.Ashwani-dev123'
                 artifactId = 'NarayanAds'
@@ -201,6 +202,32 @@ afterEvaluate {
                 artifactId = 'NarayanAds'
                 version = '1.2.8'
             }
+
+//            appProdRelease(MavenPublication) {
+//                from components.findByName('appProductRelease')
+//                groupId = 'com.github.Ashwani-dev123'
+//                artifactId = 'NarayanAds'
+//                version = '1.2.8'
+//            }
+//            appDevRelease(MavenPublication) {
+//                from components.findByName('appDevRelease')
+//                groupId = 'com.github.Ashwani-dev123'
+//                artifactId = 'NarayanAds'
+//                version = '1.2.8'
+//            }
+//            // Debug variants
+//            appProdDebug(MavenPublication) {
+//                from components.findByName('appProductDebug')
+//                groupId = 'com.github.Ashwani-dev123'
+//                artifactId = 'NarayanAds'
+//                version = '1.2.8'
+//            }
+//            appDevDebug(MavenPublication) {
+//                from components.findByName('appDevDebug')
+//                groupId = 'com.github.Ashwani-dev123'
+//                artifactId = 'NarayanAds'
+//                version = '1.2.8'
+//            }
         }
     }
 }
