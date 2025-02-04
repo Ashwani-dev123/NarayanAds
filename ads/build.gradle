@@ -24,10 +24,6 @@ android {
             minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
-        debug {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-        }
         productFlavors {
 
         }
@@ -36,7 +32,6 @@ android {
     flavorDimensions "default"
     productFlavors {
         appDev {
-            dimension "default"
             //use id test when dev
             manifestPlaceholders = [ ad_app_id:"ca-app-pub-3940256099942544~3347511713"]
             buildConfigField "String", "ad_interstitial_splash", "\"ca-app-pub-3940256099942544/1033173712\""
@@ -54,8 +49,7 @@ android {
             buildConfigField "String", "ad_native_medium", "\"ca-app-pub-3940256099942544/1044960115\""
 
         }
-        appProduct {
-            dimension "default"
+        appProd {
             //add your id ad here
             manifestPlaceholders = [ ad_app_id:"ca-app-pub-3940256099942544~3347511713"]
             buildConfigField "String", "ad_interstitial_splash", "\"ca-app-pub-3940256099942544/1033173712\""
@@ -79,17 +73,6 @@ android {
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_17
         targetCompatibility JavaVersion.VERSION_17
-    }
-
-    publishing {
-        singleVariant('release') {
-            withSourcesJar()
-            withJavadocJar()
-        }
-        singleVariant('debug') {
-            withSourcesJar()
-            withJavadocJar()
-        }
     }
 
 }
@@ -168,66 +151,45 @@ afterEvaluate {
 //                from components.appProdRelease
 //                groupId = 'com.github.Ashwani-dev123'
 //                artifactId = 'NarayanAds'
-//                version = '1.2.7'
+//                version = '1.0.7'
 //            }
-//            appDevRelease(MavenPublication) {
+//            appDevRelease(MavenPublication) {  // Add this block
 //                from components.appDevRelease
 //                groupId = 'com.github.Ashwani-dev123'
 //                artifactId = 'NarayanAds'
-//                version = '1.2.7'
+//                version = '1.0.7'
 //            }
-
-            appProductRelease(MavenPublication) {
-                from components.findByName('appProductRelease')
+            // Ensure appProdRelease is published
+            appProdRelease(MavenPublication) {
+                from components.findByName("appProdRelease")
                 groupId = 'com.github.Ashwani-dev123'
                 artifactId = 'NarayanAds'
-                version = '1.2.8'
+                version = '1.2.7'
             }
+
+            // Ensure appDevRelease is published
             appDevRelease(MavenPublication) {
-                from components.findByName('appDevRelease')
+                from components.findByName("appDevRelease")
                 groupId = 'com.github.Ashwani-dev123'
                 artifactId = 'NarayanAds'
-                version = '1.2.8'
-            }
-            // Debug variants
-            appProductDebug(MavenPublication) {
-                from components.findByName('appProductDebug')
-                groupId = 'com.github.Ashwani-dev123'
-                artifactId = 'NarayanAds'
-                version = '1.2.8'
-            }
-            appDevDebug(MavenPublication) {
-                from components.findByName('appDevDebug')
-                groupId = 'com.github.Ashwani-dev123'
-                artifactId = 'NarayanAds'
-                version = '1.2.8'
+                version = '1.2.7'
             }
 
-//            appProdRelease(MavenPublication) {
-//                from components.findByName('appProductRelease')
-//                groupId = 'com.github.Ashwani-dev123'
-//                artifactId = 'NarayanAds'
-//                version = '1.2.8'
-//            }
-//            appDevRelease(MavenPublication) {
-//                from components.findByName('appDevRelease')
-//                groupId = 'com.github.Ashwani-dev123'
-//                artifactId = 'NarayanAds'
-//                version = '1.2.8'
-//            }
-//            // Debug variants
-//            appProdDebug(MavenPublication) {
-//                from components.findByName('appProductDebug')
-//                groupId = 'com.github.Ashwani-dev123'
-//                artifactId = 'NarayanAds'
-//                version = '1.2.8'
-//            }
-//            appDevDebug(MavenPublication) {
-//                from components.findByName('appDevDebug')
-//                groupId = 'com.github.Ashwani-dev123'
-//                artifactId = 'NarayanAds'
-//                version = '1.2.8'
-//            }
+            // Ensure debug variant is published for appDev
+            appDevDebug(MavenPublication) {
+                from components.findByName("appDevDebug")
+                groupId = 'com.github.Ashwani-dev123'
+                artifactId = 'NarayanAds'
+                version = '1.2.7-debug'
+            }
+
+            // Ensure debug variant is published for appProd (if needed)
+            appProdDebug(MavenPublication) {
+                from components.findByName("appProdDebug")
+                groupId = 'com.github.Ashwani-dev123'
+                artifactId = 'NarayanAds'
+                version = '1.2.7-debug'
+            }
         }
     }
 }
