@@ -54,7 +54,7 @@ android {
             buildConfigField "String", "ad_native_medium", "\"ca-app-pub-3940256099942544/1044960115\""
 
         }
-        appProd {
+        appProduct {
             dimension "default"
             //add your id ad here
             manifestPlaceholders = [ ad_app_id:"ca-app-pub-3940256099942544~3347511713"]
@@ -176,31 +176,30 @@ afterEvaluate {
 //                artifactId = 'NarayanAds'
 //                version = '1.2.7'
 //            }
+            appProdRelease(MavenPublication) {
+                from components.findByName('appProductRelease')
+                groupId = 'com.github.Ashwani-dev123'
+                artifactId = 'NarayanAds'
+                version = '1.2.8'
+            }
             appDevRelease(MavenPublication) {
                 from components.findByName('appDevRelease')
                 groupId = 'com.github.Ashwani-dev123'
                 artifactId = 'NarayanAds'
-                version = '1.2.7'
+                version = '1.2.8'
             }
-            appProdRelease(MavenPublication) {
-                from components.findByName('appProdRelease')
+            // Debug variants
+            appProdDebug(MavenPublication) {
+                from components.findByName('appProductDebug')
                 groupId = 'com.github.Ashwani-dev123'
                 artifactId = 'NarayanAds'
-                version = '1.2.7'
+                version = '1.2.8'
             }
-
-            // Debug variants
             appDevDebug(MavenPublication) {
                 from components.findByName('appDevDebug')
                 groupId = 'com.github.Ashwani-dev123'
                 artifactId = 'NarayanAds'
-                version = '1.2.7'
-            }
-            appProdDebug(MavenPublication) {
-                from components.findByName('appProdDebug')
-                groupId = 'com.github.Ashwani-dev123'
-                artifactId = 'NarayanAds'
-                version = '1.2.7'
+                version = '1.2.8'
             }
         }
     }
