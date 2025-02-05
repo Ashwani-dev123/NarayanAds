@@ -11,6 +11,7 @@ import android.net.NetworkRequest
 import android.os.Build
 import android.os.Handler
 import android.os.Looper
+import androidx.annotation.RequiresApi
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
@@ -127,6 +128,7 @@ private val networkCallback = object : ConnectivityManager.NetworkCallback() {
 }
 
 internal val Context.isOnlineApp: Boolean
+    @RequiresApi(Build.VERSION_CODES.M)
     get() {
         (getSystemService(ConnectivityManager::class.java)).let { connectivityManager ->
             connectivityManager.getNetworkCapabilities(connectivityManager.activeNetwork)?.let {
@@ -140,7 +142,8 @@ internal val Context.isOnlineApp: Boolean
     }
 //</editor-fold>
 
-internal fun initNetwork(fContext: Application) {
+ @RequiresApi(Build.VERSION_CODES.M)
+/*internal*/fun initNetwork(fContext: Application) {
     isInternetAvailable.value = fContext.isOnlineApp
     if (Build.VERSION.SDK_INT > Build.VERSION_CODES.M) {
         (fContext.getSystemService(ConnectivityManager::class.java)).requestNetwork(networkRequest, networkCallback)
