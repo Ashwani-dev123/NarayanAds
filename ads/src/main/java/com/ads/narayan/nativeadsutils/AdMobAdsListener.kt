@@ -2,7 +2,7 @@
 
 package com.ads.narayan.nativeadsutils
 
-interface NativeAdLoadCallback<T> {
+interface AdMobAdsListener<T> {
 
     /**
      * This method is called when your AD data was loaded successfully
