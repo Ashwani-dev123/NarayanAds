@@ -9,7 +9,7 @@ import com.google.android.gms.ads.LoadAdError
 import com.google.android.gms.ads.VideoOptions
 import com.google.android.gms.ads.nativead.NativeAd
 import com.google.android.gms.ads.nativead.NativeAdOptions
-import com.ads.narayan.nativeadsutils.AdMobAdsListener
+import com.ads.narayan.nativeadsutils.NativeAdLoadCallback
 import com.ads.narayan.nativeadsutils.AdStatusModel
 import com.ads.narayan.nativeadsutils.adRequestBuilder
 import com.ads.narayan.nativeadsutils.isAnyAdOpen
@@ -198,7 +198,7 @@ object NativeAdHelper {
             loadNewAd(
                 fContext = fContext,
                 fModel = fModel.apply {
-                    this.listener = object : AdMobAdsListener<NativeAd> {
+                    this.listener = object : NativeAdLoadCallback<NativeAd> {
 
                         override fun onAdLoaded(fLoadedAd: NativeAd) {
                             super.onAdLoaded(fLoadedAd)

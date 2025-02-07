@@ -5,6 +5,7 @@ import androidx.multidex.MultiDexApplication;
 import com.ads.narayan.config.NarayanAdConfig;
 import com.ads.narayan.util.AppUtil;
 import com.ads.narayan.util.SharePreferenceUtils;
+import com.google.android.gms.ads.MobileAds;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,6 +23,7 @@ public abstract class AdsMultiDexApplication extends MultiDexApplication {
             SharePreferenceUtils.setInstallTime(this);
         }
         AppUtil.currentTotalRevenue001Ad = SharePreferenceUtils.getCurrentTotalRevenue001Ad(this);
+        MobileAds.initialize(this);
     }
 
 
