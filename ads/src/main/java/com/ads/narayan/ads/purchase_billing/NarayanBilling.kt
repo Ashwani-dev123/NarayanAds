@@ -10,10 +10,14 @@ import com.ads.narayan.ads.purchase_billing.util.*
 import com.ads.narayan.ads.purchase_billing.util.checkResponse
 import com.ads.narayan.ads.purchase_billing.util.mapToProductDetail
 import com.android.billingclient.api.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 //import com.ads.narayan.ads.billingTest.util.*
 //import com.android.billingclient.api.*
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.receiveAsFlow
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 //import kotlinx.coroutines.flow.*
 
@@ -86,7 +90,7 @@ class NarayanBilling {
 
         billingClient = BillingClient.newBuilder(application.applicationContext)
             .setListener(purchaseListener)
-            .enablePendingPurchases()
+            .enablePendingPurchases( PendingPurchasesParams.newBuilder().build())
             .build()
 
         connectionListener(listener)
@@ -147,24 +151,73 @@ class NarayanBilling {
     }
 
 
+//    fun checkPurchaseHistory(listener: PurchaseHistoryListener) {
+//
+//        val params = QueryPurchaseHistoryParams.newBuilder()
+//            .setProductType(BillingClient.ProductType.INAPP)
+//            .setProductType(BillingClient.ProductType.SUBS)
+//            .build()
+//
+//        billingClient.queryPurchaseHistoryAsync(params) { result, history ->
+//            if (result.checkResponse()) {
+//                listener.onCheckPurchaseHistory(
+//                    result.toIapResult(),
+//                    history.toNonNull().toPurchaseHistory()
+//                )
+//                return@queryPurchaseHistoryAsync
+//            }
+//            listener.onCheckPurchaseHistory(result.toIapResult(), emptyList())
+//        }
+//    }
+
     fun checkPurchaseHistory(listener: PurchaseHistoryListener) {
 
-        val params = QueryPurchaseHistoryParams.newBuilder()
+        val params = QueryPurchasesParams.newBuilder()
             .setProductType(BillingClient.ProductType.INAPP)
-            .setProductType(BillingClient.ProductType.SUBS)
             .build()
 
-        billingClient.queryPurchaseHistoryAsync(params) { result, history ->
-            if (result.checkResponse()) {
+        billingClient.queryPurchasesAsync(params) { billingResult, purchases ->
+
+            if (billingResult.checkResponse()) {
+
+                val converted = purchases.toNonNull().mapToPurchaseIap()
+
                 listener.onCheckPurchaseHistory(
-                    result.toIapResult(),
-                    history.toNonNull().toPurchaseHistory()
+                    billingResult.toIapResult(),
+                    converted
                 )
-                return@queryPurchaseHistoryAsync
+            } else {
+                listener.onCheckPurchaseHistory(
+                    billingResult.toIapResult(),
+                    emptyList()
+                )
             }
-            listener.onCheckPurchaseHistory(result.toIapResult(), emptyList())
         }
     }
+
+
+
+
+//fun checkPurchaseHistory(listener: PurchaseHistoryListener) {
+//
+//    val params = QueryPurchaseHistoryParams.newBuilder()
+//        .setProductType(BillingClient.ProductType.INAPP)
+//        .build()
+//
+//    billingClient.queryPurchaseHistoryAsync(params) { billingResult, historyList ->
+//
+//        if (billingResult.checkResponse()) {
+//            listener.onCheckPurchaseHistory(
+//                billingResult.toIapResult(),
+//                historyList.toNonNull().toPurchaseHistory()
+//            )
+//            return@queryPurchaseHistoryAsync
+//        }
+//
+//        listener.onCheckPurchaseHistory(billingResult.toIapResult(), emptyList())
+//    }
+//}
+
 
 
     private fun connectionListener(listener: ConnectionListener?) {

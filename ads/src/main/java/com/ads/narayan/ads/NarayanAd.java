@@ -72,6 +72,8 @@ import com.google.android.gms.ads.rewarded.RewardItem;
 import com.google.android.gms.ads.rewarded.RewardedAd;
 import com.google.android.gms.ads.rewardedinterstitial.RewardedInterstitialAd;
 
+import java.util.Date;
+
 public class NarayanAd {
     public static final String TAG_ADJUST = "NarayanAdjust";
     public static final String TAG = "NarayanAd";
@@ -181,63 +183,57 @@ public class NarayanAd {
             initCallback.initAdSuccess();
     }
 
-    private void setupAdjust(Boolean buildDebug, String adjustToken) {
+     private void setupAdjust(boolean buildDebug, String adjustToken) {
 
-        String environment = buildDebug ? AdjustConfig.ENVIRONMENT_SANDBOX : AdjustConfig.ENVIRONMENT_PRODUCTION;
-        Log.i("Application", "setupAdjust: " + environment);
-        AdjustConfig config = new AdjustConfig(adConfig.getApplication(), adjustToken, environment);
+         String environment = buildDebug
+                 ? AdjustConfig.ENVIRONMENT_SANDBOX
+                 : AdjustConfig.ENVIRONMENT_PRODUCTION;
 
-        // Change the log level.
-        config.setLogLevel(LogLevel.VERBOSE);
-        config.setPreinstallTrackingEnabled(true);
-        config.setOnAttributionChangedListener(new OnAttributionChangedListener() {
-            @Override
-            public void onAttributionChanged(AdjustAttribution attribution) {
-                Log.e(TAG_ADJUST, "Attribution callback called!");
-                Log.e(TAG_ADJUST, "Attribution: " + attribution.toString());
-            }
-        });
+         Log.i("Application", "setupAdjust: " + environment);
 
-        // Set event success tracking delegate.
-        config.setOnEventTrackingSucceededListener(new OnEventTrackingSucceededListener() {
-            @Override
-            public void onFinishedEventTrackingSucceeded(AdjustEventSuccess eventSuccessResponseData) {
-                Log.e(TAG_ADJUST, "Event success callback called!");
-                Log.e(TAG_ADJUST, "Event success data: " + eventSuccessResponseData.toString());
-            }
-        });
-        // Set event failure tracking delegate.
-        config.setOnEventTrackingFailedListener(new OnEventTrackingFailedListener() {
-            @Override
-            public void onFinishedEventTrackingFailed(AdjustEventFailure eventFailureResponseData) {
-                Log.e(TAG_ADJUST, "Event failure callback called!");
-                Log.e(TAG_ADJUST, "Event failure data: " + eventFailureResponseData.toString());
-            }
-        });
+         AdjustConfig config = new AdjustConfig(
+                 adConfig.getApplication(),
+                 adjustToken,
+                 environment
+         );
 
-        // Set session success tracking delegate.
-        config.setOnSessionTrackingSucceededListener(new OnSessionTrackingSucceededListener() {
-            @Override
-            public void onFinishedSessionTrackingSucceeded(AdjustSessionSuccess sessionSuccessResponseData) {
-                Log.e(TAG_ADJUST, "Session success callback called!");
-                Log.e(TAG_ADJUST, "Session success data: " + sessionSuccessResponseData.toString());
-            }
-        });
+// Log level
+         config.setLogLevel(LogLevel.VERBOSE);
 
-        // Set session failure tracking delegate.
-        config.setOnSessionTrackingFailedListener(new OnSessionTrackingFailedListener() {
-            @Override
-            public void onFinishedSessionTrackingFailed(AdjustSessionFailure sessionFailureResponseData) {
-                Log.e(TAG_ADJUST, "Session failure callback called!");
-                Log.e(TAG_ADJUST, "Session failure data: " + sessionFailureResponseData.toString());
-            }
-        });
+// Attribution callback
+         config.setOnAttributionChangedListener(attribution ->
+                 Log.e(TAG_ADJUST, "Attribution: " + attribution)
+         );
+
+// Event success
+         config.setOnEventTrackingSucceededListener(success ->
+                 Log.e(TAG_ADJUST, "Event success: " + success)
+         );
+
+// Event failure
+         config.setOnEventTrackingFailedListener(failure ->
+                 Log.e(TAG_ADJUST, "Event failure: " + failure)
+         );
+
+// Session success
+         config.setOnSessionTrackingSucceededListener(success ->
+                 Log.e(TAG_ADJUST, "Session success: " + success)
+         );
+
+// Session failure
+         config.setOnSessionTrackingFailedListener(failure ->
+                 Log.e(TAG_ADJUST, "Session failure: " + failure)
+         );
+
+// ⭐ Initialize Adjust using initSdk (NOT onCreate)
+         Adjust.initSdk(config);
+
+// Register lifecycle callbacks (required)
+         adConfig.getApplication().registerActivityLifecycleCallbacks(new AdjustLifecycleCallbacks());
 
 
-        config.setSendInBackground(true);
-        Adjust.onCreate(config);
-        adConfig.getApplication().registerActivityLifecycleCallbacks(new AdjustLifecycleCallbacks());
-    }
+     }
+
 
     private static final class AdjustLifecycleCallbacks implements Application.ActivityLifecycleCallbacks {
         @Override
@@ -1395,26 +1391,103 @@ public class NarayanAd {
      */
     public void forceShowInterstitial(@NonNull Context context, NarayanInterstitialAd mInterstitialAd,
                                       @NonNull final NarayanAdCallback callback, boolean shouldReloadAds) {
-        if (System.currentTimeMillis() - SharePreferenceUtils.getLastImpressionInterstitialTime(context)
-                < NarayanAd.getInstance().adConfig.getIntervalInterstitialAd() * 1000L
-        ) {
-            Log.i(TAG, "forceShowInterstitial: ignore by interval impression interstitial time");
+
+        // === COMPREHENSIVE DEBUGGING ===
+        long lastImpressionTime = SharePreferenceUtils.getLastImpressionInterstitialTime(context);
+        long currentTime = System.currentTimeMillis();
+        long interval = NarayanAd.getInstance().adConfig.getIntervalInterstitialAd() * 1000L;
+        long timeSinceLastImpression = currentTime - lastImpressionTime;
+
+        Log.e(TAG, "=== FORCE SHOW INTERSTITIAL DEBUG ===");
+        Log.e(TAG, "Last impression time: " + lastImpressionTime + " (" + new Date(lastImpressionTime) + ")");
+        Log.e(TAG, "Current time: " + currentTime + " (" + new Date(currentTime) + ")");
+        Log.e(TAG, "Interval setting: " + interval + " ms (" + (interval/1000) + " seconds)");
+        Log.e(TAG, "Time since last impression: " + timeSinceLastImpression + " ms (" + (timeSinceLastImpression/1000) + " seconds)");
+        Log.e(TAG, "mInterstitialAd is null: " + (mInterstitialAd == null));
+
+        if (mInterstitialAd != null) {
+            Log.e(TAG, "mInterstitialAd.isNotReady(): " + mInterstitialAd.isNotReady());
+            Log.e(TAG, "mInterstitialAd.isReady(): " + mInterstitialAd.isReady());
+            if (mInterstitialAd.getInterstitialAd() != null) {
+                Log.e(TAG, "AdMob InterstitialAd is not null");
+            } else if (mInterstitialAd.getMaxInterstitialAd() != null) {
+                Log.e(TAG, "Max InterstitialAd is not null");
+            } else {
+                Log.e(TAG, "Both AdMob and Max interstitial ads are null!");
+            }
+        }
+
+        // Check interval condition
+        if (timeSinceLastImpression < interval) {
+            Log.e(TAG, "❌ SKIP REASON: Interval not met - " + timeSinceLastImpression + " < " + interval);
+            Log.e(TAG, "Need to wait: " + (interval - timeSinceLastImpression) + " ms more");
+            callback.onNextAction();
+            return;
+        } else {
+            Log.e(TAG, "✅ Interval check PASSED");
+        }
+
+        // Check ad readiness condition
+        if (mInterstitialAd == null) {
+            Log.e(TAG, "❌ SKIP REASON: mInterstitialAd is NULL");
             callback.onNextAction();
             return;
         }
-        if (mInterstitialAd == null || mInterstitialAd.isNotReady()) {
-            Log.e(TAG, "forceShowInterstitial: ApInterstitialAd is not ready");
+
+        if (mInterstitialAd.isNotReady()) {
+            Log.e(TAG, "❌ SKIP REASON: Ad is NOT READY");
+            Log.e(TAG, "Ad details - Admob: " + (mInterstitialAd.getInterstitialAd() != null));
+            Log.e(TAG, "Ad details - Max: " + (mInterstitialAd.getMaxInterstitialAd() != null));
             callback.onNextAction();
             return;
+        } else {
+            Log.e(TAG, "✅ Ad readiness check PASSED");
         }
+
+        Log.e(TAG, "isPurchased: " + AppPurchase.getInstance().isPurchased());
+
+        // Check purchase status
+        if (AppPurchase.getInstance().isPurchased()) {
+            Log.e(TAG, "❌ SKIP REASON: User has purchased - no ads");
+            callback.onNextAction();
+            return;
+        } else {
+            Log.e(TAG, "✅ Purchase check PASSED");
+        }
+
+        Log.e(TAG, "=== PROCEEDING TO SHOW AD ===");
+
         switch (adConfig.getMediationProvider()) {
             case NarayanAdConfig.PROVIDER_ADMOB:
+                Log.e(TAG, "Using AdMob provider");
+                if (mInterstitialAd.getInterstitialAd() == null) {
+                    Log.e(TAG, "❌ AdMob interstitial is null!");
+                    callback.onNextAction();
+                    return;
+                }
+
+                // Check if context is Activity
+                if (!(context instanceof Activity)) {
+                    Log.e(TAG, "❌ Context is not Activity, cannot show ad");
+                    callback.onAdFailedToShow(new NarayanAdError("Context is not Activity"));
+                    return;
+                }
+
                 AdCallback adCallback = new AdCallback() {
+                    private boolean adShown = false;
+                    private boolean adCompleted = false;
+
                     @Override
                     public void onAdClosed() {
+                        Log.e(TAG, "AdCallback: onAdClosed");
+                        if (adCompleted) return;
+                        adCompleted = true;
+
                         super.onAdClosed();
-                        Log.e(TAG, "onAdClosed: ");
                         callback.onAdClosed();
+                        // Update last impression time
+                        SharePreferenceUtils.setLastImpressionInterstitialTime(context);
+
                         if (shouldReloadAds) {
                             Admob.getInstance().getInterstitialAds(context, mInterstitialAd.getInterstitialAd().getAdUnitId(), new AdCallback() {
                                 @Override
@@ -1431,13 +1504,6 @@ public class NarayanAd {
                                     mInterstitialAd.setInterstitialAd(null);
                                     callback.onAdFailedToLoad(new NarayanAdError(i));
                                 }
-
-                                @Override
-                                public void onAdFailedToShow(@Nullable AdError adError) {
-                                    super.onAdFailedToShow(adError);
-                                    callback.onAdFailedToShow(new NarayanAdError(adError));
-                                }
-
                             });
                         } else {
                             mInterstitialAd.setInterstitialAd(null);
@@ -1446,68 +1512,74 @@ public class NarayanAd {
 
                     @Override
                     public void onNextAction() {
-                        super.onNextAction();
-                        Log.e(TAG, "onNextAction: ");
-                        callback.onNextAction();
-                    }
+                        Log.e(TAG, "AdCallback: onNextAction");
+                        if (adCompleted) return;
 
-                    @Override
-                    public void onAdFailedToShow(@Nullable AdError adError) {
-                        super.onAdFailedToShow(adError);
-                        Log.e(TAG, "onAdFailedToShow: ");
-                        callback.onAdFailedToShow(new NarayanAdError(adError));
-                        if (shouldReloadAds) {
-                            Admob.getInstance().getInterstitialAds(context, mInterstitialAd.getInterstitialAd().getAdUnitId(), new AdCallback() {
-                                @Override
-                                public void onInterstitialLoad(@Nullable InterstitialAd interstitialAd) {
-                                    super.onInterstitialLoad(interstitialAd);
-                                    Log.e(TAG, "Admob shouldReloadAds success");
-                                    mInterstitialAd.setInterstitialAd(interstitialAd);
-                                    callback.onInterstitialLoad(mInterstitialAd);
-                                }
-
-                                @Override
-                                public void onAdFailedToLoad(@Nullable LoadAdError i) {
-                                    super.onAdFailedToLoad(i);
-                                    callback.onAdFailedToLoad(new NarayanAdError(i));
-                                }
-
-                                @Override
-                                public void onAdFailedToShow(@Nullable AdError adError) {
-                                    super.onAdFailedToShow(adError);
-                                    callback.onAdFailedToShow(new NarayanAdError(adError));
-                                }
-
-                            });
-                        } else {
-                            mInterstitialAd.setInterstitialAd(null);
+                        // Only call onNextAction if ad was never shown
+                        if (!adShown) {
+                            super.onNextAction();
+                            callback.onNextAction();
                         }
                     }
 
                     @Override
+                    public void onAdFailedToShow(@Nullable AdError adError) {
+                        Log.e(TAG, "AdCallback: onAdFailedToShow - " + (adError != null ? adError.getMessage() : "Unknown"));
+                        if (adCompleted) return;
+                        adCompleted = true;
+
+                        super.onAdFailedToShow(adError);
+                        callback.onAdFailedToShow(new NarayanAdError(adError));
+
+                        // Don't reload here since the ad failed to show
+                        mInterstitialAd.setInterstitialAd(null);
+                    }
+
+                    @Override
                     public void onAdClicked() {
+                        Log.e(TAG, "AdCallback: onAdClicked");
                         super.onAdClicked();
                         callback.onAdClicked();
                     }
 
                     @Override
                     public void onInterstitialShow() {
+                        Log.e(TAG, "AdCallback: onInterstitialShow - AD IS DISPLAYING!");
+                        adShown = true;
                         super.onInterstitialShow();
                         callback.onInterstitialShow();
+                        // Update last impression time when ad actually shows
+                        SharePreferenceUtils.setLastImpressionInterstitialTime(context);
                     }
                 };
-                Admob.getInstance().forceShowInterstitial(context, mInterstitialAd.getInterstitialAd(), adCallback);
+
+                Log.e(TAG, "Calling Admob.forceShowInterstitial");
+                try {
+                    Admob.getInstance().forceShowInterstitial(context, mInterstitialAd.getInterstitialAd(), adCallback);
+                } catch (Exception e) {
+                    Log.e(TAG, "❌ Exception calling forceShowInterstitial: " + e.getMessage());
+                    callback.onAdFailedToShow(new NarayanAdError(e.getMessage()));
+                }
                 break;
+
             case NarayanAdConfig.PROVIDER_MAX:
+                Log.e(TAG, "Using Max provider");
+                if (mInterstitialAd.getMaxInterstitialAd() == null) {
+                    Log.e(TAG, "❌ Max interstitial is null!");
+                    callback.onNextAction();
+                    return;
+                }
+
                 AppLovin.getInstance().forceShowInterstitial(context, mInterstitialAd.getMaxInterstitialAd(), new AdCallback() {
                     @Override
                     public void onAdClosed() {
                         super.onAdClosed();
                         callback.onAdClosed();
-                        callback.onNextAction();
-                        if (shouldReloadAds)
-                            mInterstitialAd.getMaxInterstitialAd().loadAd();
+                        SharePreferenceUtils.setLastImpressionInterstitialTime(context);
 
+                        if (shouldReloadAds) {
+                            mInterstitialAd.getMaxInterstitialAd().loadAd();
+                        }
                     }
 
                     @Override
@@ -1520,8 +1592,10 @@ public class NarayanAd {
                     public void onAdFailedToShow(@Nullable AdError adError) {
                         super.onAdFailedToShow(adError);
                         callback.onAdFailedToShow(new NarayanAdError(adError));
-                        if (shouldReloadAds)
+
+                        if (shouldReloadAds) {
                             mInterstitialAd.getMaxInterstitialAd().loadAd();
+                        }
                     }
 
                     @Override
@@ -1534,8 +1608,10 @@ public class NarayanAd {
                     public void onInterstitialShow() {
                         super.onInterstitialShow();
                         callback.onInterstitialShow();
+                        SharePreferenceUtils.setLastImpressionInterstitialTime(context);
                     }
                 }, false);
+                break;
         }
     }
 

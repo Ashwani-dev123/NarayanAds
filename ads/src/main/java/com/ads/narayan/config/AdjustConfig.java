@@ -1,17 +1,11 @@
 package com.ads.narayan.config;
 
-
 public class AdjustConfig {
 
     private boolean enableAdjust = false;
 
-
     private String adjustToken = "";
-
-
     private String eventNamePurchase = "";
-
-
     private String eventAdImpression = "";
 
     public AdjustConfig(boolean enableAdjust) {

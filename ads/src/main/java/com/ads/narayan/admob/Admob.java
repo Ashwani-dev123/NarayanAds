@@ -385,6 +385,7 @@ public class Admob {
             }
             return;
         }
+
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
@@ -426,8 +427,6 @@ public class Admob {
             handlerTimeout.postDelayed(rdTimeout, timeOut);
         }
 
-//        if (isShowLoadingSplash)
-//            return;
         isShowLoadingSplash = true;
         getInterstitialAds(context, id, new AdCallback() {
             @Override
@@ -453,7 +452,7 @@ public class Admob {
                 super.onAdFailedToShow(adError);
                 if (adListener != null) {
                     adListener.onAdFailedToShow(adError);
-                    adListener.onNextAction();
+                    // DON'T call onNextAction here - let the caller handle it
                 }
             }
 
@@ -464,7 +463,7 @@ public class Admob {
                 if (isTimeout)
                     return;
                 if (adListener != null) {
-                    adListener.onNextAction();
+                    // DON'T call onNextAction here - let the caller handle it
                     if (handlerTimeout != null && rdTimeout != null) {
                         handlerTimeout.removeCallbacks(rdTimeout);
                     }
@@ -473,8 +472,23 @@ public class Admob {
                     adListener.onAdFailedToLoad(i);
                 }
             }
-        });
 
+            @Override
+            public void onAdLoaded() {
+                super.onAdLoaded();
+                if (adListener != null) {
+                    adListener.onAdLoaded();
+                }
+            }
+
+            @Override
+            public void onAdClicked() {
+                super.onAdClicked();
+                if (adListener != null) {
+                    adListener.onAdClicked();
+                }
+            }
+        });
     }
 
 
@@ -714,16 +728,18 @@ public class Admob {
 
     public void onShowSplash(AppCompatActivity activity, AdCallback adListener) {
         isShowLoadingSplash = true;
-        Log.e(TAG, "onShowSplash: ");
+        Log.e(TAG, "onShowSplash: Starting to show splash ad");
 
         if (mInterstitialSplash == null) {
+            Log.e(TAG, "onShowSplash: mInterstitialSplash is null, calling onNextAction");
             adListener.onNextAction();
             return;
         }
 
+        Log.e(TAG, "onShowSplash: Ad is available, setting up callbacks");
+
         mInterstitialSplash.setOnPaidEventListener(adValue -> {
             Log.e(TAG, "OnPaidEvent splash:" + adValue.getValueMicros());
-
             NarayanLogEventManager.logPaidAdImpression(context,
                     adValue,
                     mInterstitialSplash.getAdUnitId(),
@@ -739,13 +755,18 @@ public class Admob {
             adListener.onAdLoaded();
         }
 
+        // Set up the full screen content callback FIRST
         mInterstitialSplash.setFullScreenContentCallback(new FullScreenContentCallback() {
             @Override
             public void onAdShowedFullScreenContent() {
-                Log.e(TAG, " Splash:onAdShowedFullScreenContent ");
+                Log.e(TAG, "🎉 Splash:onAdShowedFullScreenContent - AD IS NOW VISIBLE!");
                 AppOpenManager.getInstance().setInterstitialShowing(true);
                 AppOpenManager.getInstance().disableAppResume();
                 isShowLoadingSplash = false;
+
+                if (adListener != null) {
+                    adListener.onInterstitialShow();
+                }
             }
 
             @Override
@@ -755,10 +776,10 @@ public class Admob {
                 AppOpenManager.getInstance().enableAppResume();
                 mInterstitialSplash = null;
                 if (adListener != null) {
+                    adListener.onAdClosed();
                     if (!openActivityAfterShowInterAds) {
                         adListener.onNextAction();
                     }
-                    adListener.onAdClosed();
 
                     if (dialog != null) {
                         dialog.dismiss();
@@ -769,7 +790,7 @@ public class Admob {
 
             @Override
             public void onAdFailedToShowFullScreenContent(@NonNull AdError adError) {
-                Log.e(TAG, "Splash onAdFailedToShowFullScreenContent: " + adError.getMessage());
+                Log.e(TAG, "❌ Splash onAdFailedToShowFullScreenContent: " + adError.getMessage());
                 mInterstitialSplash = null;
                 isShowLoadingSplash = false;
                 if (adListener != null) {
@@ -787,37 +808,52 @@ public class Admob {
             @Override
             public void onAdClicked() {
                 super.onAdClicked();
+                Log.e(TAG, "Splash: onAdClicked");
                 if (disableAdResumeWhenClickAds)
                     AppOpenManager.getInstance().disableAdResumeByClickAction();
                 NarayanLogEventManager.logClickAdsEvent(context, mInterstitialSplash.getAdUnitId());
+                if (adListener != null) {
+                    adListener.onAdClicked();
+                }
             }
 
             @Override
             public void onAdImpression() {
                 super.onAdImpression();
+                Log.e(TAG, "Splash: onAdImpression");
                 if (adListener != null) {
                     adListener.onAdImpression();
                 }
             }
         });
 
+        // Check if we can show the ad
         if (ProcessLifecycleOwner.get().getLifecycle().getCurrentState().isAtLeast(Lifecycle.State.RESUMED)) {
+            Log.e(TAG, "onShowSplash: App is in foreground, proceeding to show ad");
+
             try {
                 if (dialog != null && dialog.isShowing())
                     dialog.dismiss();
                 dialog = new PrepareLoadingAdsDialog(activity);
                 try {
+                    Log.e(TAG, "onShowSplash: Showing loading dialog");
                     dialog.show();
                 } catch (Exception e) {
+                    Log.e(TAG, "onShowSplash: Failed to show dialog: " + e.getMessage());
                     adListener.onNextAction();
                     return;
                 }
             } catch (Exception e) {
                 dialog = null;
+                Log.e(TAG, "onShowSplash: Dialog exception: " + e.getMessage());
                 e.printStackTrace();
             }
+
+            // Show the ad after a short delay
             new Handler().postDelayed(() -> {
                 if (activity.getLifecycle().getCurrentState().isAtLeast(Lifecycle.State.RESUMED)) {
+                    Log.e(TAG, "onShowSplash: Activity is still resumed, showing ad");
+
                     if (openActivityAfterShowInterAds && adListener != null) {
                         adListener.onNextAction();
                         new Handler().postDelayed(() -> {
@@ -825,29 +861,47 @@ public class Admob {
                                 dialog.dismiss();
                         }, 1500);
                     }
+
                     if (activity != null && mInterstitialSplash != null) {
-                        Log.i(TAG, "start show InterstitialAd " + activity.getLifecycle().getCurrentState().name() + "/" + ProcessLifecycleOwner.get().getLifecycle().getCurrentState().name());
-                        mInterstitialSplash.show(activity);
-                        isShowLoadingSplash = false;
-                    } else if (adListener != null) {
-                        if (dialog != null) {
-                            dialog.dismiss();
+                        Log.i(TAG, "🎯 START SHOWING INTERSTITIAL AD - " + activity.getLifecycle().getCurrentState().name());
+                        try {
+                            mInterstitialSplash.show(activity);
+                            Log.e(TAG, "✅ interstitialAd.show() called successfully");
+                        } catch (Exception e) {
+                            Log.e(TAG, "❌ Exception showing interstitial: " + e.getMessage());
+                            if (adListener != null) {
+                                adListener.onAdFailedToShow(new AdError(0, "Exception: " + e.getMessage(), "AdMob"));
+                            }
                         }
-                        adListener.onNextAction();
+                        isShowLoadingSplash = false;
+                    } else {
+                        Log.e(TAG, "❌ Activity or interstitial is null");
+                        if (adListener != null) {
+                            if (dialog != null) {
+                                dialog.dismiss();
+                            }
+                            adListener.onNextAction();
+                        }
                         isShowLoadingSplash = false;
                     }
                 } else {
+                    Log.e(TAG, "❌ Activity is not in resumed state anymore");
                     if (dialog != null && dialog.isShowing() && !activity.isDestroyed())
                         dialog.dismiss();
                     isShowLoadingSplash = false;
                     Log.e(TAG, "onShowSplash:   show fail in background after show loading ad");
-                    adListener.onAdFailedToShow(new AdError(0, " show fail in background after show loading ad", "NarayanAd"));
+                    if (adListener != null) {
+                        adListener.onAdFailedToShow(new AdError(0, " show fail in background after show loading ad", "NarayanAd"));
+                    }
                 }
             }, 800);
 
         } else {
+            Log.e(TAG, "❌ App is not in foreground, cannot show ad");
             isShowLoadingSplash = false;
-            Log.e(TAG, "onShowSplash: fail on background");
+            if (adListener != null) {
+                adListener.onNextAction();
+            }
         }
     }
 
@@ -1093,9 +1147,90 @@ public class Admob {
     }
 
 
+//    public void forceShowInterstitial(Context context, InterstitialAd mInterstitialAd, final AdCallback callback) {
+//        currentClicked = numShowAds;
+//        showInterstitialAdByTimes(context, mInterstitialAd, callback);
+//    }
+
     public void forceShowInterstitial(Context context, InterstitialAd mInterstitialAd, final AdCallback callback) {
+        Log.e("AdmobDebug", "=== Admob.forceShowInterstitial START ===");
         currentClicked = numShowAds;
-        showInterstitialAdByTimes(context, mInterstitialAd, callback);
+        if (mInterstitialAd == null) {
+            Log.e("AdmobDebug", "❌ interstitialAd is null");
+            if (callback != null) {
+                callback.onAdFailedToShow(new AdError(0, "InterstitialAd is null", "AdMob"));
+            }
+            return;
+        }
+
+        if (!(context instanceof Activity)) {
+            Log.e("AdmobDebug", "❌ Context is not Activity");
+            if (callback != null) {
+                callback.onAdFailedToShow(new AdError(0, "Context is not Activity", "AdMob"));
+            }
+            return;
+        }
+
+        Log.e("AdmobDebug", "InterstitialAd unitId: " + mInterstitialAd.getAdUnitId());
+        Log.e("AdmobDebug", "Context is Activity: " + (context instanceof Activity));
+
+        try {
+            // Set up the full screen content callback FIRST
+            mInterstitialAd.setFullScreenContentCallback(new FullScreenContentCallback() {
+                @Override
+                public void onAdDismissedFullScreenContent() {
+                    Log.e("AdmobDebug", "onAdDismissedFullScreenContent");
+                    if (callback != null) {
+                        callback.onAdClosed();
+                    }
+                }
+
+                @Override
+                public void onAdFailedToShowFullScreenContent(@NonNull AdError adError) {
+                    Log.e("AdmobDebug", "❌ onAdFailedToShowFullScreenContent: " + adError.getMessage());
+                    if (callback != null) {
+                        callback.onAdFailedToShow(adError);
+                    }
+                }
+
+                @Override
+                public void onAdShowedFullScreenContent() {
+                    Log.e("AdmobDebug", "🎉 onAdShowedFullScreenContent - AD IS VISIBLE!");
+                    if (callback != null) {
+                        callback.onInterstitialShow();
+                    }
+                }
+
+                @Override
+                public void onAdClicked() {
+                    Log.e("AdmobDebug", "onAdClicked");
+                    if (callback != null) {
+                        callback.onAdClicked();
+                    }
+                    NarayanLogEventManager.logClickAdsEvent(context, mInterstitialAd.getAdUnitId());
+                }
+
+                @Override
+                public void onAdImpression() {
+                    Log.e("AdmobDebug", "onAdImpression");
+                    if (callback != null) {
+                        callback.onAdImpression();
+                    }
+                }
+            });
+
+            // Show the ad directly - don't go through the complex chain
+            Log.e("AdmobDebug", "Calling interstitialAd.show() directly");
+            mInterstitialAd.show((Activity) context);
+            Log.e("AdmobDebug", "interstitialAd.show() called successfully");
+
+        } catch (Exception e) {
+            Log.e("AdmobDebug", "❌ Exception: " + e.getMessage());
+            e.printStackTrace();
+            if (callback != null) {
+                callback.onAdFailedToShow(new AdError(0, "Exception: " + e.getMessage(), "AdMob"));
+            }
+        }
     }
 
 
@@ -1109,7 +1244,8 @@ public class Admob {
                     dialog = new PrepareLoadingAdsDialog(context);
                     dialog.setCancelable(false);
                     try {
-                        callback.onInterstitialShow();
+                        // REMOVE THIS LINE - it's causing the issue
+                        // callback.onInterstitialShow();
                         dialog.show();
                     } catch (Exception e) {
                         callback.onNextAction();

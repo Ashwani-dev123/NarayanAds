@@ -5,14 +5,13 @@
     android:layout_height="match_parent"
     android:background="#FCFAF8">
 
-    <com.ads.narayan.widget.spinkit.SpinKitView
-        android:layout_centerInParent="true"
+    <com.github.ybq.android.spinkit.SpinKitView
         android:id="@+id/spin_kit"
-        style="@style/SpinKitView.Circle"
+        android:layout_centerInParent="true"
+        app:SpinKit_Style="Circle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        app:SpinKit_Color="#515151" />
+        app:SpinKit_Color="@color/gntGray" />
 
 
     <TextView

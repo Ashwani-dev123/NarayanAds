@@ -16,6 +16,9 @@ public class NarayanAdjust {
     public static boolean enableAdjust = false;
     private static String eventNamePurchase = "";
 
+    private static final String AD_REVENUE_ADMOB = "admob_sdk";
+    private static final String AD_REVENUE_APPLOVIN_MAX = "applovin_max_sdk";
+
     public static void setEventNamePurchase(String eventNamePurchase) {
         NarayanAdjust.eventNamePurchase = eventNamePurchase;
     }
@@ -53,7 +56,7 @@ public class NarayanAdjust {
 
     public static void pushTrackEventAdmob(AdValue adValue) {
         if (NarayanAdjust.enableAdjust) {
-            AdjustAdRevenue adRevenue = new AdjustAdRevenue(AdjustConfig.AD_REVENUE_ADMOB);
+            AdjustAdRevenue adRevenue = new AdjustAdRevenue(AD_REVENUE_ADMOB);
             adRevenue.setRevenue(adValue.getValueMicros() / 1000000.0, adValue.getCurrencyCode());
 
             Adjust.trackAdRevenue(adRevenue);
@@ -62,7 +65,7 @@ public class NarayanAdjust {
 
     public static void pushTrackEventApplovin(MaxAd ad, Context context) {
         if (NarayanAdjust.enableAdjust) {
-            AdjustAdRevenue adjustAdRevenue = new AdjustAdRevenue(AdjustConfig.AD_REVENUE_APPLOVIN_MAX);
+            AdjustAdRevenue adjustAdRevenue = new AdjustAdRevenue(AD_REVENUE_APPLOVIN_MAX);
             adjustAdRevenue.setRevenue(ad.getRevenue(), "USD");
             adjustAdRevenue.setAdRevenueNetwork(ad.getNetworkName());
             adjustAdRevenue.setAdRevenueUnit(ad.getAdUnitId());

@@ -1,5 +1,8 @@
 package com.ads.narayan.applovin;
 
+import static com.ads.narayan.applovin.AppLovinHelper.ADJUST_KEY;
+import static com.ads.narayan.applovin.AppLovinHelper.KEY_FIRST_TIME;
+
 import android.app.Activity;
 import android.app.Application;
 import android.content.Context;
@@ -40,6 +43,7 @@ import com.applovin.mediation.nativeAds.adPlacer.MaxAdPlacer;
 import com.applovin.mediation.nativeAds.adPlacer.MaxAdPlacerSettings;
 import com.applovin.mediation.nativeAds.adPlacer.MaxRecyclerAdapter;
 import com.applovin.sdk.AppLovinSdk;
+import com.applovin.sdk.AppLovinSdkInitializationConfiguration;
 import com.facebook.shimmer.ShimmerFrameLayout;
 
 import java.util.Calendar;
@@ -80,6 +84,20 @@ public class AppLovin {
     }
 
     public void init(Context context, AppLovinCallback adCallback) {
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+//            String processName = Application.getProcessName();
+//            String packageName = context.getPackageName();
+//            if (!packageName.equals(processName)) {
+//                WebView.setDataDirectorySuffix(processName);
+//            }
+//        }
+//        AppLovinSdk.getInstance(context).setMediationProvider("max");
+//        AppLovinSdk.initializeSdk(context, configuration -> {
+//            // AppLovin SDK is initialized, start loading ads
+//            Log.e(TAG, "init: applovin success");
+//            adCallback.initAppLovinSuccess();
+//        });
+//        this.context = context;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
             String processName = Application.getProcessName();
             String packageName = context.getPackageName();
@@ -87,16 +105,41 @@ public class AppLovin {
                 WebView.setDataDirectorySuffix(processName);
             }
         }
-        AppLovinSdk.getInstance(context).setMediationProvider("max");
-        AppLovinSdk.initializeSdk(context, configuration -> {
+
+        // Create initialization configuration AV check key
+        AppLovinSdkInitializationConfiguration initConfig =
+//                AppLovinSdkInitializationConfiguration.builder(BuildConfig.APPLOVIN_SDK_KEY, context)
+                AppLovinSdkInitializationConfiguration.builder(ADJUST_KEY, context)
+                        .build();
+
+        // Initialize SDK with the new method
+        AppLovinSdk.getInstance(context).initialize(initConfig, config -> {
             // AppLovin SDK is initialized, start loading ads
             Log.e(TAG, "init: applovin success");
             adCallback.initAppLovinSuccess();
         });
+
         this.context = context;
     }
 
     public void init(Context context, AppLovinCallback adCallback, Boolean enableDebug) {
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+//            String processName = Application.getProcessName();
+//            String packageName = context.getPackageName();
+//            if (!packageName.equals(processName)) {
+//                WebView.setDataDirectorySuffix(processName);
+//            }
+//        }
+//        if (enableDebug)
+//            AppLovinSdk.getInstance(context).showMediationDebugger();
+//        AppLovinSdk.getInstance(context).setMediationProvider("max");
+//        AppLovinSdk.initializeSdk(context, configuration -> {
+//            // AppLovin SDK is initialized, start loading ads
+//            Log.e(TAG, "init: applovin success");
+//            adCallback.initAppLovinSuccess();
+//        });
+//        this.context = context;
+
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
             String processName = Application.getProcessName();
             String packageName = context.getPackageName();
@@ -104,14 +147,26 @@ public class AppLovin {
                 WebView.setDataDirectorySuffix(processName);
             }
         }
-        if (enableDebug)
+
+        // Enable verbose logging if debug mode is enabled
+        AppLovinSdk.getInstance(context).getSettings().setVerboseLogging(enableDebug);
+
+        if (enableDebug) {
             AppLovinSdk.getInstance(context).showMediationDebugger();
-        AppLovinSdk.getInstance(context).setMediationProvider("max");
-        AppLovinSdk.initializeSdk(context, configuration -> {
+        }
+
+        // Create initialization configuration
+        AppLovinSdkInitializationConfiguration initConfig =
+                AppLovinSdkInitializationConfiguration.builder(ADJUST_KEY, context)
+                        .build();
+
+        // Initialize SDK with the new method
+        AppLovinSdk.getInstance(context).initialize(initConfig, config -> {
             // AppLovin SDK is initialized, start loading ads
             Log.e(TAG, "init: applovin success");
             adCallback.initAppLovinSuccess();
         });
+
         this.context = context;
     }
 

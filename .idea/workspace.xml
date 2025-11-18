@@ -10,13 +10,40 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e9a93abe-1ba6-4d3d-b9a4-37121a2a97f0" name="Changes" comment="Purchase listener">
-      <change beforePath="$PROJECT_DIR$/.gradle/7.5/checksums/checksums.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/7.5/checksums/checksums.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/7.5/fileHashes/fileHashes.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/7.5/fileHashes/fileHashes.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/7.5/fileHashes/fileHashes.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/7.5/fileHashes/fileHashes.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/7.5/checksums/checksums.lock" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/7.5/dependencies-accessors/dependencies-accessors.lock" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/7.5/dependencies-accessors/gc.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/7.5/executionHistory/executionHistory.bin" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/7.5/executionHistory/executionHistory.lock" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/7.5/fileChanges/last-build.bin" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/7.5/fileHashes/fileHashes.bin" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/7.5/fileHashes/fileHashes.lock" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/7.5/fileHashes/resourceHashesCache.bin" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/7.5/gc.properties" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/cache.properties" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/cache.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/file-system.probe" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/file-system.probe" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/gradle.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/kotlinc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/kotlinc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/other.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ads/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/ads/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ads/src/main/java/com/ads/narayan/admob/Admob.java" beforeDir="false" afterPath="$PROJECT_DIR$/ads/src/main/java/com/ads/narayan/admob/Admob.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ads/src/main/java/com/ads/narayan/admob/AppOpenManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/ads/src/main/java/com/ads/narayan/admob/AppOpenManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ads/src/main/java/com/ads/narayan/ads/NarayanAd.java" beforeDir="false" afterPath="$PROJECT_DIR$/ads/src/main/java/com/ads/narayan/ads/NarayanAd.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ads/src/main/java/com/ads/narayan/ads/purchase_billing/MIap.kt" beforeDir="false" afterPath="$PROJECT_DIR$/ads/src/main/java/com/ads/narayan/ads/purchase_billing/MIap.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ads/src/main/java/com/ads/narayan/ads/purchase_billing/NarayanBilling.kt" beforeDir="false" afterPath="$PROJECT_DIR$/ads/src/main/java/com/ads/narayan/ads/purchase_billing/NarayanBilling.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ads/src/main/java/com/ads/narayan/ads/purchase_billing/listener/PurchaseHistoryListener.kt" beforeDir="false" afterPath="$PROJECT_DIR$/ads/src/main/java/com/ads/narayan/ads/purchase_billing/listener/PurchaseHistoryListener.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ads/src/main/java/com/ads/narayan/applovin/AppLovin.java" beforeDir="false" afterPath="$PROJECT_DIR$/ads/src/main/java/com/ads/narayan/applovin/AppLovin.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ads/src/main/java/com/ads/narayan/applovin/AppLovinHelper.java" beforeDir="false" afterPath="$PROJECT_DIR$/ads/src/main/java/com/ads/narayan/applovin/AppLovinHelper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ads/src/main/java/com/ads/narayan/billing/AppPurchase.java" beforeDir="false" afterPath="$PROJECT_DIR$/ads/src/main/java/com/ads/narayan/billing/AppPurchase.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ads/src/main/java/com/ads/narayan/config/AdjustConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/ads/src/main/java/com/ads/narayan/config/AdjustConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ads/src/main/java/com/ads/narayan/event/NarayanAdjust.java" beforeDir="false" afterPath="$PROJECT_DIR$/ads/src/main/java/com/ads/narayan/event/NarayanAdjust.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ads/src/main/res/layout/dialog_prepair_loading_ads.xml" beforeDir="false" afterPath="$PROJECT_DIR$/ads/src/main/res/layout/dialog_prepair_loading_ads.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.properties" beforeDir="false" afterPath="$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/local.properties" beforeDir="false" afterPath="$PROJECT_DIR$/local.properties" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -63,6 +90,18 @@
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;Ashwani-dev123&quot;
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/Ashwani-dev123/NarayanAds.git&quot;,
+    &quot;accountId&quot;: &quot;ebbc8509-b573-4093-bb05-22c41ed76b8b&quot;
+  }
+}</component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
   </component>
@@ -77,9 +116,11 @@
   </component>
   <component name="PropertiesComponent">{
   &quot;keyToString&quot;: {
+    &quot;Gradle.NewAdsDemo:ads [assemble].executor&quot;: &quot;Run&quot;,
     &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.cidr.known.project.marker&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.readMode.enableVisualFormatting&quot;: &quot;true&quot;,
     &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
     &quot;android-custom-viewC:/Users/pushp/AppData/Local/Android/Sdk/sources/android-33/android/widget/ProgressBar.java_SELECTED&quot;: &quot;ProgressBar&quot;,
@@ -96,26 +137,21 @@
     &quot;dart.analysis.tool.window.visible&quot;: &quot;false&quot;,
     &quot;git-widget-placeholder&quot;: &quot;Launguage__Change&quot;,
     &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;F:/StudioProjects/NarayanAds&quot;,
+    &quot;last_opened_file_path&quot;: &quot;E:/Github/NarayanAds&quot;,
     &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
     &quot;project.structure.proportion&quot;: &quot;0.17&quot;,
     &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
     &quot;settings.editor.selected.configurable&quot;: &quot;project.propVCSSupport.Mappings&quot;,
     &quot;show.migrate.to.gradle.popup&quot;: &quot;false&quot;
-  },
-  &quot;keyToStringList&quot;: {
-    &quot;kotlin-gradle-user-dirs&quot;: [
-      &quot;C:\\Users\\pushp\\.gradle&quot;,
-      &quot;C:\\Users\\pc\\.gradle&quot;
-    ]
   }
 }</component>
   <component name="PsdUISettings">
     <option name="MODULE_TAB" value="Properties" />
     <option name="LAST_EDITED_SIGNING_CONFIG" value="debug" />
   </component>
-  <component name="RunManager" selected="Android App.app">
+  <component name="RunManager" selected="Gradle.NewAdsDemo:ads [assemble]">
     <configuration name="app" type="AndroidRunConfigurationType" factoryName="Android App">
+      <option name="ANDROID_RUN_CONFIGURATION_SCHEMA_VERSION" value="1" />
       <option name="DEPLOY" value="true" />
       <option name="DEPLOY_APK_FROM_BUNDLE" value="false" />
       <option name="DEPLOY_AS_INSTANT" value="false" />
@@ -123,10 +159,14 @@
       <option name="PM_INSTALL_OPTIONS" value="" />
       <option name="ALL_USERS" value="false" />
       <option name="ALWAYS_INSTALL_WITH_PM" value="false" />
+      <option name="ALLOW_ASSUME_VERIFIED" value="false" />
       <option name="CLEAR_APP_STORAGE" value="false" />
       <option name="DYNAMIC_FEATURES_DISABLED_LIST" value="" />
       <option name="ACTIVITY_EXTRA_FLAGS" value="" />
       <option name="MODE" value="default_activity" />
+      <option name="RESTORE_ENABLED" value="false" />
+      <option name="RESTORE_FILE" value="" />
+      <option name="RESTORE_FRESH_INSTALL_ONLY" value="false" />
       <option name="CLEAR_LOGCAT" value="false" />
       <option name="SHOW_LOGCAT_AUTOMATICALLY" value="false" />
       <option name="TARGET_SELECTION_MODE" value="DEVICE_AND_SNAPSHOT_COMBO_BOX" />
@@ -173,6 +213,7 @@
         <option name="NATIVE_MEMORY_SAMPLE_RATE_BYTES" value="2048" />
       </Profilers>
       <option name="DEEP_LINK" value="" />
+      <option name="ACTIVITY" value="" />
       <option name="ACTIVITY_CLASS" value="" />
       <option name="SEARCH_ACTIVITY_IN_GLOBAL_SCOPE" value="false" />
       <option name="SKIP_ACTIVITY_VALIDATION" value="false" />
@@ -551,5 +592,16 @@
     <MESSAGE value="inline" />
     <MESSAGE value="Purchase listener" />
     <option name="LAST_COMMIT_MESSAGE" value="Purchase listener" />
+  </component>
+  <component name="play_dynamic_filters_status">
+    <option name="appIdToCheckInfo">
+      <map>
+        <entry key="com.ads.narayan.test">
+          <value>
+            <CheckInfo lastCheckTimestamp="1763349978786" />
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
 </project>

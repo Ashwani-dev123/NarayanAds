@@ -25,12 +25,14 @@ import com.android.billingclient.api.BillingFlowParams;
 import com.android.billingclient.api.BillingResult;
 import com.android.billingclient.api.ConsumeParams;
 import com.android.billingclient.api.ConsumeResponseListener;
+import com.android.billingclient.api.PendingPurchasesParams;
 import com.android.billingclient.api.ProductDetails;
 import com.android.billingclient.api.ProductDetailsResponseListener;
 import com.android.billingclient.api.Purchase;
 import com.android.billingclient.api.PurchasesResponseListener;
 import com.android.billingclient.api.PurchasesUpdatedListener;
 import com.android.billingclient.api.QueryProductDetailsParams;
+import com.android.billingclient.api.QueryProductDetailsResult;
 import com.android.billingclient.api.QueryPurchasesParams;
 import com.google.common.collect.ImmutableList;
 
@@ -209,14 +211,24 @@ public class AppPurchase {
                     billingClient.queryProductDetailsAsync(
                             paramsINAP,
                             new ProductDetailsResponseListener() {
-                                public void onProductDetailsResponse(BillingResult billingResult, List<ProductDetails> productDetailsList) {
-                                    if (productDetailsList != null) {
-                                        Log.e(TAG, "onSkuINAPDetailsResponse: " + productDetailsList.size());
-                                        skuListINAPFromStore = productDetailsList;
+                                @Override
+                                public void onProductDetailsResponse(@NonNull BillingResult billingResult, @NonNull QueryProductDetailsResult queryProductDetailsResult) {
+                                    if (queryProductDetailsResult.getProductDetailsList() != null) {
+                                        Log.e(TAG, "onSkuINAPDetailsResponse: " + queryProductDetailsResult.getProductDetailsList().size());
+                                        skuListINAPFromStore = queryProductDetailsResult.getProductDetailsList();
                                         isListGot = true;
-                                        addSkuINAPToMap(productDetailsList);
+                                        addSkuINAPToMap(queryProductDetailsResult.getProductDetailsList());
                                     }
                                 }
+
+//                                public void onProductDetailsResponse(BillingResult billingResult, List<ProductDetails> productDetailsList) {
+//                                    if (productDetailsList != null) {
+//                                        Log.e(TAG, "onSkuINAPDetailsResponse: " + productDetailsList.size());
+//                                        skuListINAPFromStore = productDetailsList;
+//                                        isListGot = true;
+//                                        addSkuINAPToMap(productDetailsList);
+//                                    }
+//                                }
                             });
                 }
                 // check product detail SUBS
@@ -228,14 +240,26 @@ public class AppPurchase {
                     billingClient.queryProductDetailsAsync(
                             paramsSUBS,
                             new ProductDetailsResponseListener() {
-                                public void onProductDetailsResponse(BillingResult billingResult, List<ProductDetails> productDetailsList) {
-                                    if (productDetailsList != null) {
-                                        Log.e(TAG, "onSkuSubsDetailsResponse: " + productDetailsList.size());
-                                        skuListSubsFromStore = productDetailsList;
+                                @Override
+                                public void onProductDetailsResponse(@NonNull BillingResult billingResult, @NonNull QueryProductDetailsResult queryProductDetailsResult) {
+
+                                    if (queryProductDetailsResult.getProductDetailsList() != null) {
+                                        Log.e(TAG, "onSkuSubsDetailsResponse: " + queryProductDetailsResult.getProductDetailsList().size());
+                                        skuListSubsFromStore = queryProductDetailsResult.getProductDetailsList();
                                         isListGot = true;
-                                        addSkuSubsToMap(productDetailsList);
+                                        addSkuSubsToMap(queryProductDetailsResult.getProductDetailsList());
                                     }
+
                                 }
+
+//                                public void onProductDetailsResponse(BillingResult billingResult, List<ProductDetails> productDetailsList) {
+//                                    if (productDetailsList != null) {
+//                                        Log.e(TAG, "onSkuSubsDetailsResponse: " + productDetailsList.size());
+//                                        skuListSubsFromStore = productDetailsList;
+//                                        isListGot = true;
+//                                        addSkuSubsToMap(productDetailsList);
+//                                    }
+//                                }
                             });
                 }
             } else if (billingResult.getResponseCode() == BillingClient.BillingResponseCode.SERVICE_UNAVAILABLE || billingResult.getResponseCode() == BillingClient.BillingResponseCode.ERROR) {
@@ -278,7 +302,9 @@ public class AppPurchase {
 
         billingClient = BillingClient.newBuilder(application)
                 .setListener(purchasesUpdatedListener)
-                .enablePendingPurchases()
+                .enablePendingPurchases(PendingPurchasesParams.newBuilder()
+                        .enableOneTimeProducts()
+                        .build())
                 .build();
 
         billingClient.startConnection(purchaseClientStateListener);
@@ -710,40 +736,78 @@ public class AppPurchase {
         consumePurchase(productId);
     }
 
-    public void consumePurchase(String productId) {
-        billingClient.queryPurchasesAsync(BillingClient.ProductType.INAPP, (billingResult, list) -> {
-            Purchase pc = null;
-            if (billingResult.getResponseCode() == BillingClient.BillingResponseCode.OK && list != null) {
-                for (Purchase purchase : list) {
-                    if (purchase.getSkus().contains(productId)) {
-                        pc = purchase;
-                    }
-                }
-            }
-            if (pc == null)
-                return;
-            try {
-                ConsumeParams consumeParams =
-                        ConsumeParams.newBuilder()
-                                .setPurchaseToken(pc.getPurchaseToken())
-                                .build();
+//    public void consumePurchase(String productId) {
+//        isPurchase=false;
+//        billingClient.queryPurchasesAsync(BillingClient.ProductType.INAPP, (billingResult, list) -> {
+//            Purchase pc = null;
+//            if (billingResult.getResponseCode() == BillingClient.BillingResponseCode.OK && list != null) {
+//                for (Purchase purchase : list) {
+//                    if (purchase.getSkus().contains(productId)) {
+//                        pc = purchase;
+//                    }
+//                }
+//            }
+//            if (pc == null)
+//                return;
+//            try {
+//                ConsumeParams consumeParams =
+//                        ConsumeParams.newBuilder()
+//                                .setPurchaseToken(pc.getPurchaseToken())
+//                                .build();
+//
+//                ConsumeResponseListener listener = new ConsumeResponseListener() {
+//                    @Override
+//                    public void onConsumeResponse(BillingResult billingResult, String purchaseToken) {
+//                        if (billingResult.getResponseCode() == BillingClient.BillingResponseCode.OK) {
+//                            Log.e(TAG, "onConsumeResponse: OK");
+//                            verifyPurchased(false);
+//                        }
+//                    }
+//                };
+//
+//                billingClient.consumeAsync(consumeParams, listener);
+//            } catch (Exception e) {
+//                e.printStackTrace();
+//            }
+//        });
+//
+//    }
 
-                ConsumeResponseListener listener = new ConsumeResponseListener() {
-                    @Override
-                    public void onConsumeResponse(BillingResult billingResult, String purchaseToken) {
-                        if (billingResult.getResponseCode() == BillingClient.BillingResponseCode.OK) {
-                            Log.e(TAG, "onConsumeResponse: OK");
-                            verifyPurchased(false);
+    public void consumePurchase(String productId) {
+        isPurchase = false;
+        billingClient.queryPurchasesAsync(
+                QueryPurchasesParams.newBuilder()
+                        .setProductType(BillingClient.ProductType.INAPP)
+                        .build(),
+                (billingResult, list) -> {
+                    Purchase pc = null;
+                    if (billingResult.getResponseCode() == BillingClient.BillingResponseCode.OK && list != null) {
+                        for (Purchase purchase : list) {
+                            if (purchase.getSkus().contains(productId)) {
+                                pc = purchase;
+                            }
                         }
                     }
-                };
+                    if (pc == null)
+                        return;
+                    try {
+                        ConsumeParams consumeParams =
+                                ConsumeParams.newBuilder()
+                                        .setPurchaseToken(pc.getPurchaseToken())
+                                        .build();
 
-                billingClient.consumeAsync(consumeParams, listener);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        });
+                        ConsumeResponseListener listener = (billingResult1, purchaseToken) -> {
+                            if (billingResult1.getResponseCode() == BillingClient.BillingResponseCode.OK) {
+                                Log.e(TAG, "onConsumeResponse: OK");
+                                verifyPurchased(false);
+                            }
+                        };
 
+                        billingClient.consumeAsync(consumeParams, listener);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                });
     }
 
     private List<String> getListInappId() {

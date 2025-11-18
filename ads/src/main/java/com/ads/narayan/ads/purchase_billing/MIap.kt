@@ -16,6 +16,32 @@ internal class MIap(
 ) {
 
 
+//    fun getProducts(onResult: (List<ProductDetails>) -> Unit) {
+//
+//        val productList = products.filter {
+//            it.type == PurchaseItem.TYPE_PRODUCT
+//        }.map {
+//            QueryProductDetailsParams.Product.newBuilder()
+//                .setProductId(it.id)
+//                .setProductType(BillingClient.ProductType.INAPP)
+//                .build()
+//        }
+//
+//        if (productList.isEmpty()) return
+//        val params = QueryProductDetailsParams.newBuilder()
+//            .setProductList(productList)
+//            .build()
+//
+//        Log.d(TAG, "Querying inApp Products :: $productList")
+//        client.queryProductDetailsAsync(params) { result, prodDetailsList ->
+//            if (result.checkResponse()) {
+//                onResult.invoke(prodDetailsList)
+//            } else {
+//                Log.d(TAG, "getProducts() ${result.debugMessage}")
+//            }
+//        }
+//    }
+
     fun getProducts(onResult: (List<ProductDetails>) -> Unit) {
 
         val productList = products.filter {
@@ -28,20 +54,22 @@ internal class MIap(
         }
 
         if (productList.isEmpty()) return
+
         val params = QueryProductDetailsParams.newBuilder()
             .setProductList(productList)
             .build()
 
         Log.d(TAG, "Querying inApp Products :: $productList")
-        client.queryProductDetailsAsync(params) { result, prodDetailsList ->
-            if (result.checkResponse()) {
-                onResult.invoke(prodDetailsList)
+
+        client.queryProductDetailsAsync(params) { billingResult, productDetailsResult ->
+
+            if (billingResult.checkResponse()) {
+                onResult.invoke(productDetailsResult.productDetailsList ?: emptyList())
             } else {
-                Log.d(TAG, "getProducts() ${result.debugMessage}")
+                Log.d(TAG, "getProducts() ${billingResult.debugMessage}")
             }
         }
     }
-
 
     fun getSubs(onResult: (List<ProductDetails>) -> Unit) {
 
@@ -61,14 +89,44 @@ internal class MIap(
             .build()
 
         Log.d(TAG, "Querying Subs :: $productList")
-        client.queryProductDetailsAsync(params) { result, prodDetailsList ->
-            if (result.checkResponse()) {
-                onResult.invoke(prodDetailsList)
+
+        client.queryProductDetailsAsync(params) { billingResult, productDetailsResult ->
+
+            if (billingResult.checkResponse()) {
+                onResult.invoke(productDetailsResult.productDetailsList ?: emptyList())
             } else {
-                Log.d(TAG, "getSubs() ${result.debugMessage}")
+                Log.d(TAG, "getSubs() ${billingResult.debugMessage}")
             }
         }
     }
+
+
+//    fun getSubs(onResult: (List<ProductDetails>) -> Unit) {
+//
+//        val productList = products.filter {
+//            it.type == PurchaseItem.TYPE_SUBSCRIPTION
+//        }.map {
+//            QueryProductDetailsParams.Product.newBuilder()
+//                .setProductId(it.id)
+//                .setProductType(BillingClient.ProductType.SUBS)
+//                .build()
+//        }
+//
+//        if (productList.isEmpty()) return
+//
+//        val params = QueryProductDetailsParams.newBuilder()
+//            .setProductList(productList)
+//            .build()
+//
+//        Log.d(TAG, "Querying Subs :: $productList")
+//        client.queryProductDetailsAsync(params) { result, prodDetailsList ->
+//            if (result.checkResponse()) {
+//                onResult.invoke(prodDetailsList)
+//            } else {
+//                Log.d(TAG, "getSubs() ${result.debugMessage}")
+//            }
+//        }
+//    }
 
     private fun verifyPurchase(onAcknowledged: () -> Unit) {
 

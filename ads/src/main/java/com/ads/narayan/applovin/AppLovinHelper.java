@@ -10,7 +10,8 @@ public class AppLovinHelper {
     private static final String FILE_SETTING_APPLOVIN = "setting_applovin.pref";
     private static final String IS_PURCHASE = "IS_PURCHASE";
     private static final String IS_FIRST_OPEN = "IS_FIRST_OPEN";
-    private static final String KEY_FIRST_TIME = "KEY_FIRST_TIME";
+    public static final String KEY_FIRST_TIME = "KEY_FIRST_TIME";
+    public static final String ADJUST_KEY = "KEY_ADJUST";
 
     public static void setPurchased(Activity activity, boolean isPurchased) {
         SharedPreferences pref = activity.getSharedPreferences(FILE_SETTING, Context.MODE_PRIVATE);
