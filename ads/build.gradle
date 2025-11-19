@@ -2,19 +2,18 @@ apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 apply plugin: 'maven-publish'
 
-
 android {
+    namespace "com.ads.narayan"
     compileSdk 35
 
-    namespace "com.ads.narayan"
     defaultConfig {
-        minSdkVersion 21
-        targetSdkVersion 35
+        minSdk 21
+        targetSdk 35
         versionCode 9
-        versionName "1.1.3"
+        versionName "1.3.7"
     }
 
-    buildFeatures{
+    buildFeatures {
         buildConfig = true
         viewBinding = true
     }
@@ -24,15 +23,6 @@ android {
             minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
-//        productFlavors {
-//
-//        }
-    }
-
-    packagingOptions {
-        jniLibs {
-            useLegacyPackaging = false
-        }
     }
 
     packaging {
@@ -41,67 +31,37 @@ android {
         }
     }
 
-    flavorDimensions "default"
-    productFlavors {
-        appDev {
-            //use id test when dev
-            manifestPlaceholders = [ ad_app_id:"ca-app-pub-3940256099942544~3347511713"]
-            buildConfigField "String", "ad_interstitial_splash", "\"ca-app-pub-3940256099942544/1033173712\""
-            buildConfigField "String", "ad_interstitial", "\"ca-app-pub-3940256099942544/1033173712\""
-            buildConfigField "String", "ad_banner", "\"ca-app-pub-3940256099942544/6300978111\""
-            buildConfigField "String", "ad_reward", "\"ca-app-pub-3940256099942544/5224354917\""
-            buildConfigField "String", "ad_reward_inter", "\"ca-app-pub-3940256099942544/5354046379\""
-            buildConfigField "String", "ad_appopen_resume", "\"ca-app-pub-3940256099942544/3419835294\""
-            buildConfigField "String", "ad_native", "\"ca-app-pub-3940256099942544/2247696110\""
-            buildConfigField "String", "ads_open_app", "\"ca-app-pub-3940256099942544/3419835294\""
-            buildConfigField "String", "ads_inter_priority", "\"ca-app-pub-3940256099942544/8691691433\""
-            buildConfigField "Boolean", "env_dev", "true"
-            buildConfigField "String", "ad_native_priority", "\"ca-app-pub-3940256099942544/1044960115\""
-            buildConfigField "String", "ads_inter_medium", "\"ca-app-pub-3940256099942544/8691691433\""
-            buildConfigField "String", "ad_native_medium", "\"ca-app-pub-3940256099942544/1044960115\""
-
-        }
-        appProd {
-            //add your id ad here
-            manifestPlaceholders = [ ad_app_id:"ca-app-pub-3940256099942544~3347511713"]
-            buildConfigField "String", "ad_interstitial_splash", "\"ca-app-pub-3940256099942544/1033173712\""
-            buildConfigField "String", "ad_interstitial", "\"ca-app-pub-3940256099942544/1033173712\""
-
-            buildConfigField "String", "ad_banner", "\"ca-app-pub-3940256099942544/6300978111\""
-            buildConfigField "String", "ad_reward", "\"ca-app-pub-3940256099942544/5224354917\""
-            buildConfigField "String", "ad_reward_inter", "\"ca-app-pub-3940256099942544/5354046379\""
-            buildConfigField "String", "ad_appopen_resume", "\"ca-app-pub-3940256099942544/3419835294\""
-            buildConfigField "String", "ad_native", "\"ca-app-pub-3940256099942544/2247696110\""
-            buildConfigField "String", "ad_native", "\"ca-app-pub-3940256099942544/3419835294\""
-            buildConfigField "String", "ads_open_app", "\"ca-app-pub-3940256099942544/3419835294\""
-            buildConfigField "String", "ads_inter_priority", "\"ca-app-pub-3940256099942544/8691691433\""
-            buildConfigField "String", "ads_inter_medium", "\"ca-app-pub-3940256099942544/8691691433\""
-            buildConfigField "String", "ad_native_medium", "\"ca-app-pub-3940256099942544/1044960115\""
-            buildConfigField "String", "ad_native_priority", "\"ca-app-pub-3940256099942544/1044960115\""
-            buildConfigField "Boolean", "env_dev", "false"
-        }
-    }
-
-//    compileOptions {
-//        sourceCompatibility JavaVersion.VERSION_21
-//        targetCompatibility JavaVersion.VERSION_21
-//    }
-
-
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_21
-        targetCompatibility = JavaVersion.VERSION_21
+        sourceCompatibility JavaVersion.VERSION_21
+        targetCompatibility JavaVersion.VERSION_21
     }
 
     kotlinOptions {
         jvmTarget = "21"
     }
+
+    defaultConfig {
+        manifestPlaceholders = [ ad_app_id:"ca-app-pub-3940256099942544~3347511713"]
+        buildConfigField "String", "ad_interstitial_splash", "\"ca-app-pub-3940256099942544/1033173712\""
+        buildConfigField "String", "ad_interstitial", "\"ca-app-pub-3940256099942544/1033173712\""
+        buildConfigField "String", "ad_banner", "\"ca-app-pub-3940256099942544/6300978111\""
+        buildConfigField "String", "ad_reward", "\"ca-app-pub-3940256099942544/5224354917\""
+        buildConfigField "String", "ad_reward_inter", "\"ca-app-pub-3940256099942544/5354046379\""
+        buildConfigField "String", "ad_appopen_resume", "\"ca-app-pub-3940256099942544/3419835294\""
+        buildConfigField "String", "ad_native", "\"ca-app-pub-3940256099942544/2247696110\""
+        buildConfigField "String", "ads_open_app", "\"ca-app-pub-3940256099942544/3419835294\""
+        buildConfigField "String", "ads_inter_priority", "\"ca-app-pub-3940256099942544/8691691433\""
+        buildConfigField "Boolean", "env_dev", "true"
+        buildConfigField "String", "ad_native_priority", "\"ca-app-pub-3940256099942544/1044960115\""
+        buildConfigField "String", "ads_inter_medium", "\"ca-app-pub-3940256099942544/8691691433\""
+        buildConfigField "String", "ad_native_medium", "\"ca-app-pub-3940256099942544/1044960115\""
+    }
+
 }
 
 kotlin {
     jvmToolchain(21)
 }
-
 
 dependencies {
 
@@ -114,16 +74,14 @@ dependencies {
     implementation 'com.facebook.shimmer:shimmer:0.5.0'
     implementation 'androidx.lifecycle:lifecycle-process:2.8.7'
 
-    //admob
-//    implementation 'com.google.android.gms:play-services-ads:22.3.0'
     implementation 'com.google.android.gms:play-services-ads:24.7.0'
     implementation 'com.google.android.gms:play-services-ads-identifier:18.2.0'
-    //mediation admob
+
+    // Mediation
     implementation 'com.google.ads.mediation:facebook:6.21.0.0'
     implementation 'com.google.ads.mediation:adcolony:4.8.0.2'
     implementation 'com.google.ads.mediation:applovin:13.5.0.1'
     implementation 'com.google.ads.mediation:vungle:7.6.0.0'
-
 
     def lifecycle_version = "2.2.0"
     implementation "androidx.lifecycle:lifecycle-extensions:$lifecycle_version"
@@ -132,95 +90,41 @@ dependencies {
 
     implementation 'com.google.firebase:firebase-analytics:23.0.0'
 
-    def multidex_version = "2.0.1"
-    implementation "androidx.multidex:multidex:$multidex_version"
-//    def billing_version = "6.0.1"
-//    implementation "com.android.billingclient:billing:$billing_version"
+    implementation "androidx.multidex:multidex:2.0.1"
     implementation "com.google.guava:guava:33.3.1-android"
-    //adjust
+
     implementation 'com.adjust.sdk:adjust-android:5.4.5'
     implementation 'com.android.installreferrer:installreferrer:2.2'
 
     implementation 'com.google.android.gms:play-services-appset:16.1.0'
     implementation 'com.google.android.gms:play-services-basement:18.9.0'
-    //implementation "androidx.core:core-ktx:1.3.2"
+
     implementation 'androidx.core:core-ktx:1.14.0-alpha01'
-    //implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.0.0"
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.8.7"
-    //implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 
-    //fb sdk
     implementation 'com.facebook.android:facebook-android-sdk:18.1.3'
-
     implementation 'com.airbnb.android:lottie:5.0.2'
-
-    // applovin
     implementation 'com.applovin:applovin-sdk:13.5.0'
-
-    // appsflyer
     implementation 'com.appsflyer:af-android-sdk:6.17.4'
     implementation 'com.appsflyer:adrevenue:6.4.3'
-
     implementation "com.android.billingclient:billing-ktx:8.1.0"
 
-    implementation ("com.intuit.sdp:sdp-android:1.1.1")
-    implementation ("com.intuit.ssp:ssp-android:1.1.1")
+    implementation "com.intuit.sdp:sdp-android:1.1.1"
+    implementation "com.intuit.ssp:ssp-android:1.1.1"
 
     implementation 'com.github.ybq:Android-SpinKit:1.4.0'
-
 }
 
 afterEvaluate {
-    println(components*.name)
     publishing {
         publications {
-            // Ensure appProdRelease is published
-//            appProdRelease(MavenPublication) {
-//                from components.findByName("appProdRelease")
-//                groupId = 'com.github.Ashwani-dev123'
-//                artifactId = 'NarayanAds'
-//                version = '1.2.7'
-//            }
-//
-//            // Ensure appDevRelease is published
-//            appDevRelease(MavenPublication) {
-//                from components.findByName("appDevRelease")
-//                groupId = 'com.github.Ashwani-dev123'
-//                artifactId = 'NarayanAds'
-//                version = '1.2.7'
-//            }
-//
-//            // Ensure debug variant is published for appDev
-//            appDevDebug(MavenPublication) {
-//                from components.findByName("appDevDebug")
-//                groupId = 'com.github.Ashwani-dev123'
-//                artifactId = 'NarayanAds'
-//                version = '1.2.7-debug'
-//            }
-//
-//            // Ensure debug variant is published for appProd (if needed)
-//            appProdDebug(MavenPublication) {
-//                from components.findByName("appProdDebug")
-//                groupId = 'com.github.Ashwani-dev123'
-//                artifactId = 'NarayanAds'
-//                version = '1.2.7-debug'
-//            }
+            release(MavenPublication) {
+                from components.release
 
-            appProdRelease(MavenPublication) {
-                from components.findByName("appProdRelease")
                 groupId = 'com.github.Ashwani-dev123'
                 artifactId = 'NarayanAds'
-                version = '1.3.6'  // Bump version
-            }
-
-            appDevRelease(MavenPublication) {
-                from components.findByName("appDevRelease")
-                groupId = 'com.github.Ashwani-dev123'
-                artifactId = 'NarayanAds'
-                version = '1.3.6'  // Bump version
+                version = '1.3.7'
             }
         }
     }
 }
-
-
