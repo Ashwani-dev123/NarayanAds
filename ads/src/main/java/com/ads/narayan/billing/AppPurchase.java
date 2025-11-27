@@ -36,6 +36,11 @@ import com.android.billingclient.api.QueryProductDetailsResult;
 import com.android.billingclient.api.QueryPurchasesParams;
 import com.google.common.collect.ImmutableList;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.lang.reflect.Method;
 import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Currency;
@@ -102,7 +107,6 @@ public class AppPurchase {
         this.updatePurchaseListener = listener;
     }
 
-
     public void setBillingListener(BillingListener billingListener) {
         this.billingListener = billingListener;
         if (isAvailable) {
@@ -127,7 +131,6 @@ public class AppPurchase {
             }
         });
     }
-
 
     public void setBillingListener(BillingListener billingListener, int timeout) {
         Log.e(TAG, "setBillingListener: timeout " + timeout);
@@ -166,12 +169,25 @@ public class AppPurchase {
             if (billingResult.getResponseCode() == BillingClient.BillingResponseCode.OK && list != null) {
                 for (Purchase purchase : list) {
 
-                    List<String> sku = purchase.getSkus();
+                    // Try to obtain product IDs in a resilient way
+                    List<String> skuList = null;
+                    try {
+                        skuList = purchase.getProducts(); // preferred new API
+                    } catch (NoSuchMethodError | AbstractMethodError ex) {
+                        try {
+                            skuList = purchase.getSkus(); // deprecated fallback (safe)
+                        } catch (Throwable t) {
+                            skuList = null;
+                        }
+                    } catch (Throwable t) {
+                        skuList = null;
+                    }
+
                     handlePurchase(purchase);
                     try {
                         updatePurchaseStatus(purchase);
                     } catch (Exception e) {
-
+                        // ignore update errors
                     }
                 }
             } else if (billingResult.getResponseCode() == BillingClient.BillingResponseCode.USER_CANCELED) {
@@ -196,14 +212,13 @@ public class AppPurchase {
 
             if (!isInitBillingFinish) {
                 verifyPurchased(true);
-
             }
 
             isInitBillingFinish = true;
             if (billingResult.getResponseCode() == BillingClient.BillingResponseCode.OK) {
                 isAvailable = true;
-                // check product detail INAP
-                if (listINAPId.size() > 0) {
+
+                if (listINAPId != null && listINAPId.size() > 0) {
                     QueryProductDetailsParams paramsINAP = QueryProductDetailsParams.newBuilder()
                             .setProductList(listINAPId)
                             .build();
@@ -220,19 +235,10 @@ public class AppPurchase {
                                         addSkuINAPToMap(queryProductDetailsResult.getProductDetailsList());
                                     }
                                 }
-
-//                                public void onProductDetailsResponse(BillingResult billingResult, List<ProductDetails> productDetailsList) {
-//                                    if (productDetailsList != null) {
-//                                        Log.e(TAG, "onSkuINAPDetailsResponse: " + productDetailsList.size());
-//                                        skuListINAPFromStore = productDetailsList;
-//                                        isListGot = true;
-//                                        addSkuINAPToMap(productDetailsList);
-//                                    }
-//                                }
                             });
                 }
-                // check product detail SUBS
-                if (listSubscriptionId.size() > 0) {
+
+                if (listSubscriptionId != null && listSubscriptionId.size() > 0) {
                     QueryProductDetailsParams paramsSUBS = QueryProductDetailsParams.newBuilder()
                             .setProductList(listSubscriptionId)
                             .build();
@@ -242,29 +248,17 @@ public class AppPurchase {
                             new ProductDetailsResponseListener() {
                                 @Override
                                 public void onProductDetailsResponse(@NonNull BillingResult billingResult, @NonNull QueryProductDetailsResult queryProductDetailsResult) {
-
                                     if (queryProductDetailsResult.getProductDetailsList() != null) {
                                         Log.e(TAG, "onSkuSubsDetailsResponse: " + queryProductDetailsResult.getProductDetailsList().size());
                                         skuListSubsFromStore = queryProductDetailsResult.getProductDetailsList();
                                         isListGot = true;
                                         addSkuSubsToMap(queryProductDetailsResult.getProductDetailsList());
                                     }
-
                                 }
-
-//                                public void onProductDetailsResponse(BillingResult billingResult, List<ProductDetails> productDetailsList) {
-//                                    if (productDetailsList != null) {
-//                                        Log.e(TAG, "onSkuSubsDetailsResponse: " + productDetailsList.size());
-//                                        skuListSubsFromStore = productDetailsList;
-//                                        isListGot = true;
-//                                        addSkuSubsToMap(productDetailsList);
-//                                    }
-//                                }
                             });
                 }
-            } else if (billingResult.getResponseCode() == BillingClient.BillingResponseCode.SERVICE_UNAVAILABLE || billingResult.getResponseCode() == BillingClient.BillingResponseCode.ERROR) {
-                Log.e(TAG, "onBillingSetupFinished:ERROR ");
-
+            } else {
+                Log.e(TAG, "onBillingSetupFinished:ERROR code=" + billingResult.getResponseCode());
             }
         }
     };
@@ -297,8 +291,8 @@ public class AppPurchase {
         this.listSubscriptionId = listIdToListProduct(listSubsId, BillingClient.ProductType.SUBS);
         this.listINAPId = listIdToListProduct(listINAPId, BillingClient.ProductType.INAPP);
 
-        Log.e(TAG, "initBilling: app list size=>"+listINAPId.size() );
-        Log.e(TAG, "initBilling: list in app size=>"+this.listINAPId.size() );
+        Log.e(TAG, "initBilling: app list size=>" + listINAPId.size());
+        Log.e(TAG, "initBilling: list in app size=>" + (this.listINAPId != null ? this.listINAPId.size() : 0));
 
         billingClient = BillingClient.newBuilder(application)
                 .setListener(purchasesUpdatedListener)
@@ -309,7 +303,6 @@ public class AppPurchase {
 
         billingClient.startConnection(purchaseClientStateListener);
     }
-
 
     private void addSkuSubsToMap(List<ProductDetails> skuList) {
         for (ProductDetails skuDetails : skuList) {
@@ -354,9 +347,9 @@ public class AppPurchase {
         }
     }
 
-    // kiểm tra trạng thái purchase
+    // verify purchase state
     public void verifyPurchased(boolean isCallback) {
-        Log.e(TAG, "isPurchased : " + listSubscriptionId.size());
+        Log.e(TAG, "isPurchased : " + (listSubscriptionId != null ? listSubscriptionId.size() : 0));
         verifyFinish = false;
         if (listINAPId != null) {
             billingClient.queryPurchasesAsync(
@@ -365,15 +358,16 @@ public class AppPurchase {
                         public void onQueryPurchasesResponse(
                                 BillingResult billingResult,
                                 List<Purchase> list) {
-                            Log.e(TAG, "verifyPurchased INAPP  code:" + billingResult.getResponseCode() + " ===   size:" + list.size());
+                            Log.e(TAG, "verifyPurchased INAPP  code:" + billingResult.getResponseCode() + " ===   size:" + (list != null ? list.size() : 0));
                             if (billingResult.getResponseCode() == BillingClient.BillingResponseCode.OK && list != null) {
                                 for (Purchase purchase : list) {
+                                    List<String> products = safeGetProducts(purchase);
+                                    if (products == null) continue;
                                     for (QueryProductDetailsParams.Product id : listINAPId) {
-                                        if (purchase.getProducts().contains(id.zza())) {
+                                        if (products.contains(id.zza())) {
                                             Log.e(TAG, "verifyPurchased INAPP: true");
                                             ownerIdInapps.add(id.zza());
                                             isPurchase = true;
-//                                            isPurchase = false;
                                         }
                                     }
                                 }
@@ -390,26 +384,15 @@ public class AppPurchase {
                             } else {
                                 isVerifyINAP = true;
                                 if (isVerifySUBS) {
-                                    // chưa mua subs và IAP
-                                    billingListener.onInitBillingFinished(billingResult.getResponseCode());
-                                    if (handlerTimeout != null && rdTimeout != null) {
-                                        handlerTimeout.removeCallbacks(rdTimeout);
+                                    if (billingListener != null && isCallback) {
+                                        billingListener.onInitBillingFinished(billingResult.getResponseCode());
+                                        if (handlerTimeout != null && rdTimeout != null) {
+                                            handlerTimeout.removeCallbacks(rdTimeout);
+                                        }
+                                        verifyFinish = true;
                                     }
-                                    verifyFinish = true;
                                 }
                             }
-                            /*if (billingResult.getResponseCode() == BillingClient.BillingResponseCode.SERVICE_DISCONNECTED && !verifyFinish) {
-                                Log.e(TAG, "onQueryPurchasesResponse INAPP: SERVICE_DISCONNECTED  === count reconnect:" + countReconnectBilling);
-                                verifyFinish = true;
-                                if (countReconnectBilling >= countMaxReconnectBilling) {
-                                    billingListener.onInitBillingFinished(billingResult.getResponseCode());
-                                    return;
-                                }
-
-                                billingClient.startConnection(purchaseClientStateListener);
-                                countReconnectBilling++;
-                                return;
-                            }*/
                         }
                     }
             );
@@ -422,11 +405,13 @@ public class AppPurchase {
                         public void onQueryPurchasesResponse(
                                 BillingResult billingResult,
                                 List<Purchase> list) {
-                            Log.e(TAG, "verifyPurchased SUBS  code:" + billingResult.getResponseCode() + " ===   size:" + list.size());
+                            Log.e(TAG, "verifyPurchased SUBS  code:" + billingResult.getResponseCode() + " ===   size:" + (list != null ? list.size() : 0));
                             if (billingResult.getResponseCode() == BillingClient.BillingResponseCode.OK && list != null) {
                                 for (Purchase purchase : list) {
+                                    List<String> products = safeGetProducts(purchase);
+                                    if (products == null) continue;
                                     for (QueryProductDetailsParams.Product id : listSubscriptionId) {
-                                        if (purchase.getProducts().contains(id.zza())) {
+                                        if (products.contains(id.zza())) {
                                             PurchaseResult purchaseResult = new PurchaseResult(
                                                     purchase.getPackageName(),
                                                     purchase.getProducts(),
@@ -436,7 +421,6 @@ public class AppPurchase {
                                             addOrUpdateOwnerIdSub(purchaseResult, id.zza());
                                             Log.e(TAG, "verifyPurchased SUBS: true");
                                             isPurchase = true;
-//                                            isPurchase = false;
                                         }
                                     }
                                 }
@@ -453,7 +437,6 @@ public class AppPurchase {
                             } else {
                                 isVerifySUBS = true;
                                 if (isVerifyINAP) {
-                                    // chưa mua subs và IAP
                                     if (billingListener != null && isCallback) {
                                         billingListener.onInitBillingFinished(billingResult.getResponseCode());
                                         if (handlerTimeout != null && rdTimeout != null) {
@@ -463,17 +446,6 @@ public class AppPurchase {
                                     }
                                 }
                             }
-                            /*if (billingResult.getResponseCode() == BillingClient.BillingResponseCode.SERVICE_DISCONNECTED && !verifyFinish) {
-                                Log.e(TAG, "onQueryPurchasesResponse SUBS: SERVICE_DISCONNECTED  === count reconnect:" + countReconnectBilling);
-                                verifyFinish = true;
-                                if (countReconnectBilling >= countMaxReconnectBilling) {
-                                    billingListener.onInitBillingFinished(billingResult.getResponseCode());
-                                    return;
-                                }
-                                billingClient.startConnection(purchaseClientStateListener);
-                                countReconnectBilling++;
-                                return;
-                            }*/
                         }
                     }
             );
@@ -485,10 +457,12 @@ public class AppPurchase {
             billingClient.queryPurchasesAsync(
                     QueryPurchasesParams.newBuilder().setProductType(BillingClient.ProductType.INAPP).build(),
                     (billingResult, list) -> {
-                        if (billingResult.getResponseCode() == BillingClient.BillingResponseCode.OK) {
+                        if (billingResult.getResponseCode() == BillingClient.BillingResponseCode.OK && list != null) {
                             for (Purchase purchase : list) {
+                                List<String> products = safeGetProducts(purchase);
+                                if (products == null) continue;
                                 for (QueryProductDetailsParams.Product id : listINAPId) {
-                                    if (purchase.getProducts().contains(id.zza())) {
+                                    if (products.contains(id.zza())) {
                                         if (!ownerIdInapps.contains(id.zza())) {
                                             ownerIdInapps.add(id.zza());
                                         }
@@ -510,10 +484,12 @@ public class AppPurchase {
             billingClient.queryPurchasesAsync(
                     QueryPurchasesParams.newBuilder().setProductType(BillingClient.ProductType.SUBS).build(),
                     (billingResult, list) -> {
-                        if (billingResult.getResponseCode() == BillingClient.BillingResponseCode.OK) {
+                        if (billingResult.getResponseCode() == BillingClient.BillingResponseCode.OK && list != null) {
                             for (Purchase purchase : list) {
+                                List<String> products = safeGetProducts(purchase);
+                                if (products == null) continue;
                                 for (QueryProductDetailsParams.Product id : listSubscriptionId) {
-                                    if (purchase.getProducts().contains(id.zza())) {
+                                    if (products.contains(id.zza())) {
                                         PurchaseResult purchaseResult = new PurchaseResult(
                                                 purchase.getPackageName(),
                                                 purchase.getProducts(),
@@ -544,12 +520,11 @@ public class AppPurchase {
             return;
         }
 
-        purchase(activity, productId,false);
+        purchase(activity, productId, false);
     }
 
-
     //AV
-    public String purchase(Activity activity, String productId,Boolean isAdsRemove) {
+    public String purchase(Activity activity, String productId, Boolean isAdsRemove) {
         if (skuListINAPFromStore == null || skuDetailsINAPMap.isEmpty()) {
             if (purchaseListener != null)
                 purchaseListener.displayErrorMessage("Billing error init");
@@ -559,36 +534,25 @@ public class AppPurchase {
 
         ProductDetails productDetails = skuDetailsINAPMap.get(productId);
         try {
-            Log.e(TAG, "purchase: " + productDetails.toString());
-        }catch (Exception e){
-            Log.e(TAG, "exception: " +e.getMessage());
+            Log.e(TAG, "purchase: " + (productDetails != null ? productDetails.toString() : "null"));
+        } catch (Exception e) {
+            Log.e(TAG, "exception: " + e.getMessage());
         }
-        //ProductDetails{jsonString='{"productId":"android.test.purchased","type":"inapp","title":"Tiêu đề mẫu","description":"Mô tả mẫu về sản phẩm: android.test.purchased.","skuDetailsToken":"AEuhp4Izz50wTvd7YM9wWjPLp8hZY7jRPhBEcM9GAbTYSdUM_v2QX85e8UYklstgqaRC","oneTimePurchaseOfferDetails":{"priceAmountMicros":23207002450,"priceCurrencyCode":"VND","formattedPrice":"23.207 ₫"}}', parsedJson={"productId":"android.test.purchased","type":"inapp","title":"Tiêu đề mẫu","description":"Mô tả mẫu về sản phẩm: android.test.purchased.","skuDetailsToken":"AEuhp4Izz50wTvd7YM9wWjPLp8hZY7jRPhBEcM9GAbTYSdUM_v2QX85e8UYklstgqaRC","oneTimePurchaseOfferDetails":{"priceAmountMicros":23207002450,"priceCurrencyCode":"VND","formattedPrice":"23.207 ₫"}}, productId='android.test.purchased', productType='inapp', title='Tiêu đề mẫu', productDetailsToken='AEuhp4Izz50wTvd7YM9wWjPLp8hZY7jRPhBEcM9GAbTYSdUM_v2QX85e8UYklstgqaRC', subscriptionOfferDetails=null}
+
         if (AppUtil.VARIANT_DEV && isAdsRemove) {
-            // Auto using id purchase test in variant dev
             productId = PRODUCT_ID_TEST;
-            PurchaseDevBottomSheet purchaseDevBottomSheet = new PurchaseDevBottomSheet(TYPE_IAP.PURCHASE,productDetails,activity,purchaseListener);
+            PurchaseDevBottomSheet purchaseDevBottomSheet = new PurchaseDevBottomSheet(TYPE_IAP.PURCHASE, productDetails, activity, purchaseListener);
             purchaseDevBottomSheet.show();
             return "";
         }
 
         if (productDetails == null) {
-            Log.e(TAG, "product ID Invalid or Null" );
+            Log.e(TAG, "product ID Invalid or Null");
             return "Product ID invalid";
         }
 
         idPurchaseCurrent = productId;
         typeIap = TYPE_IAP.PURCHASE;
-
-
-//        ImmutableList<BillingFlowParams.ProductDetailsParams> productDetailsParamsList = ImmutableList.of(BillingFlowParams.ProductDetailsParams.newBuilder()
-//                                .setProductDetails(productDetails)
-//                                .build()
-//                );
-//
-//        BillingFlowParams billingFlowParams = BillingFlowParams.newBuilder()
-//                .setProductDetailsParamsList(productDetailsParamsList)
-//                .build();
 
         BillingFlowParams productId1 = BillingFlowParams.newBuilder().setProductDetailsParamsList(
                 ImmutableList.of(BillingFlowParams.ProductDetailsParams.newBuilder().setProductDetails(productDetails).build())).build();
@@ -638,8 +602,6 @@ public class AppPurchase {
 
             case BillingClient.BillingResponseCode.OK:
                 return "Subscribed Successfully";
-            //}
-
         }
         return "";
     }
@@ -653,8 +615,8 @@ public class AppPurchase {
         }
 
         if (AppUtil.VARIANT_DEV) {
-            // sử dụng ID Purchase test
-            purchase(activity, PRODUCT_ID_TEST,false);
+            // use test id in dev
+            purchase(activity, PRODUCT_ID_TEST, false);
             return "Billing test";
         }
         ProductDetails productDetails = skuDetailsSubsMap.get(SubsId);
@@ -721,9 +683,6 @@ public class AppPurchase {
 
             case BillingClient.BillingResponseCode.OK:
                 return "Subscribed Successfully";
-
-            //}
-
         }
         return "";
     }
@@ -736,43 +695,6 @@ public class AppPurchase {
         consumePurchase(productId);
     }
 
-//    public void consumePurchase(String productId) {
-//        isPurchase=false;
-//        billingClient.queryPurchasesAsync(BillingClient.ProductType.INAPP, (billingResult, list) -> {
-//            Purchase pc = null;
-//            if (billingResult.getResponseCode() == BillingClient.BillingResponseCode.OK && list != null) {
-//                for (Purchase purchase : list) {
-//                    if (purchase.getSkus().contains(productId)) {
-//                        pc = purchase;
-//                    }
-//                }
-//            }
-//            if (pc == null)
-//                return;
-//            try {
-//                ConsumeParams consumeParams =
-//                        ConsumeParams.newBuilder()
-//                                .setPurchaseToken(pc.getPurchaseToken())
-//                                .build();
-//
-//                ConsumeResponseListener listener = new ConsumeResponseListener() {
-//                    @Override
-//                    public void onConsumeResponse(BillingResult billingResult, String purchaseToken) {
-//                        if (billingResult.getResponseCode() == BillingClient.BillingResponseCode.OK) {
-//                            Log.e(TAG, "onConsumeResponse: OK");
-//                            verifyPurchased(false);
-//                        }
-//                    }
-//                };
-//
-//                billingClient.consumeAsync(consumeParams, listener);
-//            } catch (Exception e) {
-//                e.printStackTrace();
-//            }
-//        });
-//
-//    }
-
     public void consumePurchase(String productId) {
         isPurchase = false;
         billingClient.queryPurchasesAsync(
@@ -783,7 +705,8 @@ public class AppPurchase {
                     Purchase pc = null;
                     if (billingResult.getResponseCode() == BillingClient.BillingResponseCode.OK && list != null) {
                         for (Purchase purchase : list) {
-                            if (purchase.getSkus().contains(productId)) {
+                            List<String> products = safeGetProducts(purchase);
+                            if (products != null && products.contains(productId)) {
                                 pc = purchase;
                             }
                         }
@@ -812,6 +735,7 @@ public class AppPurchase {
 
     private List<String> getListInappId() {
         List<String> list = new ArrayList<>();
+        if (listINAPId == null) return list;
         for (QueryProductDetailsParams.Product product : listINAPId) {
             list.add(product.zza());
         }
@@ -820,24 +744,100 @@ public class AppPurchase {
 
     private List<String> getListSubId() {
         List<String> list = new ArrayList<>();
+        if (listSubscriptionId == null) return list;
         for (QueryProductDetailsParams.Product product : listSubscriptionId) {
             list.add(product.zza());
         }
         return list;
     }
 
+    /**
+     * Extract productId safely and notify listener(s).
+     */
     private void handlePurchase(Purchase purchase) {
 
-        //tracking adjust
+        // robustly extract productId (new API getProducts(), fallback getSkus(), fallback parse originalJson)
+        String productIdFromPurchase = null;
+        try {
+            List<String> products = safeGetProducts(purchase);
+
+            if (products != null && !products.isEmpty()) {
+                productIdFromPurchase = products.get(0);
+            }
+
+            // fallback: try parse originalJson
+            if (productIdFromPurchase == null) {
+                String orig = purchase.getOriginalJson();
+                if (orig != null && !orig.isEmpty()) {
+                    try {
+                        JSONObject jo = new JSONObject(orig);
+                        // try common keys
+                        if (jo.has("productId")) {
+                            productIdFromPurchase = jo.optString("productId", null);
+                        } else if (jo.has("productIds")) {
+                            JSONArray arr = jo.optJSONArray("productIds");
+                            if (arr != null && arr.length() > 0) {
+                                productIdFromPurchase = arr.optString(0, null);
+                            }
+                        } else if (jo.has("products")) {
+                            JSONArray arr = jo.optJSONArray("products");
+                            if (arr != null && arr.length() > 0) {
+                                productIdFromPurchase = arr.optString(0, null);
+                            }
+                        } else if (jo.has("sku")) {
+                            productIdFromPurchase = jo.optString("sku", null);
+                        }
+                    } catch (JSONException ex) {
+                        // ignore parse error
+                    }
+                }
+            }
+        } catch (Throwable t) {
+            Log.e(TAG, "extractProductId error: " + t.getMessage());
+            productIdFromPurchase = null;
+        }
+
+        // Prefer productId if present, else fall back to idPurchaseCurrent (last requested) for pricing lookup
+        if (productIdFromPurchase != null && !productIdFromPurchase.isEmpty()) {
+            idPurchaseCurrent = productIdFromPurchase;
+        }
+
         double price = getPriceWithoutCurrency(idPurchaseCurrent, typeIap);
         String currency = getCurrency(idPurchaseCurrent, typeIap);
-        NarayanLogEventManager.onTrackRevenuePurchase((float) price, currency, idPurchaseCurrent, typeIap);
+        try {
+            NarayanLogEventManager.onTrackRevenuePurchase((float) price, currency, idPurchaseCurrent, typeIap);
+        } catch (Throwable t) {
+            Log.e(TAG, "onTrackRevenuePurchase error: " + t.getMessage());
+        }
 
         if (purchaseListener != null) {
             isPurchase = true;
-//            isPurchase = false;
-            purchaseListener.onProductPurchased(purchase.getOrderId(), purchase.getOriginalJson());
+            // Determine type for listener: try subscription map membership -> SUBS else IN-APP
+            String typeStr = "IN-APP";
+            if (productIdFromPurchase != null && skuDetailsSubsMap.containsKey(productIdFromPurchase)) {
+                typeStr = "SUBS";
+            }
+            // Backwards-compatible call (existing apps expect this)
+            try {
+                purchaseListener.onProductPurchased(productIdFromPurchase != null ? productIdFromPurchase : purchase.getOrderId(), purchase.getOriginalJson());
+            } catch (Throwable t) {
+                Log.e(TAG, "purchaseListener.onProductPurchased failed: " + t.getMessage());
+            }
+
+            // If listener also implements new signature onPurchase(type, productId, transactionDetails) call it via reflection
+            try {
+                Method m = purchaseListener.getClass().getMethod("onPurchase", String.class, String.class, String.class);
+                if (m != null) {
+                    String toSend = productIdFromPurchase != null ? productIdFromPurchase : purchase.getOrderId();
+                    m.invoke(purchaseListener, typeStr, toSend, purchase.getOriginalJson());
+                }
+            } catch (NoSuchMethodException nsme) {
+                // not implemented by listener - ignore
+            } catch (Throwable t) {
+                Log.e(TAG, "invoke onPurchase reflection failed: " + t.getMessage());
+            }
         }
+
         if (isConsumePurchase) {
             ConsumeParams consumeParams =
                     ConsumeParams.newBuilder()
@@ -848,7 +848,6 @@ public class AppPurchase {
                 @Override
                 public void onConsumeResponse(BillingResult billingResult, String purchaseToken) {
                     Log.e(TAG, "onConsumeResponse: " + billingResult.getDebugMessage());
-
                 }
             };
 
@@ -859,18 +858,21 @@ public class AppPurchase {
                         AcknowledgePurchaseParams.newBuilder()
                                 .setPurchaseToken(purchase.getPurchaseToken())
                                 .build();
-                if (!purchase.isAcknowledged()) {
-                    billingClient.acknowledgePurchase(acknowledgePurchaseParams, new AcknowledgePurchaseResponseListener() {
-                        @Override
-                        public void onAcknowledgePurchaseResponse(@NonNull BillingResult billingResult) {
-                            Log.e(TAG, "onAcknowledgePurchaseResponse: " + billingResult.getDebugMessage());
-                        }
-                    });
+                try {
+                    if (!purchase.isAcknowledged()) {
+                        billingClient.acknowledgePurchase(acknowledgePurchaseParams, new AcknowledgePurchaseResponseListener() {
+                            @Override
+                            public void onAcknowledgePurchaseResponse(@NonNull BillingResult billingResult) {
+                                Log.e(TAG, "onAcknowledgePurchaseResponse: " + billingResult.getDebugMessage());
+                            }
+                        });
+                    }
+                } catch (Throwable t) {
+                    Log.e(TAG, "acknowledgePurchase error: " + t.getMessage());
                 }
             }
         }
     }
-
 
     @Deprecated
     public String getPrice() {
@@ -885,6 +887,8 @@ public class AppPurchase {
         if (skuDetails == null)
             return "";
 
+        if (skuDetails.getOneTimePurchaseOfferDetails() == null) return "";
+
         Log.e(TAG, "getPrice: " + skuDetails.getOneTimePurchaseOfferDetails().getFormattedPrice());
 
         return skuDetails.getOneTimePurchaseOfferDetails().getFormattedPrice();
@@ -895,13 +899,11 @@ public class AppPurchase {
         if (skuDetails == null)
             return "";
 
-
         List<ProductDetails.SubscriptionOfferDetails> subsDetail = skuDetails.getSubscriptionOfferDetails();
         List<ProductDetails.PricingPhase> pricingPhaseList = subsDetail.get(subsDetail.size() - 1).getPricingPhases().getPricingPhaseList();
         Log.e(TAG, "getPriceSub: " + pricingPhaseList.get(pricingPhaseList.size() - 1).getFormattedPrice());
         return pricingPhaseList.get(pricingPhaseList.size() - 1).getFormattedPrice();
     }
-
 
     public List<ProductDetails.PricingPhase> getPricePricingPhaseList(String productId) {
         ProductDetails skuDetails = skuDetailsSubsMap.get(productId);
@@ -912,7 +914,6 @@ public class AppPurchase {
         List<ProductDetails.PricingPhase> pricingPhaseList = subsDetail.get(subsDetail.size() - 1).getPricingPhases().getPricingPhaseList();
         return pricingPhaseList;
     }
-
 
     public String getIntroductorySubPrice(String productId) {
         ProductDetails skuDetails = skuDetailsSubsMap.get(productId);
@@ -928,9 +929,7 @@ public class AppPurchase {
         } else {
             return "";
         }
-
     }
-
 
     public String getCurrency(String productId, int typeIAP) {
         ProductDetails skuDetails = typeIAP == TYPE_IAP.PURCHASE ? skuDetailsINAPMap.get(productId) : skuDetailsSubsMap.get(productId);
@@ -946,28 +945,21 @@ public class AppPurchase {
         }
     }
 
-
     public double getPriceWithoutCurrency(String productId, int typeIAP) {
         ProductDetails skuDetails = typeIAP == TYPE_IAP.PURCHASE ? skuDetailsINAPMap.get(productId) : skuDetailsSubsMap.get(productId);
         if (skuDetails == null) {
             return 0;
         }
-        if (typeIAP == TYPE_IAP.PURCHASE)
+        if (typeIAP == TYPE_IAP.PURCHASE) {
+            if (skuDetails.getOneTimePurchaseOfferDetails() == null) return 0;
+            // priceAmountMicros is in micros (long). Return as double so caller's code stays compatible.
             return skuDetails.getOneTimePurchaseOfferDetails().getPriceAmountMicros();
-        else {
+        } else {
             List<ProductDetails.SubscriptionOfferDetails> subsDetail = skuDetails.getSubscriptionOfferDetails();
             List<ProductDetails.PricingPhase> pricingPhaseList = subsDetail.get(subsDetail.size() - 1).getPricingPhases().getPricingPhaseList();
             return pricingPhaseList.get(pricingPhaseList.size() - 1).getPriceAmountMicros();
         }
     }
-//
-//    public String getOldPrice() {
-//        SkuDetails skuDetails = bp.getPurchaseListingDetails(productId);
-//        if (skuDetails == null)
-//            return "";
-//        return formatCurrency(skuDetails.priceValue / discount, skuDetails.currency);
-//    }
-
 
     private String formatCurrency(double price, String currency) {
         NumberFormat format = NumberFormat.getCurrencyInstance();
@@ -988,6 +980,7 @@ public class AppPurchase {
 
     private ArrayList<QueryProductDetailsParams.Product> listIdToListProduct(List<String> listId, String styleBilling) {
         ArrayList<QueryProductDetailsParams.Product> listProduct = new ArrayList<QueryProductDetailsParams.Product>();
+        if (listId == null) return listProduct;
         for (String id : listId) {
             QueryProductDetailsParams.Product product = QueryProductDetailsParams.Product.newBuilder()
                     .setProductId(id)
@@ -1002,5 +995,66 @@ public class AppPurchase {
     public @interface TYPE_IAP {
         int PURCHASE = 1;
         int SUBSCRIPTION = 2;
+    }
+
+    // --- Helper: safe product extraction (new API then fallback) ---
+    private List<String> safeGetProducts(Purchase purchase) {
+        if (purchase == null) return null;
+        List<String> products = null;
+        try {
+            products = purchase.getProducts(); // new API
+            if (products != null && !products.isEmpty()) return products;
+        } catch (NoSuchMethodError | AbstractMethodError ex) {
+            // fall through to try deprecated API
+        } catch (Throwable t) {
+            // ignore
+        }
+
+        try {
+            List<String> skus = purchase.getSkus(); // deprecated fallback, safe to call inside try/catch
+            if (skus != null && !skus.isEmpty()) return skus;
+        } catch (Throwable t) {
+            // ignore
+        }
+
+        // final fallback: parse JSON and look for arrays "productIds" or "products"
+        String orig = purchase.getOriginalJson();
+        if (orig != null && !orig.isEmpty()) {
+            try {
+                JSONObject jo = new JSONObject(orig);
+                if (jo.has("productId")) {
+                    String pid = jo.optString("productId", null);
+                    if (pid != null) {
+                        List<String> out = new ArrayList<>();
+                        out.add(pid);
+                        return out;
+                    }
+                } else if (jo.has("productIds")) {
+                    JSONArray arr = jo.optJSONArray("productIds");
+                    if (arr != null && arr.length() > 0) {
+                        List<String> out = new ArrayList<>();
+                        for (int i = 0; i < arr.length(); i++) out.add(arr.optString(i));
+                        return out;
+                    }
+                } else if (jo.has("products")) {
+                    JSONArray arr = jo.optJSONArray("products");
+                    if (arr != null && arr.length() > 0) {
+                        List<String> out = new ArrayList<>();
+                        for (int i = 0; i < arr.length(); i++) out.add(arr.optString(i));
+                        return out;
+                    }
+                } else if (jo.has("sku")) {
+                    String sku = jo.optString("sku", null);
+                    if (sku != null) {
+                        List<String> out = new ArrayList<>();
+                        out.add(sku);
+                        return out;
+                    }
+                }
+            } catch (JSONException e) {
+                // ignore
+            }
+        }
+        return null;
     }
 }
