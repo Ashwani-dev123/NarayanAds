@@ -861,7 +861,7 @@ class NativeAdView : FrameLayout {
                     isPopulatedMediaView = true
                 } ?: kotlin.run {
                     logI(tag = TAG, message = "populateNativeAdView: No Media View Found")
-                    populateNativeAdView(fNativeAd = fNativeAd, fAdView = fAdView, onAdPopulated = onAdPopulated)
+                    isPopulatedMediaView = true
                 }
             } ?: kotlin.run {
                 logI(tag = TAG, message = "populateNativeAdView: Media View NULL")
@@ -1072,25 +1072,25 @@ class NativeAdView : FrameLayout {
 
     private fun callAdLoaded() {
         Handler(Looper.getMainLooper()).postDelayed({
-            mListener?.onAdLoaded() ?: kotlin.run { callAdLoaded() }
+            mListener?.onAdLoaded()
         }, 100)
     }
 
     private fun callAdClosed() {
         Handler(Looper.getMainLooper()).postDelayed({
-            mListener?.onAdClosed() ?: kotlin.run { callAdClosed() }
+            mListener?.onAdClosed()
         }, 100)
     }
 
     private fun callAdCustomClosed() {
         Handler(Looper.getMainLooper()).postDelayed({
-            mListener?.onAdCustomClosed() ?: kotlin.run { callAdCustomClosed() }
+            mListener?.onAdCustomClosed()
         }, 100)
     }
 
     private fun callAdFailed() {
         Handler(Looper.getMainLooper()).postDelayed({
-            mListener?.onAdFailed() ?: kotlin.run { callAdFailed() }
+            mListener?.onAdFailed()
         }, 100)
     }
 

@@ -30,6 +30,7 @@ import com.adjust.sdk.OnEventTrackingSucceededListener;
 import com.adjust.sdk.OnSessionTrackingFailedListener;
 import com.adjust.sdk.OnSessionTrackingSucceededListener;
 import com.ads.narayan.R;
+import com.ads.narayan.GoogleMobileAdsConsentManager;
 import com.ads.narayan.admob.Admob;
 import com.ads.narayan.admob.AppOpenManager;
 import com.ads.narayan.ads.nativeAds.NarayanAdAdapter;
@@ -71,6 +72,7 @@ import com.google.android.gms.ads.nativead.NativeAdView;
 import com.google.android.gms.ads.rewarded.RewardItem;
 import com.google.android.gms.ads.rewarded.RewardedAd;
 import com.google.android.gms.ads.rewardedinterstitial.RewardedInterstitialAd;
+import com.google.android.ump.ConsentForm;
 
 import java.util.Date;
 
@@ -120,6 +122,65 @@ public class NarayanAd {
      */
     public void init(Application context, NarayanAdConfig adConfig) {
         init(context, adConfig, false);
+    }
+
+    public void initWithConsent(Activity activity, NarayanAdConfig adConfig) {
+        initWithConsent(activity, adConfig, false);
+    }
+
+    public void initWithConsent(Activity activity, NarayanAdConfig adConfig, Boolean enableDebugMediation) {
+        if (activity == null) {
+            throw new RuntimeException("cant not set Activity null");
+        }
+        if (adConfig == null) {
+            throw new RuntimeException("cant not set NarayanAdConfig null");
+        }
+        if (adConfig.getMediationProvider() == NarayanAdConfig.PROVIDER_ADMOB) {
+            gatherAdConsent(activity, error -> init(activity.getApplication(), adConfig, enableDebugMediation));
+        } else {
+            init(activity.getApplication(), adConfig, enableDebugMediation);
+        }
+    }
+
+    public void gatherAdConsent(
+            Activity activity,
+            GoogleMobileAdsConsentManager.OnConsentGatheringCompleteListener listener
+    ) {
+        if (activity == null) {
+            throw new RuntimeException("cant not set Activity null");
+        }
+        GoogleMobileAdsConsentManager.OnConsentGatheringCompleteListener callback =
+                listener != null ? listener : error -> {
+                };
+        GoogleMobileAdsConsentManager.Companion
+                .getInstance(activity.getApplicationContext())
+                .gatherConsent(activity, callback);
+    }
+
+    public void showPrivacyOptionsForm(
+            Activity activity,
+            ConsentForm.OnConsentFormDismissedListener listener
+    ) {
+        if (activity == null) {
+            throw new RuntimeException("cant not set Activity null");
+        }
+        GoogleMobileAdsConsentManager.Companion
+                .getInstance(activity.getApplicationContext())
+                .showPrivacyOptionsForm(activity, listener);
+    }
+
+    public boolean canRequestAdmobAds(Context context) {
+        return context != null
+                && GoogleMobileAdsConsentManager.Companion
+                .getInstance(context.getApplicationContext())
+                .getCanRequestAds();
+    }
+
+    public boolean isPrivacyOptionsRequired(Context context) {
+        return context != null
+                && GoogleMobileAdsConsentManager.Companion
+                .getInstance(context.getApplicationContext())
+                .isPrivacyOptionsRequired();
     }
 
     /**

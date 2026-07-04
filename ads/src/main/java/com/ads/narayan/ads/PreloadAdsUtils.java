@@ -2,6 +2,8 @@ package com.ads.narayan.ads;
 
 import android.app.Activity;
 import android.content.Context;
+import android.os.Handler;
+import android.os.Looper;
 import android.util.Log;
 import android.view.View;
 import android.widget.FrameLayout;
@@ -38,6 +40,7 @@ public class PreloadAdsUtils {
     public int loadTimesFailMedium = 0;
     public int loadTimesFailNormal = 0;
     public final int limitLoad = 2;
+    private static final long NATIVE_RETRY_DELAY_MS = 1_500L;
 
 
     public void loadInterSameTime(final Context context, String idAdInterPriority, String idAdInterNormal, NarayanAdCallback adListener) {
@@ -260,7 +263,7 @@ public class PreloadAdsUtils {
                         Log.d(TAG, "FailToLoadNativeHigh");
                         if (loadTimesFailHigh < limitLoad) {
                             loadTimesFailHigh++;
-                            loadNativeHigh(activity, idNativeHigh, callBack);
+                            retryNativeLoad(() -> loadNativeHigh(activity, idNativeHigh, callBack));
                         }
                     }
                 }
@@ -288,7 +291,7 @@ public class PreloadAdsUtils {
                         Log.d(TAG, "FailToLoadNativeMedium");
                         if (loadTimesFailMedium < limitLoad) {
                             loadTimesFailMedium++;
-                            loadNativeMedium(activity, idNativeMedium, callBack);
+                            retryNativeLoad(() -> loadNativeMedium(activity, idNativeMedium, callBack));
                         }
                     }
                 }
@@ -316,11 +319,15 @@ public class PreloadAdsUtils {
                         Log.d(TAG, "FailToLoadNativeNormal");
                         if (loadTimesFailNormal < limitLoad) {
                             loadTimesFailNormal++;
-                            loadNativeNormal(activity, idNativeNormal, callBack);
+                            retryNativeLoad(() -> loadNativeNormal(activity, idNativeNormal, callBack));
                         }
                     }
                 }
         );
+    }
+
+    private void retryNativeLoad(Runnable retryAction) {
+        new Handler(Looper.getMainLooper()).postDelayed(retryAction, NATIVE_RETRY_DELAY_MS);
     }
 
     public void showPreNativeSametime(

@@ -38,7 +38,7 @@ public class NarayanAdConfig {
     private String facebookClientToken = DEFAULT_TOKEN_FACEBOOK_SDK;
 
 
-    private int intervalInterstitialAd = 0;
+    private int intervalInterstitialAd = 30;
 
     public NarayanAdConfig(Application application) {
         this.application = application;
@@ -139,7 +139,7 @@ public class NarayanAdConfig {
     }
 
     public void setIntervalInterstitialAd(int intervalInterstitialAd) {
-        this.intervalInterstitialAd = intervalInterstitialAd;
+        this.intervalInterstitialAd = Math.max(0, intervalInterstitialAd);
     }
 
     public void setFacebookClientToken(String token) {

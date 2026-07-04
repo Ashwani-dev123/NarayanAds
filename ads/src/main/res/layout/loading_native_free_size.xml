@@ -29,6 +29,9 @@
                 android:orientation="horizontal"
                 android:paddingLeft="10dip"
                 android:paddingRight="10dip"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
                 tools:layout_editor_absoluteY="5dp">
 
 
@@ -89,6 +92,8 @@
                 android:padding="5.0dip"
                 android:paddingLeft="10dip"
                 android:paddingRight="10dip"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/relativeLayout">
 
                 <LinearLayout

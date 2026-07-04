@@ -81,11 +81,13 @@ import com.google.android.gms.ads.rewarded.RewardedAd;
 import com.google.android.gms.ads.rewarded.RewardedAdLoadCallback;
 import com.google.android.gms.ads.rewardedinterstitial.RewardedInterstitialAd;
 import com.google.android.gms.ads.rewardedinterstitial.RewardedInterstitialAdLoadCallback;
+import com.google.android.ump.UserMessagingPlatform;
 import com.jirbo.adcolony.AdColonyAdapter;
 import com.jirbo.adcolony.AdColonyBundleBuilder;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
@@ -94,6 +96,7 @@ import java.util.Objects;
 
 public class Admob {
     private static final String TAG = "NarayanAdmob";
+    private static final int MIN_INTERSTITIAL_ACTIONS = 2;
     private static Admob instance;
     private int currentClicked = 0;
     private String nativeId;
@@ -159,12 +162,12 @@ public class Admob {
     }
 
     public void setNumToShowAds(int numShowAds) {
-        this.numShowAds = numShowAds;
+        this.numShowAds = Math.max(MIN_INTERSTITIAL_ACTIONS, numShowAds);
     }
 
     public void setNumToShowAds(int numShowAds, int currentClicked) {
-        this.numShowAds = numShowAds;
-        this.currentClicked = currentClicked;
+        this.numShowAds = Math.max(MIN_INTERSTITIAL_ACTIONS, numShowAds);
+        this.currentClicked = Math.max(0, currentClicked);
     }
 
 
@@ -189,7 +192,12 @@ public class Admob {
                         adapterClass, status.getDescription(), status.getLatency()));
             }
         });
-        MobileAds.setRequestConfiguration(new RequestConfiguration.Builder().setTestDeviceIds(testDeviceList).build());
+        List<String> safeTestDeviceList = new ArrayList<>();
+        safeTestDeviceList.add(AdRequest.DEVICE_ID_EMULATOR);
+        if (testDeviceList != null) {
+            safeTestDeviceList.addAll(testDeviceList);
+        }
+        MobileAds.setRequestConfiguration(new RequestConfiguration.Builder().setTestDeviceIds(safeTestDeviceList).build());
 
         this.context = context;
     }
@@ -237,12 +245,6 @@ public class Admob {
 
     public AdRequest getAdRequest() {
         AdRequest.Builder builder = new AdRequest.Builder();
-        //AV Language
-        Bundle extras = new Bundle();
-        extras.putString("npa", "1");
-        extras.putString("GoogleConsent", "en"); // Replace "en" with the desired language code
-        builder.addNetworkExtrasBundle(AdMobAdapter.class, extras);
-        //AV Language
 
         if (isAdcolony) {
             AdColonyBundleBuilder.setShowPrePopup(true);
@@ -257,6 +259,20 @@ public class Admob {
             builder.addNetworkExtrasBundle(ApplovinAdapter.class, extras1);
         }
         return builder.build();
+    }
+
+    private boolean canRequestAds(Context context) {
+        if (context == null) {
+            return false;
+        }
+        try {
+            return UserMessagingPlatform
+                    .getConsentInformation(context.getApplicationContext())
+                    .canRequestAds();
+        } catch (Exception e) {
+            Log.e(TAG, "Unable to read UMP consent state: " + e.getMessage());
+            return false;
+        }
     }
 
     private void requestInterstitialAds(InterstitialAd mInterstitialAd, String id, InterstitialAdLoadCallback callback) {
@@ -664,7 +680,10 @@ public class Admob {
                 super.onAdClicked();
                 if (disableAdResumeWhenClickAds)
                     AppOpenManager.getInstance().disableAdResumeByClickAction();
-                NarayanLogEventManager.logClickAdsEvent(context, mInterstitialSplashHighFloor.getAdUnitId());
+                if (mInterstitialSplashHighFloor != null) {
+                    AdmodHelper.increaseNumClickAdsPerDay(context, mInterstitialSplashHighFloor.getAdUnitId());
+                    NarayanLogEventManager.logClickAdsEvent(context, mInterstitialSplashHighFloor.getAdUnitId());
+                }
             }
 
             @Override
@@ -759,7 +778,7 @@ public class Admob {
         mInterstitialSplash.setFullScreenContentCallback(new FullScreenContentCallback() {
             @Override
             public void onAdShowedFullScreenContent() {
-                Log.e(TAG, "🎉 Splash:onAdShowedFullScreenContent - AD IS NOW VISIBLE!");
+                Log.e(TAG, "Splash:onAdShowedFullScreenContent - ad is visible");
                 AppOpenManager.getInstance().setInterstitialShowing(true);
                 AppOpenManager.getInstance().disableAppResume();
                 isShowLoadingSplash = false;
@@ -790,7 +809,7 @@ public class Admob {
 
             @Override
             public void onAdFailedToShowFullScreenContent(@NonNull AdError adError) {
-                Log.e(TAG, "❌ Splash onAdFailedToShowFullScreenContent: " + adError.getMessage());
+                Log.e(TAG, "Splash onAdFailedToShowFullScreenContent: " + adError.getMessage());
                 mInterstitialSplash = null;
                 isShowLoadingSplash = false;
                 if (adListener != null) {
@@ -811,7 +830,10 @@ public class Admob {
                 Log.e(TAG, "Splash: onAdClicked");
                 if (disableAdResumeWhenClickAds)
                     AppOpenManager.getInstance().disableAdResumeByClickAction();
-                NarayanLogEventManager.logClickAdsEvent(context, mInterstitialSplash.getAdUnitId());
+                if (mInterstitialSplash != null) {
+                    AdmodHelper.increaseNumClickAdsPerDay(context, mInterstitialSplash.getAdUnitId());
+                    NarayanLogEventManager.logClickAdsEvent(context, mInterstitialSplash.getAdUnitId());
+                }
                 if (adListener != null) {
                     adListener.onAdClicked();
                 }
@@ -863,19 +885,19 @@ public class Admob {
                     }
 
                     if (activity != null && mInterstitialSplash != null) {
-                        Log.i(TAG, "🎯 START SHOWING INTERSTITIAL AD - " + activity.getLifecycle().getCurrentState().name());
+                        Log.i(TAG, "Start showing interstitial ad - " + activity.getLifecycle().getCurrentState().name());
                         try {
                             mInterstitialSplash.show(activity);
-                            Log.e(TAG, "✅ interstitialAd.show() called successfully");
+                            Log.e(TAG, "interstitialAd.show() called successfully");
                         } catch (Exception e) {
-                            Log.e(TAG, "❌ Exception showing interstitial: " + e.getMessage());
+                            Log.e(TAG, "Exception showing interstitial: " + e.getMessage());
                             if (adListener != null) {
                                 adListener.onAdFailedToShow(new AdError(0, "Exception: " + e.getMessage(), "AdMob"));
                             }
                         }
                         isShowLoadingSplash = false;
                     } else {
-                        Log.e(TAG, "❌ Activity or interstitial is null");
+                        Log.e(TAG, "Activity or interstitial is null");
                         if (adListener != null) {
                             if (dialog != null) {
                                 dialog.dismiss();
@@ -885,7 +907,7 @@ public class Admob {
                         isShowLoadingSplash = false;
                     }
                 } else {
-                    Log.e(TAG, "❌ Activity is not in resumed state anymore");
+                    Log.e(TAG, "Activity is not in resumed state anymore");
                     if (dialog != null && dialog.isShowing() && !activity.isDestroyed())
                         dialog.dismiss();
                     isShowLoadingSplash = false;
@@ -897,7 +919,7 @@ public class Admob {
             }, 800);
 
         } else {
-            Log.e(TAG, "❌ App is not in foreground, cannot show ad");
+            Log.e(TAG, "App is not in foreground, cannot show ad");
             isShowLoadingSplash = false;
             if (adListener != null) {
                 adListener.onNextAction();
@@ -1015,6 +1037,12 @@ public class Admob {
             adCallback.onInterstitialLoad(null);
             return;
         }
+        if (!canRequestAds(context)) {
+            if (adCallback != null) {
+                adCallback.onAdFailedToLoad(null);
+            }
+            return;
+        }
 
 
         InterstitialAd.load(context, id, getAdRequest(),
@@ -1130,6 +1158,7 @@ public class Admob {
                 super.onAdClicked();
                 if (disableAdResumeWhenClickAds)
                     AppOpenManager.getInstance().disableAdResumeByClickAction();
+                AdmodHelper.increaseNumClickAdsPerDay(context, mInterstitialAd.getAdUnitId());
                 if (callback != null) {
                     callback.onAdClicked();
                 }
@@ -1156,7 +1185,7 @@ public class Admob {
         Log.e("AdmobDebug", "=== Admob.forceShowInterstitial START ===");
         currentClicked = numShowAds;
         if (mInterstitialAd == null) {
-            Log.e("AdmobDebug", "❌ interstitialAd is null");
+            Log.e("AdmobDebug", "InterstitialAd is null");
             if (callback != null) {
                 callback.onAdFailedToShow(new AdError(0, "InterstitialAd is null", "AdMob"));
             }
@@ -1164,7 +1193,7 @@ public class Admob {
         }
 
         if (!(context instanceof Activity)) {
-            Log.e("AdmobDebug", "❌ Context is not Activity");
+            Log.e("AdmobDebug", "Context is not Activity");
             if (callback != null) {
                 callback.onAdFailedToShow(new AdError(0, "Context is not Activity", "AdMob"));
             }
@@ -1180,6 +1209,7 @@ public class Admob {
                 @Override
                 public void onAdDismissedFullScreenContent() {
                     Log.e("AdmobDebug", "onAdDismissedFullScreenContent");
+                    AppOpenManager.getInstance().setInterstitialShowing(false);
                     if (callback != null) {
                         callback.onAdClosed();
                     }
@@ -1187,7 +1217,8 @@ public class Admob {
 
                 @Override
                 public void onAdFailedToShowFullScreenContent(@NonNull AdError adError) {
-                    Log.e("AdmobDebug", "❌ onAdFailedToShowFullScreenContent: " + adError.getMessage());
+                    Log.e("AdmobDebug", "onAdFailedToShowFullScreenContent: " + adError.getMessage());
+                    AppOpenManager.getInstance().setInterstitialShowing(false);
                     if (callback != null) {
                         callback.onAdFailedToShow(adError);
                     }
@@ -1195,7 +1226,8 @@ public class Admob {
 
                 @Override
                 public void onAdShowedFullScreenContent() {
-                    Log.e("AdmobDebug", "🎉 onAdShowedFullScreenContent - AD IS VISIBLE!");
+                    Log.e("AdmobDebug", "onAdShowedFullScreenContent - ad is visible");
+                    AppOpenManager.getInstance().setInterstitialShowing(true);
                     if (callback != null) {
                         callback.onInterstitialShow();
                     }
@@ -1204,6 +1236,7 @@ public class Admob {
                 @Override
                 public void onAdClicked() {
                     Log.e("AdmobDebug", "onAdClicked");
+                    AdmodHelper.increaseNumClickAdsPerDay(context, mInterstitialAd.getAdUnitId());
                     if (callback != null) {
                         callback.onAdClicked();
                     }
@@ -1225,7 +1258,7 @@ public class Admob {
             Log.e("AdmobDebug", "interstitialAd.show() called successfully");
 
         } catch (Exception e) {
-            Log.e("AdmobDebug", "❌ Exception: " + e.getMessage());
+            Log.e("AdmobDebug", "Exception: " + e.getMessage());
             e.printStackTrace();
             if (callback != null) {
                 callback.onAdFailedToShow(new AdError(0, "Exception: " + e.getMessage(), "AdMob"));
@@ -1237,6 +1270,18 @@ public class Admob {
     private void showInterstitialAd(Context context, InterstitialAd mInterstitialAd, AdCallback callback) {
         currentClicked++;
         if (currentClicked >= numShowAds && mInterstitialAd != null) {
+            if (!(context instanceof Activity)) {
+                if (callback != null) {
+                    callback.onAdFailedToShow(new AdError(0, "Context is not Activity", "NarayanAd"));
+                }
+                currentClicked = 0;
+                return;
+            }
+            if (!(context instanceof AppCompatActivity)) {
+                mInterstitialAd.show((Activity) context);
+                currentClicked = 0;
+                return;
+            }
             if (ProcessLifecycleOwner.get().getLifecycle().getCurrentState().isAtLeast(Lifecycle.State.RESUMED)) {
                 try {
                     if (dialog != null && dialog.isShowing())
@@ -1395,6 +1440,14 @@ public class Admob {
             containerShimmer.setVisibility(View.GONE);
             return;
         }
+        if (!canRequestAds(mActivity)) {
+            containerShimmer.setVisibility(View.GONE);
+            adContainer.setVisibility(View.GONE);
+            if (callback != null) {
+                callback.onAdFailedToLoad(null);
+            }
+            return;
+        }
 
         containerShimmer.setVisibility(View.VISIBLE);
         containerShimmer.startShimmer();
@@ -1480,6 +1533,14 @@ public class Admob {
         }
         if (AppPurchase.getInstance().isPurchased(mActivity)) {
             containerShimmer.setVisibility(View.GONE);
+            return;
+        }
+        if (!canRequestAds(mActivity)) {
+            containerShimmer.setVisibility(View.GONE);
+            adContainer.setVisibility(View.GONE);
+            if (callback != null) {
+                callback.onAdFailedToLoad(null);
+            }
             return;
         }
 
@@ -1582,8 +1643,6 @@ public class Admob {
         AdRequest.Builder builder = new AdRequest.Builder();
         Bundle admobExtras = new Bundle();
         admobExtras.putString("collapsible", gravity);
-        admobExtras.putString("npa", "1");
-        admobExtras.putString("GoogleConsent", "en");
         builder.addNetworkExtrasBundle(AdMobAdapter.class, admobExtras);
         // no need from facebook sdk ver 6.12.0.0
         /*if (isFan) {
@@ -1640,6 +1699,12 @@ public class Admob {
             showTestIdAlert(context, NATIVE_ADS, id);
         }
         if (AppPurchase.getInstance().isPurchased(context)) {
+            return;
+        }
+        if (!canRequestAds(context)) {
+            if (callback != null) {
+                callback.onAdFailedToLoad(null);
+            }
             return;
         }
         VideoOptions videoOptions = new VideoOptions.Builder()
@@ -1704,6 +1769,12 @@ public class Admob {
         }
         if (AppPurchase.getInstance().isPurchased(context)) {
             callback.onAdClosed();
+            return;
+        }
+        if (!canRequestAds(context)) {
+            if (callback != null) {
+                callback.onAdFailedToLoad(null);
+            }
             return;
         }
         VideoOptions videoOptions = new VideoOptions.Builder()
@@ -2032,6 +2103,9 @@ public class Admob {
         if (AppPurchase.getInstance().isPurchased(context)) {
             return;
         }
+        if (!canRequestAds(context)) {
+            return;
+        }
         RewardedAd.load(context, id, getAdRequest(), new RewardedAdLoadCallback() {
             @Override
             public void onAdLoaded(@NonNull RewardedAd rewardedAd) {
@@ -2065,6 +2139,12 @@ public class Admob {
         }
         this.nativeId = id;
         if (AppPurchase.getInstance().isPurchased(context)) {
+            return;
+        }
+        if (!canRequestAds(context)) {
+            if (callback != null) {
+                callback.onAdFailedToLoad(null);
+            }
             return;
         }
         RewardedAd.load(context, id, getAdRequest(), new RewardedAdLoadCallback() {
@@ -2103,6 +2183,12 @@ public class Admob {
         }
         this.nativeId = id;
         if (AppPurchase.getInstance().isPurchased(context)) {
+            return;
+        }
+        if (!canRequestAds(context)) {
+            if (callback != null) {
+                callback.onAdFailedToLoad(null);
+            }
             return;
         }
         RewardedInterstitialAd.load(context, id, getAdRequest(), new RewardedInterstitialAdLoadCallback() {
@@ -2145,7 +2231,8 @@ public class Admob {
             adCallback.onRewardedAdFailedToShow(0);
             return;
         } else {
-            Admob.this.rewardedAd.setFullScreenContentCallback(new FullScreenContentCallback() {
+            final RewardedAd adToShow = rewardedAd;
+            adToShow.setFullScreenContentCallback(new FullScreenContentCallback() {
                 @Override
                 public void onAdDismissedFullScreenContent() {
                     super.onAdDismissedFullScreenContent();
@@ -2175,10 +2262,10 @@ public class Admob {
                     super.onAdClicked();
                     if (disableAdResumeWhenClickAds)
                         AppOpenManager.getInstance().disableAdResumeByClickAction();
-                    NarayanLogEventManager.logClickAdsEvent(context, rewardedAd.getAdUnitId());
+                    NarayanLogEventManager.logClickAdsEvent(context, adToShow.getAdUnitId());
                 }
             });
-            rewardedAd.show(context, new OnUserEarnedRewardListener() {
+            adToShow.show(context, new OnUserEarnedRewardListener() {
                 @Override
                 public void onUserEarnedReward(@NonNull RewardItem rewardItem) {
                     if (adCallback != null) {
@@ -2230,7 +2317,7 @@ public class Admob {
 
                 public void onAdClicked() {
                     super.onAdClicked();
-                    NarayanLogEventManager.logClickAdsEvent(activity, rewardedAd.getAdUnitId());
+                    NarayanLogEventManager.logClickAdsEvent(activity, rewardedInterstitialAd.getAdUnitId());
                     if (disableAdResumeWhenClickAds)
                         AppOpenManager.getInstance().disableAdResumeByClickAction();
                 }

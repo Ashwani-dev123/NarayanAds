@@ -61,6 +61,15 @@ public class NarayanNativeAd extends NarayanAdBase {
         this.nativeView = nativeView;
     }
 
+    public void destroy() {
+        if (admobNativeAd != null) {
+            admobNativeAd.destroy();
+            admobNativeAd = null;
+        }
+        nativeView = null;
+        status = StatusAd.AD_INIT;
+    }
+
     public String toString(){
         return "Status:"+ status + " == nativeView:"+nativeView + " == admobNativeAd:"+admobNativeAd;
     }

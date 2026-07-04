@@ -50,6 +50,7 @@ import java.util.Calendar;
 
 public class AppLovin {
     private static final String TAG = "NarayanAppLovin";
+    private static final int MIN_INTERSTITIAL_ACTIONS = 2;
     private static AppLovin instance;
     private int currentClicked = 0;
     private String nativeId;
@@ -171,12 +172,12 @@ public class AppLovin {
     }
 
     public void setNumShowAds(int numShowAds) {
-        this.numShowAds = numShowAds;
+        this.numShowAds = Math.max(MIN_INTERSTITIAL_ACTIONS, numShowAds);
     }
 
     public void setNumToShowAds(int numShowAds, int currentClicked) {
-        this.numShowAds = numShowAds;
-        this.currentClicked = currentClicked;
+        this.numShowAds = Math.max(MIN_INTERSTITIAL_ACTIONS, numShowAds);
+        this.currentClicked = Math.max(0, currentClicked);
     }
 
     public MaxInterstitialAd getInterstitialSplash() {
@@ -263,6 +264,7 @@ public class AppLovin {
             public void onAdClicked(MaxAd ad) {
                 if (disableAdResumeWhenClickAds)
                     AppOpenMax.getInstance().disableAdResumeByClickAction();
+                AppLovinHelper.increaseNumClickAdsPerDay(context, ad.getAdUnitId());
                 NarayanLogEventManager.logClickAdsEvent(context, ad.getAdUnitId());
             }
 
@@ -370,6 +372,7 @@ public class AppLovin {
 
             @Override
             public void onAdClicked(MaxAd ad) {
+                AppLovinHelper.increaseNumClickAdsPerDay(context, ad.getAdUnitId());
                 NarayanLogEventManager.logClickAdsEvent(context, ad.getAdUnitId());
                 if (adListener != null) {
                     adListener.onAdClicked();
@@ -445,7 +448,10 @@ public class AppLovin {
 
             @Override
             public void onAdClicked(MaxAd ad) {
-                NarayanLogEventManager.logClickAdsEvent(context, interstitialSplash.getAdUnitId());
+                if (interstitialSplash != null) {
+                    AppLovinHelper.increaseNumClickAdsPerDay(context, interstitialSplash.getAdUnitId());
+                    NarayanLogEventManager.logClickAdsEvent(context, interstitialSplash.getAdUnitId());
+                }
                 if (adListener != null) {
                     adListener.onAdClicked();
                 }
@@ -539,6 +545,7 @@ public class AppLovin {
 
             @Override
             public void onAdClicked(MaxAd ad) {
+                AppLovinHelper.increaseNumClickAdsPerDay(context, ad.getAdUnitId());
                 NarayanLogEventManager.logClickAdsEvent(context, ad.getAdUnitId());
                 if (disableAdResumeWhenClickAds)
                     AppOpenMax.getInstance().disableAdResumeByClickAction();
@@ -615,6 +622,7 @@ public class AppLovin {
 
             @Override
             public void onAdClicked(MaxAd ad) {
+                AppLovinHelper.increaseNumClickAdsPerDay(context, ad.getAdUnitId());
                 NarayanLogEventManager.logClickAdsEvent(context, ad.getAdUnitId());
                 if (callback != null) {
                     callback.onAdClicked();

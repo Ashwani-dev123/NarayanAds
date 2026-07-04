@@ -31,6 +31,9 @@ public class AppLovinHelper {
 
 
     public static void increaseNumClickAdsPerDay(Context context, String idAds) {
+        if (idAds == null) {
+            return;
+        }
         SharedPreferences pre = context.getSharedPreferences(FILE_SETTING_APPLOVIN, Context.MODE_PRIVATE);
         int count = pre.getInt(idAds, 0);
         pre.edit().putInt(idAds, count + 1).apply();
@@ -38,12 +41,13 @@ public class AppLovinHelper {
 
 
     public static void setupAppLovinData(Context context) {
-        if (isFirstOpenApp(context)) {
-            context.getSharedPreferences(FILE_SETTING_APPLOVIN, Context.MODE_PRIVATE).edit().putLong(KEY_FIRST_TIME, System.currentTimeMillis()).apply();
+        SharedPreferences adPrefs = context.getSharedPreferences(FILE_SETTING_APPLOVIN, Context.MODE_PRIVATE);
+        long firstTime = adPrefs.getLong(KEY_FIRST_TIME, 0);
+        if (firstTime == 0) {
+            adPrefs.edit().putLong(KEY_FIRST_TIME, System.currentTimeMillis()).apply();
             context.getSharedPreferences(FILE_SETTING, Context.MODE_PRIVATE).edit().putBoolean(IS_FIRST_OPEN, true).apply();
             return;
         }
-        long firstTime = context.getSharedPreferences(FILE_SETTING_APPLOVIN, Context.MODE_PRIVATE).getLong(KEY_FIRST_TIME, System.currentTimeMillis());
         long rs = System.currentTimeMillis() - firstTime;
        /*
        qua q ngày reset lại data

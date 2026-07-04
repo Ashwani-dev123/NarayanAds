@@ -378,7 +378,7 @@ object NativeAdHelper {
                     CoroutineScope(Dispatchers.IO).launch {
                         logE(tag = TAG, message = "loadAd: View after load Added == "+ listOfNativeAdView.isNotEmpty())
                         if (listOfNativeAdView.isNotEmpty()) {
-                            listOfNativeAdView.forEach {
+                            for (it in listOfNativeAdView) {
                                 if (it.fNativeAdView.isAttachedToWindow) {
                                     it.onAdLoaded.invoke(nativeAd)
                                 }
@@ -390,7 +390,7 @@ object NativeAdHelper {
                     logI(tag = TAG, message = "loadAd: onAdClosed: Index -> ${listOfNativeAdView.size}")
                     CoroutineScope(Dispatchers.IO).launch {
                         if (listOfNativeAdView.isNotEmpty()) {
-                            listOfNativeAdView.forEach {
+                            for (it in listOfNativeAdView) {
                                 if (it.fNativeAdView.isAttachedToWindow) {
                                     it.onAdClosed.invoke()
                                 }
@@ -401,7 +401,7 @@ object NativeAdHelper {
                 onAdFailed = {
                     CoroutineScope(Dispatchers.IO).launch {
                         if (listOfNativeAdView.isNotEmpty()) {
-                            listOfNativeAdView.forEach {
+                            for (it in listOfNativeAdView) {
                                 if (it.fNativeAdView.isAttachedToWindow) {
                                     it.onAdFailed.invoke()
                                 }
@@ -461,6 +461,7 @@ object NativeAdHelper {
         mAdIdPosition = -1
 
         for (data in listOfNativeAdsModel) {
+            data.loadedAd?.destroy()
             data.loadedAd = null
             data.listener = null
             data.isAdLoadingRunning = false

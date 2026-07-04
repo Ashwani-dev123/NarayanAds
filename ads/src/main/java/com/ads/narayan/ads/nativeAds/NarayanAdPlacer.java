@@ -45,13 +45,20 @@ public class NarayanAdPlacer {
     }
 
     public void configData() {
+        listAd.clear();
+        listPositionAd.clear();
+        int positionFixAd = settings.getPositionFixAd();
+        if (positionFixAd <= 0) {
+            Log.e(TAG, "Invalid native ad interval: " + positionFixAd);
+            return;
+        }
         if (settings.isRepeatingAd()) {
             //calculator position add ad native to list
             int posAddAd = 0;
             int countNewAdapter = adapterOriginal.getItemCount();
-            while (posAddAd <= countNewAdapter - settings.getPositionFixAd()) {
+            while (posAddAd <= countNewAdapter - positionFixAd) {
 //                Log.i(TAG, "add native to list pos: " + posAddAd);
-                posAddAd += settings.getPositionFixAd();
+                posAddAd += positionFixAd;
                 if (listAd.get(posAddAd) == null) {
                     listAd.put(posAddAd, new NarayanNativeAd(StatusAd.AD_INIT));
                     listPositionAd.add(posAddAd);
@@ -67,6 +74,10 @@ public class NarayanAdPlacer {
 
     public void renderAd(int pos, RecyclerView.ViewHolder holder) {
         NarayanNativeAd adNative = listAd.get(pos);
+        if (adNative == null) {
+            holder.itemView.setVisibility(View.GONE);
+            return;
+        }
         if (adNative.getAdmobNativeAd() == null) {
             if (listAd.get(pos).getStatus() != StatusAd.AD_LOADING) {
                 holder.itemView.post(() -> {
@@ -93,6 +104,7 @@ public class NarayanAdPlacer {
                         @Override
                         public void onAdFailedToLoad(@Nullable LoadAdError i) {
                             super.onAdFailedToLoad(i);
+                            nativeAd.setStatus(StatusAd.AD_LOAD_FAIL);
                             ShimmerFrameLayout containerShimmer = holder.itemView.findViewById(R.id.shimmer_container_native);
                             containerShimmer.setVisibility(View.GONE);
                         }
@@ -141,9 +153,17 @@ public class NarayanAdPlacer {
             @Override
             public void onUnifiedNativeAdLoaded(@NonNull NativeAd unifiedNativeAd) {
                 super.onUnifiedNativeAdLoaded(unifiedNativeAd);
+                if (countLoadAd >= listPositionAd.size()) {
+                    unifiedNativeAd.destroy();
+                    return;
+                }
                 NarayanNativeAd nativeAd = new NarayanNativeAd(settings.getLayoutCustomAd(), unifiedNativeAd);
                 nativeAd.setStatus(StatusAd.AD_LOADED);
-                listAd.put(listPositionAd.get(countLoadAd), nativeAd);
+                int adPosition = listPositionAd.get(countLoadAd);
+                NarayanNativeAd previousAd = listAd.put(adPosition, nativeAd);
+                if (previousAd != null) {
+                    previousAd.destroy();
+                }
                 Log.i(TAG, "native ad in recycle loaded: " + countLoadAd);
                 countLoadAd++;
             }
@@ -167,8 +187,9 @@ public class NarayanAdPlacer {
     public int getAdjustedCount() {
         int countMinAd;
         if (settings.isRepeatingAd()) {
-            countMinAd = adapterOriginal.getItemCount() / settings.getPositionFixAd();
-        } else if (adapterOriginal.getItemCount() >= settings.getPositionFixAd()) {
+            int positionFixAd = settings.getPositionFixAd();
+            countMinAd = positionFixAd > 0 ? adapterOriginal.getItemCount() / positionFixAd : 0;
+        } else if (settings.getPositionFixAd() > 0 && adapterOriginal.getItemCount() >= settings.getPositionFixAd()) {
             countMinAd = 1;
         } else {
             countMinAd = 0;
@@ -206,6 +227,16 @@ public class NarayanAdPlacer {
         Log.i(TAG, "Ad native impression ");
         if (settings.getListener() != null)
             settings.getListener().onAdImpression();
+    }
+
+    public void destroy() {
+        for (NarayanNativeAd nativeAd : listAd.values()) {
+            if (nativeAd != null) {
+                nativeAd.destroy();
+            }
+        }
+        listAd.clear();
+        listPositionAd.clear();
     }
 
 
